@@ -49,6 +49,19 @@
       efiSysMountPoint = "/boot";
     };
   };
+  
+  # fstab mounts
+  fileSystems."$HOME/1TB-Hard-Drive" = {
+    device = "/dev/sda2";
+    fsType = "ntfs";
+    options = [ "users" "nofail" "exec" ];
+  };
+
+  fileSystems."$HOME/2TB-Hard-Drive" = {
+    device = "/dev/sdb2";
+    fsType = "ntfs";
+    options = [ "users" "nofail" "exec" ];
+  };
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
