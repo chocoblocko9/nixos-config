@@ -115,8 +115,8 @@
         "rounding" = "20";
         "rounding_power" = "1";
 
-        "active_opacity" = "0.95";
-        "inactive_opacity" = "0.6";
+        "active_opacity" = "0.96";
+        "inactive_opacity" = "0.7";
         "dim_inactive" = true;
         "dim_strength" = "0.35";
       };
