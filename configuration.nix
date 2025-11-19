@@ -30,6 +30,10 @@
 	search --no-floppy --fs-uuid --set=root 54A5-22B3
 	chainloader /EFI/Microsoft/Boot/bootmgfw.efi
       }
+      menuentry "System shutdown" {
+        echo "System shutting down..."
+        halt
+      }
       menuentry 'Arch Linux (on /dev/sda5)' --class arch --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-simple-ec21-0eb4f241-ec21-4840-8321-4c66a2f2cd89' {
 	ismod part_msdos
 	ismod fat
