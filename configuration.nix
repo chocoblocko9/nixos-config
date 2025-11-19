@@ -55,13 +55,13 @@
   };
   
   # fstab mounts
-  fileSystems."~/1TB-Hard-Drive" = {
+  fileSystems."/home/conor/1TB-Hard-Drive" = {
     device = "/dev/sda2";
     fsType = "ntfs";
     options = [ "users" "nofail" "exec" ];
   };
 
-  fileSystems."~/2TB-Hard-Drive" = {
+  fileSystems."/home/conor/2TB-Hard-Drive" = {
     device = "/dev/sdb2";
     fsType = "ntfs";
     options = [ "users" "nofail" "exec" ];
