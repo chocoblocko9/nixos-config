@@ -107,6 +107,18 @@
         "col.active_border" = "rgb(072242) rgb(2A7B9B) 60deg";
         "col.inactive_border" = "rgba(595959E6) rgba(000000E6) 30deg";
 
+        "allow_tearing" = false;
+        "layout" = "dwindle";
+      };
+
+      "decoration" = {
+        "rounding" = "20";
+        "rounding_power" = "1";
+
+        "active_opacity" = "0.95";
+        "inactive_opacity" = "0.6";
+        "dim_inactive" = true;
+        "dim_strength" = "0.35";
       };
 
       # Set apps
