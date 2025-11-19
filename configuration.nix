@@ -55,16 +55,22 @@
   };
   
   # fstab mounts
-  fileSystems."$HOME/1TB-Hard-Drive" = {
+  fileSystems."~/1TB-Hard-Drive" = {
     device = "/dev/sda2";
     fsType = "ntfs";
     options = [ "users" "nofail" "exec" ];
   };
 
-  fileSystems."$HOME/2TB-Hard-Drive" = {
+  fileSystems."~/2TB-Hard-Drive" = {
     device = "/dev/sdb2";
     fsType = "ntfs";
     options = [ "users" "nofail" "exec" ];
+  };
+ 
+  # Auto-mount USB (probably Ventoy)
+  fileSystems."~/USB-Mount" = {
+    device = "/dev/sdc1";
+    options = [ "users" "nofail" ];
   };
 
   # Use latest kernel.
