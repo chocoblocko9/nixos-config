@@ -68,7 +68,7 @@
   };
  
   # Auto-mount USB (probably Ventoy)
-  fileSystems."~/USB-Mount" = {
+  fileSystems."/home/conor//USB-Mount" = {
     device = "/dev/sdc1";
     options = [ "users" "nofail" ];
   };
