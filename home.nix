@@ -79,7 +79,8 @@
       # Execute on boot
       "exec-once" = [
         "firefox"
-         "discord"
+        "discord"
+        "hyprpaper"
       ];
       
       "input" = {
@@ -92,6 +93,21 @@
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,18"
       ];
+
+      # Look and feel
+      "general" = {
+        "gaps_in" = "5";
+        "gaps_out" = "5,10,10,10";
+        
+        "border_size" = "3";
+        "resize_on_border" = true;
+        "hover_icon_on_border" = true;
+        "extend_border_grab_area" = "25";
+    
+        "col.active_border" = "rgb(072242) rgb(2A7B9B) 60deg";
+        "col.inactive_border" = "rgba(595959E6) rgba(000000E6) 30deg";
+
+      };
 
       # Set apps
       "$mod" = "SUPER";
