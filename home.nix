@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ./hyprland.nix
+  ];
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "conor";
@@ -17,14 +21,14 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
+  home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
-    pkgs.hello
-    pkgs.firefox
-    pkgs.pavucontrol
-    pkgs.zip
-    pkgs.unzip
+    hello
+    firefox
+    pavucontrol
+    zip
+    unzip
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -69,81 +73,6 @@
     };
   };
 
-
-  # Hyprland
-  programs.kitty.enable = true;
-  programs.wofi.enable = true;
-  wayland.windowManager.hyprland = {
-    enable = true;
-    settings = {
-      # Execute on boot
-      "exec-once" = [
-        "firefox"
-        "discord"
-        "hyprpaper"
-      ];
-      
-      "input" = {
-        "kb_layout" = "de";
-        "kb_variant" = "qwerty";
-      };
-
-      # Environment Variables
-      "env" = [
-        "XCURSOR_SIZE,24"
-        "HYPRCURSOR_SIZE,18"
-      ];
-
-      # Look and feel
-      "general" = {
-        "gaps_in" = "5";
-        "gaps_out" = "5,10,10,10";
-        
-        "border_size" = "3";
-        "resize_on_border" = true;
-        "hover_icon_on_border" = true;
-        "extend_border_grab_area" = "25";
-    
-        "col.active_border" = "rgb(072242) rgb(2A7B9B) 60deg";
-        "col.inactive_border" = "rgba(595959E6) rgba(000000E6) 30deg";
-
-        "allow_tearing" = false;
-        "layout" = "dwindle";
-      };
-
-      "decoration" = {
-        "rounding" = "20";
-        "rounding_power" = "1";
-
-        "active_opacity" = "0.96";
-        "inactive_opacity" = "0.7";
-        "dim_inactive" = true;
-        "dim_strength" = "0.35";
-      };
-
-      # Set apps
-      "$mod" = "SUPER";
-      "$terminal" = "kitty";
-      "$fileManager" = "Thunar";
-      "$menu" = "wofi --show drun";
-  
-      # Keybinds
-      bind = 
-        [
-          # Standard program binds
-          "$mod, F, exec, firefox"
-          ", Print, exec, grimblast copy area" 
-          "$mod, Q, exec, $terminal"
-          "$mod, M, exit,"
-          "$mod, C, killactive,"
-          "$mod, E, exec, $fileManager"
-          "$mod, V, togglefloating,"
-          "$mod, D, exec, $menu"
-          "$mod, P, pseudo," # dwindle
-          "$mod, J, togglesplit," # dwindle
-      ];
-    };
-  };
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
