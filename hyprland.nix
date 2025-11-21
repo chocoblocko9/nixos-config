@@ -69,7 +69,7 @@
           "$mod, F, exec, firefox"
           ", Print, exec, grimblast copy area" 
           "$mod, Q, exec, $terminal"
-          "$mod, M, exit,"
+          "$mod, M, exec, uwsm stop"
           "$mod, C, killactive,"
           "$mod, E, exec, $fileManager"
           "$mod, V, togglefloating,"
@@ -114,7 +114,32 @@
           # Scroll through workspaces
           "$mod, mouse_up, workspace, e-1"
           "$mod, mouse_down, workspace, e+1"
+          
+          # Keyboard has a music note button on F1, might as well
+          ",XF86Tools, exec, lollypop"
+
+          # Screenshots
+          "$mod, Print, exec, grim -g '$(slurp -d' - | wl-copy,"
       ];
+
+      # Mouse binds
+      bindm = 
+        [
+          "$mod, mouse:272, movewindow"
+          "$mod, mouse:273, resizewindow"
+      ];  
+
+      bindel = 
+        [
+          ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+          ",XF86AudioLowerVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-"
+          ",XF86AudioMute, exec, wpctl set-mute @DEAFULT_AUDIO_SINK@ toggle"
+          "$mod, F4, exec, wpctl set-mute @DEAFULT_AUDIO_SINK@ toggle"
+          "$mod, F2, exec, ddcutil --sleep-multiplier .1 --bus=8 setvcp 10 - 10" # brightness down
+          "$mod, F3, exec, ddcutil --sleep-multiplier .1 --bus=8 setvcp 10 + 10" # brightness up
+        ];
+      
+     
     };
   };
 }
