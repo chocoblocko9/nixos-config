@@ -1,5 +1,4 @@
 { config, lib, pkgs, ... }:
-
 {
   imports = [
     ./hypr/hyprland.nix
@@ -33,6 +32,8 @@
     unzip
     lollypop
     nwg-look   
+    fastfetch
+    btop
 
     # Themes
     adw-gtk3  
@@ -71,16 +72,6 @@
     };
   };   
 
-  # GTK 
-#  gtk = {
-#    enable = true;
-#    theme = {
-#      name = "Adwaita-dark";
-#      package  = pkgs.adw-gtk3;
-#    };
-#  };
-
-
   # Bash  
   programs.bash = {
     enable = true;
@@ -102,11 +93,6 @@
   # Fix for UWSM/systemd conflict
   wayland.windowManager.hyprland.systemd.enable = false;
 
-
-
-
-
-
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
@@ -115,7 +101,11 @@
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
     ".config/gtk-3.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk3-dark.css; 
+#    ".config/gtk-3.0/gtk.css".force = true;
+    
     ".config/gtk-4.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk4-dark.css; 
+#    ".config/gtk-4.0/gtk.css".force = true;
+    
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''
     #   org.gradle.console=verbose
