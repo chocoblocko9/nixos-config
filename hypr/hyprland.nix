@@ -9,7 +9,7 @@
       # Execute on boot
       "exec-once" = [
         "firefox"
-        "discord"
+        "vesktop"
         # "hyprpaper" don't need this maybe? service should be enabled theoretically
       ];
       
@@ -119,7 +119,7 @@
           ",XF86Tools, exec, lollypop"
 
           # Screenshots
-          "$mod, Print, exec, grim -g '$(slurp -d' - | wl-copy,"
+          ", Print, exec, grim -g \"$(slurp -d)\" - | wl-copy"
       ];
 
       # Mouse binds
