@@ -10,7 +10,7 @@
       "exec-once" = [
         "firefox"
         "discord"
-        "hyprpaper"
+        # "hyprpaper" don't need this maybe? service should be enabled theoretically
       ];
       
       "dwindle" = {

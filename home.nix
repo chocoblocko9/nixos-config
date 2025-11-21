@@ -3,7 +3,8 @@
 {
   imports = [
     ./hypr/hyprland.nix
-    # ./hypr/hyprpaper.nix
+    ./hypr/hyprpaper.nix
+    ./hypr/hyprsunset.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -30,6 +31,7 @@
     pavucontrol
     zip
     unzip
+    hyprpicker
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
