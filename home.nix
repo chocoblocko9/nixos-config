@@ -36,6 +36,7 @@
 
     # Themes
     adw-gtk3  
+    numix-icon-theme
   
     # hyprland screenshots
     grim

@@ -56,19 +56,19 @@
   
   # fstab mounts
   fileSystems."/home/conor/1TB-Hard-Drive" = {
-    device = "/dev/sda2";
+    device = "/dev/sdb2";
     fsType = "ntfs";
     options = [ "users" "nofail" "exec" ];
   };
 
   fileSystems."/home/conor/2TB-Hard-Drive" = {
-    device = "/dev/sdb2";
+    device = "/dev/sda2";
     fsType = "ntfs";
     options = [ "users" "nofail" "exec" ];
   };
  
   # Auto-mount USB (probably Ventoy)
-  fileSystems."/home/conor//USB-Mount" = {
+  fileSystems."/home/conor/USB-Mount" = {
     device = "/dev/sdc1";
     options = [ "users" "nofail" ];
   };
