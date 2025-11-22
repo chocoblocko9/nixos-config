@@ -125,8 +125,15 @@
       bind = $mod SHIFT, 9, movetoworkspace, 9
       bind = $mod SHIFT, 0, movetoworkspace, 10
           
-      bind = $mod, S, togglespecialworkspace, magic
+    #  bind = $mod, S, togglespecialworkspace, magic
       bind = $mod SHIFT, S, movetoworkspace, special:magic
+
+      bind = $mod, S, togglespecialworkspace, magic
+      bind = $mod, S, movetoworkspace, +0
+      bind = $mod, S, togglespecialworkspace, magic
+      bind = $mod, S, movetoworkspace, special:magic
+      bind = $mod, S, togglespecialworkspace, magic
+
    
       bind = $mod, mouse_up, workspace, e-1
       bind = $mod, mouse_down, workspace, e+1

@@ -22,6 +22,7 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
+  nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
@@ -34,7 +35,10 @@
     nwg-look   
     fastfetch
     btop
-
+    rocmPackages.rocm-smi
+    jq
+    xdotool
+    
     # Themes
     adw-gtk3  
     numix-icon-theme
@@ -59,7 +63,29 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
   ];
-  
+
+  # dunst
+  services.dunst = {
+    enable = true;
+    settings = {
+      global = {
+        width = "(0,400)";
+        height = "(0,325)";
+        offset = "(40,20)";
+        origin = "top-right";
+        frame_color = "#073642";
+        background = "#00000010";
+#        background = "#09455480";
+        progress_bar = "true";
+        font = "Monospace 12";
+      };
+      urgency_normal = {};
+
+
+    };
+  };
+
+
   # Git
   programs.git = {
     enable = true;

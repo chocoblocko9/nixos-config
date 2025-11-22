@@ -143,6 +143,9 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+
+  programs.steam.enable = true;
+
  
   # Hyprland 
   programs.hyprland = {
