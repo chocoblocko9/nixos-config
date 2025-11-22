@@ -3,8 +3,13 @@
 {
   programs.kitty = {
     enable = true;
-    themeFile = "Solarized_Dark_-_Patched";
+#    themeFile = "Solarized_Dark_-_Patched";
     enableGitIntegration = true;
+    settings = {
+      background = "#001e26";
+      background_opacity = "0.4";
+      background_blur = 32;
+    };
     font = { 
       size = 12;
       name = "monospace";
@@ -14,12 +19,17 @@
   programs.wofi.enable = true;
   wayland.windowManager.hyprland = {
     enable = true;
+    extraConfig = ''
+      windowrule = float, class:org.pulseaudio.pavucontrol
+      windowrule = size 1200 800, class:org.pulseaudio.pavucontrol 
+      windowrule = opacity 0.96 0.75, class:negative:kitty
+    '';
+
     settings = {
       # Execute on boot
       "exec-once" = [
         "firefox"
         "vesktop"
-        # "hyprpaper" don't need this maybe? service should be enabled theoretically
       ];
       
       "dwindle" = {
@@ -37,6 +47,8 @@
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,18"
       ];
+
+#      "windowrule" = "opacity 0.95 0.6, match:class kitty";
 
       # Look and feel
       "general" = {
@@ -59,7 +71,7 @@
         "rounding" = "20";
         "rounding_power" = "1";
 
-        "active_opacity" = "0.95";
+#        "active_opacity" = "0.95";
         "inactive_opacity" = "0.6";
         "dim_inactive" = true;
         "dim_strength" = "0.35";
@@ -76,7 +88,6 @@
         [
           # Standard program binds
           "$mod, F, exec, firefox"
-          ", Print, exec, grimblast copy area" 
           "$mod, Q, exec, $terminal"
           "$mod, M, exec, uwsm stop"
           "$mod, C, killactive,"
