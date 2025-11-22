@@ -1,7 +1,16 @@
 { config, pkgs, ...}:
 
 {
-  programs.kitty.enable = true;
+  programs.kitty = {
+    enable = true;
+    themeFile = "Solarized_Dark_-_Patched";
+    enableGitIntegration = true;
+    font = { 
+      size = 12;
+      name = "monospace";
+    };
+  };
+
   programs.wofi.enable = true;
   wayland.windowManager.hyprland = {
     enable = true;
