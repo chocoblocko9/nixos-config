@@ -43,7 +43,7 @@
     grim
     slurp
     wl-clipboard
-    
+ 
     hyprpicker
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
@@ -132,6 +132,7 @@
   home.sessionVariables = {
     # EDITOR = "emacs";
     NIXOS_OZONE_WL = "1"; 
+    XCURSOR_SIZE = "24";
   };
 
   # Let Home Manager install and manage itself.
