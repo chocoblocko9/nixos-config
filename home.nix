@@ -24,9 +24,6 @@
   # environment.
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    hello
     firefox
     pavucontrol
     zip
@@ -34,7 +31,7 @@
     lollypop
     nwg-look   
     fastfetch
-    btop
+    rocmPackages.rocminfo
     rocmPackages.rocm-smi
     jq
     xdotool
@@ -63,6 +60,19 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
   ];
+
+  # vscode
+  programs.vscode = {
+    enable = true;
+#    profiles.conor.extensions = [ pkgs.vscode-extensions.jnoortheen.nix-ide ];
+  };
+
+  # btop
+  programs.btop = {
+    enable = true;
+    package = pkgs.btop-rocm;
+
+  };
 
   # dunst
   services.dunst = {
