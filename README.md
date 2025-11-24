@@ -2,7 +2,8 @@
 
 This is my NixOS config! (quite self explanatory)
 
-## To-do list
+## To-do list 
+#### Not in order of priority
 
 - [] Install waybar and make it look not horrible (23/11/25)
 - [x] Watch those 2 videos on flakes and actually use it JUST ONCE (23/11/25)
@@ -18,6 +19,13 @@ This is my NixOS config! (quite self explanatory)
 - [] ~~Package discord-rpmpris myself (scary) (23/11/25)~~
   - [x] Switched to mpd and got rich presence working with that instead! (24/11/25)
 - [] Install a cursor theme to get rid of this Stupid Logo
+- [] Investigate stylix to simplify theming possibly? 
+
+### To-Done list
+- [] ~~Package discord-rpmpris myself (scary) (23/11/25)~~
+  - [x] Switched to mpd and got rich presence working with that instead! (24/11/25)
+- [x] Watch those 2 videos on flakes and actually use it JUST ONCE (23/11/25)
+  - Hey I did it! Added stylix to flake.nix (24/11/25)
 
 
 ## Background
