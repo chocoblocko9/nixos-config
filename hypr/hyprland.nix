@@ -89,7 +89,7 @@
       $mod = SUPER 
       
       bind = $mod, Q, exec, $terminal
-      bind = $mod, C, exec, bash ~/.files/hypr/minimise.sh
+      bind = $mod, C, exec, bash ~/.files/scripts/hypr/minimise.sh
       bind = $mod, F, exec, firefox
       bind = $mod, M, exec, uwsm stop
       bind = $mod, E, exec, $filemanager
