@@ -5,7 +5,7 @@ This is my NixOS config! (quite self explanatory)
 ## To-do list 
 #### Not in order of priority
 
-- [] Install waybar and make it look not horrible (23/11/25)
+- [ ] Install waybar and make it look not horrible (23/11/25)
 - [x] Watch those 2 videos on flakes and actually use it JUST ONCE (23/11/25)
   - Hey I did it! Added stylix to flake.nix (24/11/25)
 - [] Do some more dunst stuff! Discord notifs look really bad rn for example (23/11/25)
@@ -16,10 +16,8 @@ This is my NixOS config! (quite self explanatory)
 - [] Enable randomising wallpapers + get at least 1 more (23/11/25)
 - [] Make hyprsunset work so my poor eyes can survive (23/11/25)
 - [] Install and test Heroic Launcher + Rocket League (23/11/25)
-- [] ~~Package discord-rpmpris myself (scary) (23/11/25)~~
-  - [x] Switched to mpd and got rich presence working with that instead! (24/11/25)
-- [] Install a cursor theme to get rid of this Stupid Logo
-- [] Investigate stylix to simplify theming possibly? 
+- [] Install a cursor theme to get rid of this Stupid Logo (24/11/25)
+- [] Investigate stylix to simplify theming possibly? (24/11/25)
 
 ### To-Done list
 - [] ~~Package discord-rpmpris myself (scary) (23/11/25)~~
