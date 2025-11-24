@@ -55,13 +55,13 @@
   };
   
   # fstab mounts
-  fileSystems."/home/conor/1TB-Hard-Drive" = {
+  fileSystems."/home/conor/2TB-Hard-Drive" = {
     device = "/dev/sdb2";
     fsType = "ntfs";
     options = [ "users" "nofail" "exec" ];
   };
 
-  fileSystems."/home/conor/2TB-Hard-Drive" = {
+  fileSystems."/home/conor/1TB-Hard-Drive" = {
     device = "/dev/sda2";
     fsType = "ntfs";
     options = [ "users" "nofail" "exec" ];
@@ -182,7 +182,7 @@
     enable = true;
     settings = {
       # Uses local setup.sh file because it can't find default with home manager managing bash I think? I feel like that shouldn't be it but this makes it work so hey!
-      setup_cmd = "$HOME/.files/ly/lysetup.sh";
+      setup_cmd = "$HOME/.files/scripts/ly/lysetup.sh";
 
       # Config
       allow_empty_password = false;

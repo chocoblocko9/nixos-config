@@ -35,7 +35,8 @@
     rocmPackages.rocm-smi
     jq
     xdotool
-    
+    heroic
+
     # Themes
     adw-gtk3  
     numix-icon-theme
@@ -61,6 +62,52 @@
     # '')
   ];
 
+  # mpd
+  services.mpd = {
+    enable = true;
+    musicDirectory = "/home/conor/1TB-Hard-Drive/Bandcamp/";
+    # Optional:
+    network.listenAddress = "any"; # if you want to allow non-localhost connections
+    network.startWhenNeeded = true; # systemd feature: only start MPD service upon connection to its socket
+  };
+
+  programs.rmpc = {
+    enable = true;
+    config = ''
+      #![enable(implicit_some)]
+      #![enable(unwrap_newtypes)]
+      #![enable(unwrap_variant_newtypes)]
+      (
+        on_song_change: ["/home/conor/.files/scripts/rmpc/rmpc-notif"],
+        cava: (
+          framerate: 60, // default 60
+          autosens: true, // default true
+          sensitivity: 100, // default 100
+          lower_cutoff_freq: 50, // not passed to cava if not provided
+          higher_cutoff_freq: 10000, // not passed to cava if not provided
+          input: (
+            method: Fifo,
+            source: "/tmp/mpd.fifo",
+            sample_rate: 44100,
+            channels: 2,
+            sample_bits: 16,
+          ),
+          smoothing: (
+            noise_reduction: 77, // default 77
+            monstercat: false, // default false
+            waves: false, // default false
+          ),
+        ),
+      )
+    '';
+  };
+
+  # mpd-discord-rpc
+  services.mpd-discord-rpc = {
+    enable = true;
+    # settings = { };
+  };
+
   # vscode
   programs.vscode = {
     enable = true;
@@ -84,7 +131,7 @@
         offset = "(40,20)";
         origin = "top-right";
         frame_color = "#073642";
-        background = "#00000010";
+        background = "#000000C0";
 #        background = "#09455480";
         progress_bar = "true";
         font = "Monospace 12";
