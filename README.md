@@ -6,21 +6,19 @@ This is my NixOS config! (quite self explanatory)
 #### Not in order of priority
 
 - [ ] Install waybar and make it look not horrible (23/11/25)
-- [x] Watch those 2 videos on flakes and actually use it JUST ONCE (23/11/25)
-  - Hey I did it! Added stylix to flake.nix (24/11/25)
-- [] Do some more dunst stuff! Discord notifs look really bad rn for example (23/11/25)
+- [ ] Do some more dunst stuff! Discord notifs look really bad rn for example (23/11/25)
   - [x] Opacity has been edited to make stuff readable (24/11/25)
-- [] Figure out what ACTUALLY made btop detect my GPU (don't you love when you try 100 billion solutions and none of them work so you try them all at once and then realise that you missed the super basic thing you did 3 hours ago so now it works and you don't know which of your said 100 million fixes did it? I DO THIS SO MUCH) (23/11/25)
-- [] Read ly documentation again, it already looks sick but maybe I can change more stuff (23/11/25)
-- [] Get Docker and WinApps running as an Experiment (23/11/25)
-- [] Enable randomising wallpapers + get at least 1 more (23/11/25)
-- [] Make hyprsunset work so my poor eyes can survive (23/11/25)
-- [] Install and test Heroic Launcher + Rocket League (23/11/25)
-- [] Install a cursor theme to get rid of this Stupid Logo (24/11/25)
-- [] Investigate stylix to simplify theming possibly? (24/11/25)
+- [ ] Figure out what ACTUALLY made btop detect my GPU (don't you love when you try 100 billion solutions and none of them work so you try them all at once and then realise that you missed the super basic thing you did 3 hours ago so now it works and you don't know which of your said 100 million fixes did it? I DO THIS SO MUCH) (23/11/25)
+- [ ] Read ly documentation again, it already looks sick but maybe I can change more stuff (23/11/25)
+- [ ] Get Docker and WinApps running as an Experiment (23/11/25)
+- [ ] Enable randomising wallpapers + get at least 1 more (23/11/25)
+- [ ] Make hyprsunset work so my poor eyes can survive (23/11/25)
+- [ ] Install and test Heroic Launcher + Rocket League (23/11/25)
+- [ ] Install a cursor theme to get rid of this Stupid Logo (24/11/25)
+- [ ] Investigate stylix to simplify theming possibly? (24/11/25)
 
 ### To-Done list
-- [] ~~Package discord-rpmpris myself (scary) (23/11/25)~~
+- [ ] ~~Package discord-rpmpris myself (scary) (23/11/25)~~
   - [x] Switched to mpd and got rich presence working with that instead! (24/11/25)
 - [x] Watch those 2 videos on flakes and actually use it JUST ONCE (23/11/25)
   - Hey I did it! Added stylix to flake.nix (24/11/25)
