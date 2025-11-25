@@ -71,9 +71,14 @@
     network.startWhenNeeded = true; # systemd feature: only start MPD service upon connection to its socket
     extraConfig = ''
       audio_output {
-        type   "fifo"
-        name   "my_fifo"
-        path   "/tmp/mpd.fifo"
+        type "pipewire"
+        name "PipeWire Output"
+      }
+      
+      audio_output {
+        type "fifo"
+        name "my_fifo"
+        path "/tmp/mpd.fifo"
         format "44100:16:2"
       }
     '';
@@ -88,6 +93,30 @@
       #![enable(unwrap_variant_newtypes)]
       (
         on_song_change: ["/home/conor/.files/scripts/rmpc/rmpc-notif"],
+        tabs: [
+        ( name: "Queue",  pane: Split
+          ( direction: Horizontal,  panes: 
+            [
+              ( size: "40%", pane: Pane(AlbumArt)),
+              ( size: "60%", pane: Split 
+                ( direction: Vertical,  panes: 
+                  [
+                    ( size: "50%", pane: Pane(Queue)),
+                    ( size: "50%", pane: Pane(Cava)),
+                  ],
+                ),
+              ), 
+            ],
+          ),
+        ),
+        ( name: "Directories",  pane: Pane(Directories),  ),
+        ( name: "Artists",  pane: Pane(Artists),  ),
+        ( name: "Album Artists",  pane: Pane(AlbumArtists), ),
+        ( name: "Albums", pane: Pane(Albums), ),
+        ( name: "Playlists",  pane: Pane(Playlists),  ),
+        ( name: "Search", pane: Pane(Search), ),
+        ],
+
         cava: (
           framerate: 60, // default 60
           autosens: true, // default true
@@ -104,12 +133,12 @@
           smoothing: (
             noise_reduction: 77, // default 77
             monstercat: false, // default false
-            waves: false, // default false
+            waves: true, // default false
           ),  
         ),
       )
     '';
-  };
+  }; 
 
   # mpd-discord-rpc
   services.mpd-discord-rpc = {
@@ -193,10 +222,7 @@
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
     ".config/gtk-3.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk3-dark.css; 
-#    ".config/gtk-3.0/gtk.css".force = true;
-    
     ".config/gtk-4.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk4-dark.css; 
-#    ".config/gtk-4.0/gtk.css".force = true;
     
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''

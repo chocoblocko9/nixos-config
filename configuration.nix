@@ -73,14 +73,13 @@
     options = [ "users" "nofail" ];
   };
 
-  # Use latest kernel.
+  # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
   
   # Enable i2c protocol for use with ddcutil (brightness changing)
   hardware.i2c.enable = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.hostName = "nixos";
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -94,7 +93,6 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_IE.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_IE.UTF-8";
     LC_IDENTIFICATION = "en_IE.UTF-8";
@@ -130,10 +128,11 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim
     wget
     git
     ddcutil
+    cava # HAS to be here for the rmpc visualiser to work, the home-manager module does not work for unknown reasons
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -155,8 +154,7 @@
   };  
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1"; 
-  
- 
+
   # Audio & Bluetooth
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
