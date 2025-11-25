@@ -143,7 +143,18 @@
   # mpd-discord-rpc
   services.mpd-discord-rpc = {
     enable = true;
-    # settings = { };
+    settings = { 
+      format = {
+        details = "$title";
+        state = "$album by $artist";
+        timestamp = "both";
+        large_image = "notes";
+        small_image = "";
+        large_text = "";
+        small_text = "";
+        display_type = "details";
+      };
+    };
   };
 
   # vscode
