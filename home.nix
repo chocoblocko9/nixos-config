@@ -8,20 +8,13 @@
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "conor";
-  home.homeDirectory = "/home/conor";
+  home = {
+    username = "conor";
+    homeDirectory = "/home/conor";
+    stateVersion = "25.05";
+  };
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "25.05"; # Please read the comment before changing.
-
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
+  # The home.packages option allows you to install Nix packages into your environment.
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     firefox
@@ -33,15 +26,14 @@
     rocmPackages.rocminfo
     rocmPackages.rocm-smi
     jq
-    xdotool
     heroic
-    hyprpicker
 
     # Themes
     adw-gtk3  
     numix-icon-theme
   
-    # hyprland screenshots
+    # hyprland
+    hyprpicker
     grim
     slurp
     wl-clipboard
@@ -167,7 +159,6 @@
   programs.btop = {
     enable = true;
     package = pkgs.btop-rocm;
-
   };
 
   # dunst
