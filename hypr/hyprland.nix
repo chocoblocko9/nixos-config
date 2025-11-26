@@ -37,7 +37,7 @@
       ### EXEC ON BOOT ###
      
       exec-once = firefox & vesktop
-      exec-once = bash ~/.files/scripts/hypr/randomwallpaper.sh
+      exec-once = "bash ~/.files/scripts/hypr/randomwallpaper.sh"
  
       ### LAYOUT ###
 

@@ -27,10 +27,6 @@
 	      search --no-floppy --fs-uuid --set=root 54A5-22B3
 	      chainloader /EFI/Microsoft/Boot/bootmgfw.efi
       }
-      menuentry "System shutdown" {
-        echo "System shutting down..."
-        halt
-      }
       menuentry 'Arch Linux (on 2TB Hard Drive)' --class arch --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-simple-ec21-0eb4f241-ec21-4840-8321-4c66a2f2cd89' {
 	      ismod part_msdos
 	      ismod fat
@@ -42,6 +38,13 @@
 	      fi
 	      linux /vmlinuz-linux root=UUID=0eb4f241-ec21-4840-8321-4c66a2f2cd89 rw loglevel=3 quiet
 	      initrd /initramfs-linux.img
+      }
+      menuentry "Shutdown" {
+        echo "System shutting down..."
+        halt
+      }
+      menuentry 'Reboot to UEFI' --id 'uefi-firmware' {
+        fwsetup
       }
       '';
     };
@@ -136,7 +139,9 @@
     vim
     wget
     git
-    ddcutil
+    ddcutil #
+    vlc
+    streamlink
     cava # HAS to be here for the rmpc visualiser to work, the home-manager module does not work for unknown reasons
   ];
 
