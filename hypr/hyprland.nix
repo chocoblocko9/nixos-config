@@ -140,7 +140,7 @@
       bind = $mod, mouse_down, workspace, e+1
           
       # Keyboard has a music note button on F1, might as well
-      bind = ,XF86Tools, exec, lollypop
+      bind = ,XF86Tools, exec, kitty rmpc
 
       # Screenshots
       bind = , Print, exec, grim -g "$(slurp -d)" - | wl-copy

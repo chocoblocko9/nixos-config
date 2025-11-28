@@ -4,6 +4,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
     home-manager = {
       url = "github:nix-community/home-manager/master"; 
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,7 +15,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, stylix, ... }:
+  outputs = { self, nixpkgs, home-manager, stylix, nix-flatpak, ... }:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -26,6 +27,7 @@
         modules = [ 
           ./configuration.nix 
           stylix.nixosModules.stylix
+          nix-flatpak.nixosModules.nix-flatpak
         ];
       };
     };
