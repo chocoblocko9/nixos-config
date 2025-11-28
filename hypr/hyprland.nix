@@ -29,6 +29,7 @@
       ### WINDOW RULES ###
       windowrule = float, class:org.pulseaudio.pavucontrol
       windowrule = size 1200 800, class:org.pulseaudio.pavucontrol 
+
       windowrule = opacity 0.96 0.75, class:negative:kitty
 
       windowrule = float, class:nwg-look
@@ -82,8 +83,6 @@
       animation {
         bezier = linear,0,0,1,1
         animation = borderangle, 1, 100, linear, loop
-
-
       }
 
       ### BINDS ###
@@ -140,7 +139,8 @@
       bind = $mod, mouse_down, workspace, e+1
           
       # Top row normal binds
-      bind = ,XF86Tools, exec, kitty rmpc # I mean it's literally a music note
+      bind = ,XF86Tools, exec, [float; size 1200 800] kitty rmpc # I mean it's literally a music note
+
       bindl = , XF86AudioNext, exec, playerctl next
       bindl = , XF86AudioPause, exec, playerctl play-pause
       bindl = , XF86AudioPlay, exec, playerctl play-pause
