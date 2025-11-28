@@ -139,8 +139,13 @@
       bind = $mod, mouse_up, workspace, e-1
       bind = $mod, mouse_down, workspace, e+1
           
-      # Keyboard has a music note button on F1, might as well
-      bind = ,XF86Tools, exec, kitty rmpc
+      # Top row normal binds
+      bind = ,XF86Tools, exec, kitty rmpc # I mean it's literally a music note
+      bindl = , XF86AudioNext, exec, playerctl next
+      bindl = , XF86AudioPause, exec, playerctl play-pause
+      bindl = , XF86AudioPlay, exec, playerctl play-pause
+      bindl = , XF86AudioPrev, exec, playerctl previous
+      bind = ,XF86AudioMute, exec, wpctl set-mute @DEAFULT_AUDIO_SINK@ toggle
 
       # Screenshots
       bind = , Print, exec, grim -g "$(slurp -d)" - | wl-copy
@@ -152,8 +157,6 @@
       # Press and hold binds
       bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
       bindel = ,XF86AudioLowerVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-
-      bindel = ,XF86AudioMute, exec, wpctl set-mute @DEAFULT_AUDIO_SINK@ toggle
-      bindel = $mod, F4, exec, wpctl set-mute @DEAFULT_AUDIO_SINK@ toggle
       bindel = $mod, F2, exec, ddcutil --sleep-multiplier .1 --bus=8 setvcp 10 - 10 # brightness down
       bindel = $mod, F3, exec, ddcutil --sleep-multiplier .1 --bus=8 setvcp 10 + 10 # brightness up            
     '';

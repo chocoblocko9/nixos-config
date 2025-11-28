@@ -54,6 +54,8 @@
     # '')
   ];
 
+  services.playerctld.enable = true;
+
   # mpd
   services.mpd = {
     enable = true;
@@ -225,7 +227,15 @@
     # ".screenrc".source = dotfiles/screenrc;
     ".config/gtk-3.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk3-dark.css; 
     ".config/gtk-4.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk4-dark.css; 
-    
+    ".local/share/applications/Sober.desktop".text = ''
+      [Desktop Entry]
+      Name=Sober
+      Comment=Play Roblox on flatpak
+      Exec=flatpak run org.vinegarhq.Sober
+      Terminal=false
+      Type=Application
+      Categories=Game;
+    '';
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''
     #   org.gradle.console=verbose
