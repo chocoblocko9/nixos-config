@@ -15,7 +15,6 @@ This is my NixOS config! (quite self explanatory)
 - [ ] Install a cursor theme to get rid of this Stupid Logo (24/11/25)
 - [ ] Investigate stylix to simplify theming possibly? (24/11/25)
 - [ ] Make profile for my laptop (BIG maybe, need to use Microsoft apps and stuff on it so if it causes big problems then its a no) (24/11/25)
-- [ ] Add hyprland to flake and pin its version (good excuse to use flake cus they're changing window rules) (25/11/25)
 - [ ] Fix pop-up opacity on firefox theme (25/11/25)
 
 ### To-Done list
@@ -27,6 +26,8 @@ This is my NixOS config! (quite self explanatory)
   - Nah, it's fine (24/11/25)
 - [x] Enable randomising wallpapers + get at least 1 more (23/11/25)
   - I'm very lazy that was not hard at all, up to like 12 now (29/11/25)
+- [X] Add hyprland to flake and pin its version (good excuse to use flake cus they're changing window rules) (25/11/25)
+  - Alright that should theoretically be done, I guess I'll find out when hyprland updates to 0.53 (29/11/25)
 
 ## Background
 
