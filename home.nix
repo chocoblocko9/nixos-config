@@ -11,7 +11,7 @@
   home = {
     username = "conor";
     homeDirectory = "/home/conor";
-    stateVersion = "25.05";
+    stateVersion = "25.11";
   };
 
   # The home.packages option allows you to install Nix packages into your environment.
