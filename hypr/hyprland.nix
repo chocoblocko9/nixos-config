@@ -1,22 +1,25 @@
 { config, pkgs, ...}:
 
 {
-  programs.kitty = {
-    enable = true;
-#    themeFile = "Solarized_Dark_-_Patched";
-    enableGitIntegration = true;
-    settings = {
-      background = "#001e26";
-      background_opacity = "0.4";
-      background_blur = 32;
-    };
-    font = { 
-      size = 12;
-      name = "monospace";
+
+  programs = {
+    wofi.enable = true;
+    kitty = {
+      enable = true;
+#      themeFile = "Solarized_Dark_-_Patched";
+      enableGitIntegration = true;
+      settings = {
+        background = "#001e26";
+        background_opacity = "0.4";
+        background_blur = 32;
+      };
+      font = { 
+        size = 12;
+        name = "monospace";
+      };
     };
   };
 
-  programs.wofi.enable = true;
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''
@@ -35,11 +38,11 @@
       windowrule = float, class:nwg-look
       windowrule = size 1200 800, class:nwg-look
 
-      ### EXEC ON BOOT ###
+      ### EXEC ON BOOT/RELOAD ###
      
       exec-once = firefox & vesktop
-      exec-once = "bash ~/.files/scripts/hypr/randomwallpaper.sh"
- 
+      exec = bash /home/conor/.files/scripts/hypr/randomwallpaper.sh
+
       ### LAYOUT ###
 
       dwindle {

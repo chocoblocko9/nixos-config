@@ -10,7 +10,6 @@ This is my NixOS config! (quite self explanatory)
   - [x] Opacity has been edited to make stuff readable (24/11/25)
 - [ ] Figure out what ACTUALLY made btop detect my GPU (don't you love when you try 100 billion solutions and none of them work so you try them all at once and then realise that you missed the super basic thing you did 3 hours ago so now it works and you don't know which of your said 100 million fixes did it? I DO THIS SO MUCH) (23/11/25)
 - [ ] Get Docker and WinApps running as an Experiment (23/11/25)
-- [ ] Enable randomising wallpapers + get at least 1 more (23/11/25)
 - [ ] Make hyprsunset work so my poor eyes can survive (23/11/25)
 - [ ] Install and test Heroic Launcher + Rocket League (23/11/25)
 - [ ] Install a cursor theme to get rid of this Stupid Logo (24/11/25)
@@ -26,7 +25,8 @@ This is my NixOS config! (quite self explanatory)
   - Hey I did it! Added stylix to flake.nix (24/11/25)
 - [x] Read ly documentation again, it already looks sick but maybe I can change more stuff (23/11/25)
   - Nah, it's fine (24/11/25)
-
+- [x] Enable randomising wallpapers + get at least 1 more (23/11/25)
+  - I'm very lazy that was not hard at all, up to like 12 now (29/11/25)
 
 ## Background
 
