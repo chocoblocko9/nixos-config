@@ -204,6 +204,7 @@
       rebuild = "sudo nixos-rebuild switch --flake .";
       ll = "ls -la"; 
       icat = "kitten icat";
+      ets2 = "streamlink -p vlc -a \"-vvv - --sout \#transcode{vcodec=none,acodec=mp3,ab=320,scodec=none}:standard{access=http,mux=raw,dst=127.0.0.1:8080}\" --twitch-disable-hosting --twitch-disable-ads https://www.youtube.com/watch?v=edqlOxtnvL0 144p";
     };
   };
   
