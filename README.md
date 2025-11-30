@@ -16,6 +16,16 @@ This is my NixOS config! (quite self explanatory)
 - [ ] Investigate stylix to simplify theming possibly? (24/11/25)
 - [ ] Make profile for my laptop (BIG maybe, need to use Microsoft apps and stuff on it so if it causes big problems then its a no) (24/11/25)
 - [ ] Fix pop-up opacity on firefox theme (25/11/25)
+- [ ] Add wayy more animations to hyprland (30/11/25)
+- [ ] Install hyprplugins
+- [ ] Expand hyprland functionality:
+  - [ ] hyprpolkitagent
+  - [ ] Any one of the 50 clipboard managers
+  - [ ] Fonts (Nerd Font especially)
+  - [ ] Make screensharing work
+  ##### Optional
+  - [ ] hyprland-qt-support, hyprsysteminfo, hyprqt6engine
+- [ ] Install some GUI apps for use with thunar, (image viewer, archive manager etc)
 
 ### To-Done list
 - [ ] ~~Package discord-rpmpris myself (scary) (23/11/25)~~

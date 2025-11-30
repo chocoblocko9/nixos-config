@@ -6,7 +6,6 @@
     wofi.enable = true;
     kitty = {
       enable = true;
-#      themeFile = "Solarized_Dark_-_Patched";
       enableGitIntegration = true;
       settings = {
         background = "#001e26";
@@ -20,10 +19,8 @@
     };
   };
 
-  wayland.windowManager.hyprland = {
-#    enable = true;
-    extraConfig = ''
-
+  # Hyprland Settings (sorry Nix I love you, you are nice to write but trying to configure Hyprland in it was making me lose it)
+  wayland.windowManager.hyprland.extraConfig = ''
       ### PROGRAMS ###
       $terminal = kitty
       $fileManager = Thunar
@@ -128,7 +125,7 @@
       bind = $mod SHIFT, 9, movetoworkspace, 9
       bind = $mod SHIFT, 0, movetoworkspace, 10
           
-    #  bind = $mod, S, togglespecialworkspace, magic
+      # bind = $mod, S, togglespecialworkspace, magic
       bind = $mod SHIFT, S, movetoworkspace, special:magic
 
       bind = $mod, S, togglespecialworkspace, magic
@@ -163,5 +160,4 @@
       bindel = $mod, F2, exec, ddcutil --sleep-multiplier .1 --bus=8 setvcp 10 - 10 # brightness down
       bindel = $mod, F3, exec, ddcutil --sleep-multiplier .1 --bus=8 setvcp 10 + 10 # brightness up            
     '';
-  };
 }
