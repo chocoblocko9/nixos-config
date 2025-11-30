@@ -19,7 +19,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, stylix, nix-flatpak, ... }:
+  outputs = { self, nixpkgs, home-manager, stylix, nix-flatpak, hyprland, ... } @ inputs:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -28,6 +28,7 @@
     nixosConfigurations = {
       nixos = lib.nixosSystem {
         inherit system;
+        specialArgs = { inherit inputs; };
         modules = [ 
           ./configuration.nix 
           stylix.nixosModules.stylix
@@ -38,7 +39,17 @@
     homeConfigurations = {
       conor = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [ ./home.nix ];
+        modules = [ 
+          {
+            wayland.windowManager.hyprland = {
+              enable = true;
+              # set the flake package
+              package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+              portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+            };
+          }
+          ./home.nix 
+        ];
       };
     };
   };

@@ -54,30 +54,29 @@
     # '')
   ];
 
-  services.playerctld.enable = true;
-
   # mpd
-  services.mpd = {
-    enable = true;
-    musicDirectory = "/home/conor/1TB-Hard-Drive/Bandcamp/";
-    # Optional:
-    network.listenAddress = "any"; # if you want to allow non-localhost connections
-    network.startWhenNeeded = true; # systemd feature: only start MPD service upon connection to its socket
-    extraConfig = ''
-      audio_output {
-        type "pipewire"
-        name "PipeWire Output"
-      }
+  services = {
+    playerctld.enable = true;
+    mpd = {
+      enable = true;
+      musicDirectory = "/home/conor/1TB-Hard-Drive/Bandcamp/";
+      network.listenAddress = "any"; # if you want to allow non-localhost connections
+      network.startWhenNeeded = true; # systemd feature: only start MPD service upon connection to its socket
+      extraConfig = ''
+        audio_output {
+          type "pipewire"
+          name "PipeWire Output"
+        }
       
-      audio_output {
-        type "fifo"
-        name "my_fifo"
-        path "/tmp/mpd.fifo"
-        format "44100:16:2"
-      }
-    '';
+        audio_output {
+          type "fifo"
+          name "my_fifo"
+          path "/tmp/mpd.fifo"
+          format "44100:16:2"
+        }
+      '';
+    };
   };
-
   # rmpc
   programs.rmpc = {
     enable = true;
