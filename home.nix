@@ -27,6 +27,7 @@
     rocmPackages.rocm-smi
     jq
     heroic
+    lsfg-vk
 
     # Themes
     adw-gtk3  
