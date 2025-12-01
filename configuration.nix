@@ -118,6 +118,7 @@
 
   # 
   services = {
+    vnstat.enable = true;
     lact.enable = true;
     flatpak = {
       enable = true;

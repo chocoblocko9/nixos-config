@@ -28,6 +28,7 @@
     jq
     heroic
     lsfg-vk
+    cemu
 
     # Themes
     adw-gtk3  
