@@ -166,6 +166,7 @@
     cava # HAS to be here for the rmpc visualiser to work, the home-manager module does not work for unknown reasons
     wev
     ncdu
+    bluetuith
   ];
 
   programs = {

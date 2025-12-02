@@ -21,14 +21,13 @@
     pavucontrol
     zip
     unzip
-    nwg-look   
+    nwg-look # GTK settings control   
     fastfetch
     rocmPackages.rocminfo
     rocmPackages.rocm-smi
-    jq
-    heroic
-    lsfg-vk
-    cemu
+    jq # hyprland minimise script needs this or smth
+    heroic # Good games launcher
+    cemu # Wii U my beloved
 
     # Themes
     adw-gtk3  
@@ -202,14 +201,18 @@
   programs.bash = {
     enable = true;
     shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --flake .";
+      rebuild = "sudo nixos-rebuild switch --flake ."; # Command is way too long to be typing out constantly
       ll = "ls -la"; 
       icat = "kitten icat";
-      ets2 = "streamlink -p vlc -a \"-vvv - --sout \#transcode{vcodec=none,acodec=mp3,ab=320,scodec=none}:standard{access=http,mux=raw,dst=127.0.0.1:8080}\" --twitch-disable-hosting --twitch-disable-ads https://www.youtube.com/watch?v=edqlOxtnvL0 144p";
+      ets2 = "streamlink -p vlc -a \"-vvv - --sout \#transcode{vcodec=none,acodec=mp3,ab=320,scodec=none}:standard{access=http,mux=raw,dst=127.0.0.1:8080}\" --twitch-disable-hosting --twitch-disable-ads https://www.youtube.com/watch?v=edqlOxtnvL0 144p"; 
+      # basically this starts a VLC HTTP stream at localhost:8080 of the mau5trap
+      # Airplane Mode 24/7 stream and Euro Truck Simulator can then download that
+      # and play it as an in-game radio because it functions like any over the 
+      # internet radio. Cool? Cool.
     };
   };
   
-  # Vesktop + Vencord
+  # Vesktop cus discord on wayland is goofy I think
   programs.vesktop = {
     enable = true;
     vencord = {
@@ -229,7 +232,7 @@
     # ".screenrc".source = dotfiles/screenrc;
     ".config/gtk-3.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk3-dark.css; 
     ".config/gtk-4.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk4-dark.css; 
-    ".local/share/applications/Sober.desktop".text = ''
+    ".local/share/applications/Sober.desktop".text = '' # Let me run Sober from wofi
       [Desktop Entry]
       Name=Sober
       Comment=Play Roblox on flatpak
@@ -238,29 +241,8 @@
       Type=Application
       Categories=Game;
     '';
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
   };
 
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. These will be explicitly sourced when using a
-  # shell provided by Home Manager. If you don't want to manage your shell
-  # through Home Manager then you have to manually source 'hm-session-vars.sh'
-  # located at either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/conor/etc/profile.d/hm-session-vars.sh
-  #
   home.sessionVariables = {
     # EDITOR = "emacs";
     NIXOS_OZONE_WL = "1"; 
