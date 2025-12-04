@@ -28,7 +28,10 @@
     jq # hyprland minimise script needs this or smth
     heroic # Good games launcher
     cemu # Wii U my beloved
-
+    mpd-discord-rpc # Shows currently playing music on MPD on discord rich presence, home-manager service was being weird unforunately 
+    prismlauncher
+    python315
+   
     # Themes
     adw-gtk3  
     numix-icon-theme
@@ -81,75 +84,58 @@
   # rmpc
   programs.rmpc = {
     enable = true;
-    config = ''
-      #![enable(implicit_some)]
-      #![enable(unwrap_newtypes)]
-      #![enable(unwrap_variant_newtypes)]
-      (
-        on_song_change: ["/home/conor/.files/scripts/rmpc/rmpc-notif"],
-        tabs: [
-        ( name: "Queue",  pane: Split
-          ( direction: Horizontal,  panes: 
-            [
-              ( size: "40%", pane: Pane(AlbumArt)),
-              ( size: "60%", pane: Split 
-                ( direction: Vertical,  panes: 
-                  [
-                    ( size: "50%", pane: Pane(Queue)),
-                    ( size: "50%", pane: Pane(Cava)),
-                  ],
-                ),
-              ), 
-            ],
-          ),
-        ),
-        ( name: "Directories",  pane: Pane(Directories),  ),
-        ( name: "Artists",  pane: Pane(Artists),  ),
-        ( name: "Album Artists",  pane: Pane(AlbumArtists), ),
-        ( name: "Albums", pane: Pane(Albums), ),
-        ( name: "Playlists",  pane: Pane(Playlists),  ),
-        ( name: "Search", pane: Pane(Search), ),
-        ],
-
-        cava: (
-          framerate: 60, // default 60
-          autosens: true, // default true
-          sensitivity: 100, // default 100
-          lower_cutoff_freq: 50, // not passed to cava if not provided
-          higher_cutoff_freq: 10000, // not passed to cava if not provided
-          input: (
-            method: Fifo,
-            source: "/tmp/mpd.fifo",
-            sample_rate: 44100,
-            channels: 2,
-            sample_bits: 16,
-          ),
-          smoothing: (
-            noise_reduction: 77, // default 77
-            monstercat: false, // default false
-            waves: true, // default false
-          ),  
-        ),
-      )
-    '';
+#    config = ''
+#      #![enable(implicit_some)]
+#      #![enable(unwrap_newtypes)]
+#      #![enable(unwrap_variant_newtypes)]
+#      (
+#        on_song_change: ["/home/conor/.files/scripts/rmpc/rmpc-notif"],
+#        tabs: [
+#        ( name: "Queue",  pane: Split
+#          ( direction: Horizontal,  panes: 
+#            [
+#              ( size: "40%", pane: Pane(AlbumArt)),
+#              ( size: "60%", pane: Split 
+#                ( direction: Vertical,  panes: 
+#                  [
+#                    ( size: "50%", pane: Pane(Queue)),
+#                    ( size: "50%", pane: Pane(Cava)),
+#                  ],
+#                ),
+#              ), 
+#            ],
+#          ),
+#        ),
+#        ( name: "Directories",  pane: Pane(Directories),  ),
+#        ( name: "Artists",  pane: Pane(Artists),  ),
+#        ( name: "Album Artists",  pane: Pane(AlbumArtists), ),
+#        ( name: "Albums", pane: Pane(Albums), ),
+#        ( name: "Playlists",  pane: Pane(Playlists),  ),
+#        ( name: "Search", pane: Pane(Search), ),
+#        ],
+#
+#        cava: (
+#          framerate: 60, // default 60
+#          autosens: true, // default true
+#          sensitivity: 100, // default 100
+#          lower_cutoff_freq: 50, // not passed to cava if not provided
+#          higher_cutoff_freq: 10000, // not passed to cava if not provided
+#          input: (
+#            method: Fifo,
+#            source: "/tmp/mpd.fifo",
+#            sample_rate: 44100,
+#            channels: 2,
+#            sample_bits: 16,
+#          ),
+#          smoothing: (
+#            noise_reduction: 77, // default 77
+#            monstercat: false, // default false
+#            waves: true, // default false
+#          ),  
+#        ),
+#      )
+#    '';
   }; 
-
-  # mpd-discord-rpc
-  services.mpd-discord-rpc = {
-    enable = true;
-    settings = { 
-      format = {
-        details = "$title";
-        state = "$album by $artist";
-        timestamp = "both";
-        large_image = "notes";
-        small_image = "";
-        large_text = "";
-        small_text = "";
-        display_type = "details";
-      };
-    };
-  };
 
   # vscode
   programs.vscode = {
@@ -216,6 +202,9 @@
   programs.vesktop = {
     enable = true;
     vencord = {
+#      themes = {
+#	"/home/conor/.files/themes/Vesktop/CustomMaterialDiscord.theme.css"
+#      };
       useSystem = true;
     };
   };
@@ -232,6 +221,7 @@
     # ".screenrc".source = dotfiles/screenrc;
     ".config/gtk-3.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk3-dark.css; 
     ".config/gtk-4.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk4-dark.css; 
+    ".config/vesktop/themes/CustomMaterialDiscord.theme.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/Vesktop/CustomMaterialDiscord.theme.css;
     ".local/share/applications/Sober.desktop".text = '' # Let me run Sober from wofi
       [Desktop Entry]
       Name=Sober
@@ -240,6 +230,24 @@
       Terminal=false
       Type=Application
       Categories=Game;
+    '';
+    ".config/discord-rpc/config.toml".text = ''
+        [format]
+        details = "$title"
+        state = "$album by $artist"
+        timestamp = "both"
+        large_image = "notes"
+        small_image = ""
+        large_text = ""
+        small_text = ""
+        display_type = "details"
+    '';
+    ".nanorc".text = ''
+      set softwrap
+      set tabsize 2
+      set zap
+      set mouse
+      set autoindent
     '';
   };
 
