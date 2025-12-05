@@ -23,8 +23,6 @@
     unzip
     nwg-look # GTK settings control   
     fastfetch
-    rocmPackages.rocminfo
-    rocmPackages.rocm-smi
     jq # hyprland minimise script needs this or smth
     heroic # Good games launcher
     cemu # Wii U my beloved

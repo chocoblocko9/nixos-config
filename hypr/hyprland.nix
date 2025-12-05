@@ -38,6 +38,7 @@
       ### EXEC ON BOOT/RELOAD ###
      
       exec-once = firefox & vesktop
+      exec-once = mpd-discord-rpc 
       exec = bash /home/conor/.files/scripts/hypr/randomwallpaper.sh
 
       ### LAYOUT ###
