@@ -80,8 +80,19 @@
         }
       '';
     };
+    mpdscribble = { # Lastfm scrobbling with MPD
+			enable = true;
+			endpoints = {
+				conor = {
+					url = "https://post.audioscrobbler.com/";
+					username = "Choco988";
+					passwordFile = "/home/conor/Documents/lastfmpass"; # path to plaintext last.fm password (it's not that important alr)
+				};
+			};
+    };
   };
-  # rmpc
+  
+  # rmpc (MASSIVE work in progress)
   programs.rmpc = {
     enable = true;
 #    config = ''
