@@ -22,7 +22,6 @@ This is my NixOS config! (quite self explanatory)
   - [ ] Make screensharing work
   ##### Optional
   - [ ] hyprland-qt-support, hyprsysteminfo, hyprqt6engine
-- [ ] Install some GUI apps for use with thunar, (image viewer, archive manager etc)
 
 ### To-Done list
 - [ ] ~~Package discord-rpmpris myself (scary) (23/11/25)~~
@@ -43,6 +42,8 @@ This is my NixOS config! (quite self explanatory)
     - Works for me! (05/12/25)
 - [x] Figure out what ACTUALLY made btop detect my GPU (don't you love when you try 100 billion solutions and none of them work so you try them all at once and then realise that you missed the super basic thing you did 3 hours ago so now it works and you don't know which of your said 100 million fixes did it? I DO THIS SO MUCH) (23/11/25)
 	- Well that was easy. (05/12/25)
+- [x] Install some GUI apps for use with thunar, (image viewer, archive manager etc)
+	- Picked feh for images and xarchiver for archives, they look good!
 
 ## Background
 

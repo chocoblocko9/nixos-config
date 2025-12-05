@@ -18,17 +18,22 @@
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     firefox
-    pavucontrol
-    zip
-    unzip
-    nwg-look # GTK settings control   
-    fastfetch
-    jq # hyprland minimise script needs this or smth
     heroic # Good games launcher
     cemu # Wii U my beloved
-    mpd-discord-rpc # Shows currently playing music on MPD on discord rich presence, home-manager service was being weird unforunately 
     prismlauncher
     python315
+    nicotine-plus # Soulseek
+
+    # Tools
+    pavucontrol
+    fastfetch
+    zip
+    unzip
+    nwg-look # GTK themes manager
+    jq # hyprland minimise script needs this or smth
+    mpd-discord-rpc # Shows currently playing music on MPD on discord rich presence, home-manager service was being weird unforunately
+    feh # GUI image viewer
+    xarchiver # GUI archive manager
    
     # Themes
     adw-gtk3  
