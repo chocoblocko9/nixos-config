@@ -14,10 +14,6 @@
     stateVersion = "25.11";
   };
 
-#	stylix.autoEnable = true;
-#	stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-
-
   # The home.packages option allows you to install Nix packages into your environment.
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
