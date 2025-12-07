@@ -142,10 +142,11 @@
       # Top row normal binds
       bind = ,XF86Tools, exec, [float; size 1200 800] kitty rmpc # I mean it's literally a music note
 
-      bindl = , XF86AudioNext, exec, playerctl next
-      bindl = , XF86AudioPause, exec, playerctl play-pause
-      bindl = , XF86AudioPlay, exec, playerctl play-pause
-      bindl = , XF86AudioPrev, exec, playerctl previous
+			# mpd specific binds, might still change these but as it stands I use mpd a lot more than playerctl stuff
+      bindl = , XF86AudioNext, exec, rmpc next
+      bindl = , XF86AudioPlay, exec, rmpc togglepause
+      bindl = , XF86AudioPrev, exec, rmpc prev
+      
       bind = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
       # Screenshots
