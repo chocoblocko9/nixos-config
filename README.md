@@ -18,8 +18,6 @@ This is my NixOS config! (quite self explanatory)
 - [ ] Expand hyprland functionality:
   - [ ] hyprpolkitagent
   - [ ] Any one of the 50 clipboard managers
-  - [x] Fonts (Nerd Font especially)
-  - [ ] Make screensharing work
   ##### Optional
   - [ ] hyprland-qt-support, hyprsysteminfo, hyprqt6engine
 
@@ -37,6 +35,8 @@ This is my NixOS config! (quite self explanatory)
 - [ ] Expand hyprland functionality:
   - [x] Fonts (Nerd Font especially)
   	- Installed some random fonts and stuff (05/12/25)
+  - [x] Make screensharing work
+    - It seems to work?? (7/12/25) 
 - [x] Do some more dunst stuff! Discord notifs look really bad rn for example (23/11/25)
   - [x] Opacity has been edited to make stuff readable (24/11/25)
     - Works for me! (05/12/25)
