@@ -13,10 +13,7 @@
       url = "github:nix-community/home-manager/master"; 
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    stylix. url = "github:nix-community/stylix";
   };
 
   outputs = { self, nixpkgs, home-manager, stylix, nix-flatpak, hyprland, ... } @ inputs:
@@ -46,6 +43,9 @@
               # set the flake package
               package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
               portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+            };
+            stylix = {
+							enable = true;
             };
           }
           ./home.nix 
