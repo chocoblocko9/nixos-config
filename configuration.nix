@@ -15,7 +15,8 @@
 
   # Bootloader
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+#  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_17; # Gonna use 6.17 until v4l2loopback actually builds on 6.18
   boot.supportedFilesystems = ["ntfs"];
   boot.loader = {
     systemd-boot.enable = false;
@@ -48,6 +49,7 @@
         halt
       }
       menuentry 'Reboot to UEFI' --id 'uefi-firmware' {
+        echo "Entering UEFI Settings..."
         fwsetup
       }
       '';
@@ -178,6 +180,10 @@
   ];
 
   programs = {
+  	obs-studio = {
+			enable = true;
+	  	enableVirtualCamera = true;
+  	};
     steam.enable = true;
     thunar = {
       enable = true;
@@ -196,7 +202,10 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1"; 
 
   # Audio
-  security.rtkit.enable = true;
+  security = {
+  	rtkit.enable = true;
+  	polkit.enable = true;
+  };
   services = {
     pulseaudio.enable = false;
     pipewire = {
