@@ -38,7 +38,6 @@
       ### EXEC ON BOOT/RELOAD ###
      
       exec-once = firefox & vesktop
-#      exec-once = mpd-discord-rpc 
       exec = bash /home/conor/.files/scripts/hypr/randomwallpaper.sh
 
       ### LAYOUT ###
@@ -147,7 +146,7 @@
       bindl = , XF86AudioPause, exec, playerctl play-pause
       bindl = , XF86AudioPlay, exec, playerctl play-pause
       bindl = , XF86AudioPrev, exec, playerctl previous
-      bind = ,XF86AudioMute, exec, wpctl set-mute @DEAFULT_AUDIO_SINK@ toggle
+      bind = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
       # Screenshots
       bind = , Print, exec, grim -g "$(slurp -d)" - | wl-copy
