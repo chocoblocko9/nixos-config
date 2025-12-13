@@ -8,9 +8,7 @@ This is my NixOS config! (quite self explanatory)
 - [ ] Install waybar and make it look not horrible (23/11/25)
 - [ ] Get Docker and WinApps running as an Experiment (23/11/25)
 - [ ] Make hyprsunset work so my poor eyes can survive (23/11/25)
-- [ ] Install and test Heroic Launcher + Rocket League (23/11/25)
 - [ ] Install a cursor theme to get rid of this Stupid Logo (24/11/25)
-- [ ] Investigate stylix to simplify theming possibly? (24/11/25)
 - [ ] Make profile for my laptop (BIG maybe, need to use Microsoft apps and stuff on it so if it causes big problems then its a no) (24/11/25)
 - [ ] Fix pop-up opacity on firefox theme (25/11/25)
 - [ ] Add wayy more animations to hyprland (30/11/25)
@@ -44,6 +42,10 @@ This is my NixOS config! (quite self explanatory)
 	- Well that was easy. (05/12/25)
 - [x] Install some GUI apps for use with thunar, (image viewer, archive manager etc)
 	- Picked feh for images and xarchiver for archives, they look good!
+- [x] Install and test Heroic Launcher + Rocket League (23/11/25)
+	- It works indeed! (13/12/25)
+- [ ] ~~Investigate stylix to simplify theming possibly? (24/11/25)~~
+	- Cancelled for the time being, idk how to make it work LOL (13/12/25)
 
 ## Background
 

@@ -37,7 +37,7 @@
 
       ### EXEC ON BOOT/RELOAD ###
      
-      exec-once = firefox & vesktop
+      exec-once = firefox & vesktop & soteria
       exec = bash /home/conor/.files/scripts/hypr/randomwallpaper.sh
 
       ### LAYOUT ###

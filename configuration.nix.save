@@ -118,19 +118,39 @@
     };
   };  
 
-	services.mpdscribble = {
-		enable = true;
-#	  verbose = 3;
-		journalInterval = 300;
-		endpoints = {
-			"last.fm" = {
-#				url = "https://post.audioscrobbler.com/";
-				passwordFile = "/home/conor/Documents/lastfmpass";
-			  username = "Choco988";
-			}; 
-		};
-	};
-
+  services = {
+    playerctld.enable = true;
+    mpd = {
+      enable = true;
+      musicDirectory = "/home/conor/1TB-Hard-Drive/Bandcamp/";
+     # network.listenAddress = "any"; # if you want to allow non-localhost connections
+      #network.startWhenNeeded = true; # systemd feature: only start MPD service upon connection to its socket
+      extraConfig = ''
+        audio_output {
+          type "pipewire"
+          name "PipeWire Output"
+        }
+      
+        #audio_output {
+      #    type "fifo"
+      #    name "my_fifo"
+     #     path "/tmp/mpd.fifo"
+    #      format "44100:16:2"
+   #     }
+      '';
+    };
+ #   mpdscribble = { # Lastfm scrobbling with MPD
+	#		enable = true;
+	#		endpoints = {
+	#			lastfm = {
+	#				url = "http://post.audioscrobbler.com/";
+	#				username = "Choco988";
+	#				passwordFile = "/home/conor/Documents/lastfmpass"; # path to plaintext last.fm password (it's not that important alr)
+		#		};
+	#		};
+   # };
+  }
+    
   # 
   services = {
     vnstat.enable = true;
@@ -219,7 +239,7 @@
   # Audio
   security = {
   	rtkit.enable = true;
-  	soteria.enable = true;
+#  	soteria.enable = true;
   };
   services = {
     pulseaudio.enable = false;
@@ -273,8 +293,8 @@
     };
   };
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 2234 ];
-  networking.firewall.allowedUDPPorts = [	2234 ];
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

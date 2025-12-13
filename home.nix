@@ -34,7 +34,9 @@
     mpd-discord-rpc # Shows currently playing music on MPD on discord rich presence, home-manager service was being weird unforunately
     feh # GUI image viewer
     xarchiver # GUI archive manager
-   
+		libsForQt5.qt5ct
+		puddletag # song file tagger
+	
     # Themes
     adw-gtk3  
     numix-icon-theme
@@ -61,9 +63,15 @@
     # '')
   ];
 
-  # mpd
+	# qt
+	qt = {
+		enable = true;
+		style.name = "adwaita-dark";
+		style.package = pkgs.adwaita-qt;
+	};
+
+	
   services = {
-    playerctld.enable = true;
     mpd = {
       enable = true;
       musicDirectory = "/home/conor/1TB-Hard-Drive/Bandcamp/";
@@ -83,18 +91,9 @@
         }
       '';
     };
-    mpdscribble = { # Lastfm scrobbling with MPD
-			enable = true;
-			endpoints = {
-				conor = {
-					url = "https://post.audioscrobbler.com/";
-					username = "Choco988";
-					passwordFile = "/home/conor/Documents/lastfmpass"; # path to plaintext last.fm password (it's not that important alr)
-				};
-			};
-    };
   };
-  
+
+
   # rmpc (MASSIVE work in progress)
   programs.rmpc = {
     enable = true;
@@ -233,8 +232,8 @@
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
-#    ".config/gtk-3.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk3-dark.css; 
-#    ".config/gtk-4.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk4-dark.css; 
+    ".config/gtk-3.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk3-dark.css; 
+    ".config/gtk-4.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk4-dark.css; 
     ".config/vesktop/themes/CustomMaterialDiscord.theme.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/Vesktop/CustomMaterialDiscord.theme.css;
     ".local/share/applications/Sober.desktop".text = '' # Let me run Sober from wofi
       [Desktop Entry]
