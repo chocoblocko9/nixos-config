@@ -21,8 +21,10 @@
     heroic # Good games launcher
     cemu # Wii U my beloved
     prismlauncher
+    parallel-launcher
     python315
     nicotine-plus # Soulseek
+    jdk21_headless
 
     # Tools
     pavucontrol
@@ -215,9 +217,10 @@
   programs.vesktop = {
     enable = true;
     vencord = {
-#      themes = {
-#	"/home/conor/.files/themes/Vesktop/CustomMaterialDiscord.theme.css"
-#      };
+      themes = {
+				custom = "/home/conor/.files/themes/Vesktop/CustomMaterialDiscordFix.theme.css";
+      };
+      settings.enabledThemes = [ "custom" ];
       useSystem = true;
     };
   };
@@ -244,14 +247,23 @@
       Type=Application
       Categories=Game;
     '';
+    ".local/share/applications/Doors.desktop".text = '' # Let me run Doors from wofi
+      [Desktop Entry]
+      Name=Doors
+      Comment=Play doors on Roblox
+      Type=Application
+      Terminal=false
+      Exec=firefox roblox://placeId=6516141723/
+      Categories=Game;
+    '';        
     ".config/discord-rpc/config.toml".text = ''
         [format]
         details = "$title"
-        state = "$album by $artist"
+        state = "$artist"
         timestamp = "both"
         large_image = "notes"
         small_image = ""
-        large_text = ""
+        large_text = "$album"
         small_text = ""
         display_type = "details"
     '';

@@ -6,7 +6,7 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     hyprland = {
-      url = "github:hyprwm/Hyprland/v0.52.1?submodules=true";
+      url = "github:hyprwm/Hyprland/v0.52.2?submodules=true";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {

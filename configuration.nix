@@ -216,11 +216,13 @@
   	NIXOS_OZONE_WL = "1"; 
   };
 
-  # Audio
+  # Security options
   security = {
   	rtkit.enable = true;
   	soteria.enable = true;
   };
+
+  # Audio
   services = {
     pulseaudio.enable = false;
     pipewire = {
@@ -273,8 +275,8 @@
     };
   };
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 2234 ];
-  networking.firewall.allowedUDPPorts = [	2234 ];
+  networking.firewall.allowedTCPPorts = [ 2234 25565 ];
+  networking.firewall.allowedUDPPorts = [	2234 25565 ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
