@@ -27,11 +27,15 @@
       $menu = wofi --show drun
 
       ### WINDOW RULES ###
+			windowrule = tag +defFloat, match:class org.pulseaudio.pavucontrol
+			windowrule = tag +defFloat, match:class nwg-look
+			windowrule = tag +defFloat, match:title File Operation Progress
+      
 			windowrule {
-  		name = audioControlFloat
+  			name = Default Float Behaviour
 			  float = on
 			  size = 1200 800
-			  match:class = org.pulseaudio.pavucontrol
+			  match:tag = defFloat
 			}
 
 
@@ -39,14 +43,6 @@
 			  name = opacityRules
 			  opacity = 0.96 0.75
 			  match:class = negative:kitty
-			}
-
-
-			windowrule {
-			  name = GTKSettingsFloat
-			  float = on
-			  size = 1200 800
-			  match:class = nwg-look
 			}
 			
       ### EXEC ON BOOT/RELOAD ###

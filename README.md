@@ -13,11 +13,11 @@ This is my NixOS config! (quite self explanatory)
 - [ ] Fix pop-up opacity on firefox theme (25/11/25)
 - [ ] Add wayy more animations to hyprland (30/11/25)
 - [ ] Install hyprplugins
+- [ ] Set-up Haskell dev shell
 - [ ] Expand hyprland functionality:
-  - [ ] hyprpolkitagent
   - [ ] Any one of the 50 clipboard managers
   ##### Optional
-  - [ ] hyprland-qt-support, hyprsysteminfo, hyprqt6engine
+  - [ ] hyprland-qt-support, hyprsysteminfo, hyprqt6engine  
 
 ### To-Done list
 - [ ] ~~Package discord-rpmpris myself (scary) (23/11/25)~~
@@ -46,6 +46,8 @@ This is my NixOS config! (quite self explanatory)
 	- It works indeed! (13/12/25)
 - [ ] ~~Investigate stylix to simplify theming possibly? (24/11/25)~~
 	- Cancelled for the time being, idk how to make it work LOL (13/12/25)
+- [ ] ~~hyprpolkitagent~~
+	- [x] Using Soteria instead!
 
 ## Background
 
@@ -66,3 +68,6 @@ Yeah I have very very little coding experience, I know like a little bit of pyth
 But NixOS BEGINS once it's installed, especially when I knew I'd be in the TTY learning a new programming language for days without even stepping foot on the mountain that is hyprland ricing, it was definitely a lot. But yeah, a strong desire to make shit work and TONS of great documentation will get you anywhere!
 
 All that is to say, this is gonna be awful awful spaghetti code that will absolutely not do the Nix language justice. I haven't even touched that flake and honestly I barely understand what they do. If I turn this into a blog it'll get moved out of the REAMDE I promise. (23/11/25)
+
+### BACK from hiatus
+After a couple weeks of multiple commits and tweaks every day, my desktop got to a functional state and Christmas, then school so I was unmotivated to do anything else, however with a newfound passion for Haskell and more time on my hands it is time to get back to ricing... (20/01/26)
