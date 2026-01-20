@@ -19,7 +19,7 @@
     };
   };
 
-  # Hyprland Settings (sorry Nix I love you, you are nice to write but trying to configure Hyprland in it was making me lose it)
+  # Hyprland Settings (sorry Nix I love you, you are nice to write but trying to configure	Hyprland in it was making me lose it)
   wayland.windowManager.hyprland.extraConfig = ''
       ### PROGRAMS ###
       $terminal = kitty
@@ -27,14 +27,28 @@
       $menu = wofi --show drun
 
       ### WINDOW RULES ###
-      windowrule = float, class:org.pulseaudio.pavucontrol
-      windowrule = size 1200 800, class:org.pulseaudio.pavucontrol 
+			windowrule {
+  		name = audioControlFloat
+			  float = on
+			  size = 1200 800
+			  match:class = org.pulseaudio.pavucontrol
+			}
 
-      windowrule = opacity 0.96 0.75, class:negative:kitty
 
-      windowrule = float, class:nwg-look
-      windowrule = size 1200 800, class:nwg-look
+			windowrule {
+			  name = opacityRules
+			  opacity = 0.96 0.75
+			  match:class = negative:kitty
+			}
 
+
+			windowrule {
+			  name = GTKSettingsFloat
+			  float = on
+			  size = 1200 800
+			  match:class = nwg-look
+			}
+			
       ### EXEC ON BOOT/RELOAD ###
      
       exec-once = firefox & vesktop & soteria
