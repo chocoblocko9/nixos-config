@@ -16,7 +16,7 @@
   # Bootloader
 
 #  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_17; # Gonna use 6.17 until v4l2loopback actually builds on 6.18
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
   boot.supportedFilesystems = ["ntfs"];
   boot.loader = {
     systemd-boot.enable = false;

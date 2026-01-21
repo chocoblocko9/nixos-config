@@ -243,23 +243,13 @@
     # ".screenrc".source = dotfiles/screenrc;
     ".config/gtk-3.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk3-dark.css; 
     ".config/gtk-4.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk4-dark.css; 
-    ".config/vesktop/themes/CustomMaterialDiscord.theme.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/Vesktop/CustomMaterialDiscord.theme.css;
-    ".local/share/applications/Sober.desktop".text = '' # Let me run Sober from wofi
-      [Desktop Entry]
-      Name=Sober
-      Comment=Play Roblox on flatpak
-      Exec=flatpak run org.vinegarhq.Sober
-      Terminal=false
-      Type=Application
-      Categories=Game;
-    '';
     ".local/share/applications/Doors.desktop".text = '' # Let me run Doors from wofi
       [Desktop Entry]
       Name=Doors
       Comment=Play doors on Roblox
       Type=Application
       Terminal=false
-      Exec=firefox roblox://placeId=6516141723/
+      Exec=firefox --new-window roblox://placeId=6516141723/
       Categories=Game;
     '';        
     ".config/discord-rpc/config.toml".text = ''
