@@ -10,12 +10,13 @@ This is my NixOS config! (quite self explanatory)
 - [ ] Make hyprsunset work so my poor eyes can survive (23/11/25)
 - [ ] Install a cursor theme to get rid of this Stupid Logo (24/11/25)
 - [ ] Make profile for my laptop (BIG maybe, need to use Microsoft apps and stuff on it so if it causes big problems then its a no) (24/11/25)
-- [ ] Fix pop-up opacity on firefox theme (25/11/25)
 - [ ] Add wayy more animations to hyprland (30/11/25)
 - [ ] Install hyprplugins
 - [ ] Set-up Haskell dev shell
 - [ ] Expand hyprland functionality:
   - [ ] Any one of the 50 clipboard managers
+- [ ] Fix rmpc by making an actual layout (terrifying undertaking) (21/01/26)
+- [ ] Figure out how to manage Vesktop properly, currently have to reapply all themes and plugins after restarts (21/01/26)
   ##### Optional
   - [ ] hyprland-qt-support, hyprsysteminfo, hyprqt6engine  
 
@@ -48,7 +49,8 @@ This is my NixOS config! (quite self explanatory)
 	- Cancelled for the time being, idk how to make it work LOL (13/12/25)
 - [ ] ~~hyprpolkitagent~~
 	- [x] Using Soteria instead!
-
+- [x] Fix pop-up opacity on firefox theme (25/11/25)
+  - Changed it from 0.6 to 0.75, small change but big difference to readability (21/01/26)
 ## Background
 
 ### Why?

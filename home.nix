@@ -17,6 +17,7 @@
   # The home.packages option allows you to install Nix packages into your environment.
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
+    # Programs
     firefox
     heroic # Good games launcher
     cemu # Wii U my beloved
@@ -25,6 +26,7 @@
     python315
     nicotine-plus # Soulseek
     jdk21_headless
+    vlc
 
     # Tools
     pavucontrol
@@ -38,6 +40,10 @@
     xarchiver # GUI archive manager
 		libsForQt5.qt5ct
 		puddletag # song file tagger
+    streamlink 
+    ncdu 
+    wev 
+    unipicker
 	
     # Themes
     adw-gtk3  
@@ -219,7 +225,7 @@
     vencord = {
       themes = {
 				custom = "/home/conor/.files/themes/Vesktop/CustomMaterialDiscordFix.theme.css";
-      };
+      }; # marked as broken
       settings.enabledThemes = [ "custom" ];
       useSystem = true;
     };

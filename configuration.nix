@@ -182,14 +182,9 @@
     vim
     wget
     git
-    ddcutil #
-    vlc
-    streamlink
+    ddcutil # Program for changing monitor brightness from keyboard
     cava # HAS to be here for the rmpc visualiser to work, the home-manager module does not work for unknown reasons
-    wev
-    ncdu
     bluetuith 
-    unipicker
   ];
 
   programs = {
