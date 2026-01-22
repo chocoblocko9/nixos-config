@@ -5,6 +5,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+    nixcord.url = "github:FlameFlag/nixcord";
     hyprland = {
       url = "github:hyprwm/Hyprland/v0.53.1?submodules=true";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,6 +45,7 @@
             };
           }
           ./home.nix 
+          inputs.nixcord.homeModules.nixcord
         ];
       };
     };

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 {
   imports = [
     ./hypr/hyprland.nix
@@ -14,6 +14,45 @@
     stateVersion = "25.11";
   };
 
+	programs.nixcord = {
+		enable = true;
+		vesktop.enable = true;
+		config = {
+			themeLinks = [ https://raw.githubusercontent.com/chocoblocko9/Material-Discord-Cyan/refs/heads/master/Material-Discord.theme.css ];
+		
+
+		plugins = {
+				fakeNitro.enable = true;
+				fixSpotifyEmbeds = {
+					enable = true;
+					volume = 5.0;
+				};
+				fixYoutubeEmbeds.enable = true;
+				implicitRelationships.enable = true;
+				memberCount.enable = true;
+				mentionAvatars.enable = true;
+				moreQuickReactions = {
+					enable = true;
+					reactionCount = 6;
+				};
+				noUnblockToJump.enable = true;
+				platformIndicators = {
+					enable = true;
+					consoleIcon = "vencord";
+				};
+				previewMessage.enable = true;
+				replyTimestamp.enable = true;
+				serverInfo.enable = true;
+				translate.enable = true;
+				shikiCodeblocks.enable = true;
+				volumeBooster.enable = true;
+				webScreenShareFixes.enable = true;
+				whoReacted.enable = true;
+				youtubeAdblock.enable = true;
+			};
+		};
+	};
+	
   # The home.packages option allows you to install Nix packages into your environment.
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
@@ -216,18 +255,6 @@
       # Airplane Mode 24/7 stream and Euro Truck Simulator can then download that
       # and play it as an in-game radio because it functions like any over the 
       # internet radio. Cool? Cool.
-    };
-  };
-  
-  # Vesktop cus discord on wayland is goofy I think
-  programs.vesktop = {
-    enable = true;
-    vencord = {
-      themes = {
-				custom = "/home/conor/.files/themes/Vesktop/CustomMaterialDiscordFix.theme.css";
-      }; # marked as broken
-      settings.enabledThemes = [ "custom" ];
-      useSystem = true;
     };
   };
 

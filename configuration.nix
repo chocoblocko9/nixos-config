@@ -203,8 +203,8 @@
         set zap
         set mouse
         set autoindent
-      ''
-    }
+      '';
+    };
     hyprland = {
       enable = true;
       withUWSM = true;
