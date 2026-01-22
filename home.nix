@@ -273,13 +273,13 @@
         small_text = ""
         display_type = "details"
     '';
-    ".nanorc".text = ''
-      set softwrap
-      set tabsize 2
-      set zap
-      set mouse
-      set autoindent
-    '';
+#    ".nanorc".text = ''
+#      set softwrap
+#      set tabsize 2
+#      set zap
+#      set mouse
+#      set autoindent
+#    '';
   };
 
   home.sessionVariables = {

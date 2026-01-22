@@ -4,8 +4,8 @@
 :root {
   --app-font: "Google Sans";
   --app-bg: var(--main-alt);
-  --app-watermark-one: "Material";
-  --app-watermark-two: "Discord";
+  --app-watermark-one: "Material   ";
+  --app-watermark-two: "   Discord";
   --app-title-bar-height: 22px;
   --app-button-min: hsl(39,100%,63%);
   --app-button-max: hsl(143,100%,40%);
@@ -10572,7 +10572,7 @@ div[role=radiogroup]._344e69670924b1be-group {
 .c19a557985eb7793-compact + ._5126c0cd07f243a0-divider:not(._5126c0cd07f243a0-beforeGroup) {
   top: -11px;
 }
-+ .c19a557985eb7793-compact:not(._5126c0cd07f243a0-message) {
+ .c19a557985eb7793-compact:not(._5126c0cd07f243a0-message) {
   margin: 16px 20px 0 70px;
 }
 
