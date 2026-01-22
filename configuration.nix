@@ -108,6 +108,7 @@
     };
     amdgpu = {
       opencl.enable = true;
+      initrd.enable = true;
       overdrive = { # GPU overclocking stuff
         enable = true;
         ppfeaturemask = "0xfffd7fff";
@@ -128,7 +129,6 @@
 		};
 	};
 
-  # 
   services = {
     vnstat.enable = true;
     lact.enable = true;
@@ -194,6 +194,17 @@
       enable = true;
       plugins = with pkgs.xfce; [ thunar-volman thunar-media-tags-plugin thunar-archive-plugin thunar-vcs-plugin ];
     };
+    nano = {
+      enable = true;
+      syntaxHighlight = true;
+      nanorc = ''
+        set softwrap
+        set tabsize 2
+        set zap
+        set mouse
+        set autoindent
+      ''
+    }
     hyprland = {
       enable = true;
       withUWSM = true;
@@ -270,13 +281,7 @@
   networking.firewall.allowedTCPPorts = [ 2234 25565 ];
   networking.firewall.allowedUDPPorts = [	2234 25565 ];
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.11"; # Did you read the comment?
+  system.stateVersion = "25.11";
 
 }
 
