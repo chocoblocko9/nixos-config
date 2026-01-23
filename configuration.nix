@@ -3,9 +3,6 @@
 {
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ]; # Enable Flakes
-#    substituters = ["https://hyprland.cachix.org"]; # Hyprland cache stuff
-#    trusted-substituters = ["https://hyprland.cachix.org"];
-#    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
   };
 
   imports =
@@ -13,10 +10,10 @@
       ./hardware-configuration.nix
     ];
 
-  # Bootloader
+# Bootloader
 
 #  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_17; # Gonna use 6.17 until v4l2loopback actually builds on 6.18
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
   boot.supportedFilesystems = ["ntfs"];
   boot.loader = {
     systemd-boot.enable = false;
@@ -111,27 +108,14 @@
     };
     amdgpu = {
       opencl.enable = true;
+      initrd.enable = true;
       overdrive = { # GPU overclocking stuff
         enable = true;
         ppfeaturemask = "0xfffd7fff";
       };
     };
   };  
-
-	services.mpdscribble = {
-		enable = true;
-#	  verbose = 3;
-		journalInterval = 300;
-		endpoints = {
-			"last.fm" = {
-#				url = "https://post.audioscrobbler.com/";
-				passwordFile = "/home/conor/Documents/lastfmpass";
-			  username = "Choco988";
-			}; 
-		};
-	};
-
-  # 
+ 
   services = {
     vnstat.enable = true;
     lact.enable = true;
@@ -183,7 +167,6 @@
     wget
     git
     ddcutil # Program for changing monitor brightness from keyboard
-    cava # HAS to be here for the rmpc visualiser to work, the home-manager module does not work for unknown reasons
     bluetuith 
   ];
 
@@ -230,56 +213,11 @@
     };
   };
 
-  # List services that you want to enable:
-  services.displayManager.ly = {
-    enable = true;
-    settings = {
-      # Uses local setup.sh file because it can't find default with home manager managing bash I think? I feel like that shouldn't be it but this makes it work so hey!
-      setup_cmd = "$HOME/.files/scripts/ly/lysetup.sh";
-
-      # Config
-      allow_empty_password = false;
-      auth_fails = "8"; 
-      default_input = "login";    
-      full_color = true;
-      save = true; # Future me: idk what this does either tbh lol
-
-      # Keybinds
-      shutdown_key = "F1";
-      shutdown_cmd = "systemctl poweroff";
-      restart_key = "F2";
-      restart_cmd = "systemctl reboot";
-      sleep_key = "F3";
-      sleep_cmd = "systemctl sleep";
-      brightness_down_key = "F5";
-      brightness_down_cmd = "/nix/store/881kbvkx60vfglagli4wqz0ascz2icni-ddcutil-2.2.1/bin/ddcutil --sleep-multiplier .1 --bus=8 setvcp 10 - 10"; # this is horrible horrible code that is gonna break 
-      brightness_up_key = "F6";
-      brightness_up_cmd = "/nix/store/881kbvkx60vfglagli4wqz0ascz2icni-ddcutil-2.2.1/bin/ddcutil --sleep-multiplier .1 --bus=8 setvcp 10 + 10"; # whenever i upgrade but whatever i WILL fix it cus i'll have to
-
-      # Styling
-      animation = "colormix";
-      colormix_col1 = "0xFF000000";
-      colormix_col2 = "0x00009494";
-      # colormix_col1 = "0x0066FF33";
-      colormix_col3 = "0x00000080";
-      asterisk = ">";
-      bg = "0x00000000";
-      bigclock = "en";
-      bigclock_seconds = "true"; 
-      clock = "%H:%M:%S %a, %d/%m/%Y";  
-    };
-  };
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 2234 25565 ];
   networking.firewall.allowedUDPPorts = [	2234 25565 ];
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.11"; # Did you read the comment?
+  system.stateVersion = "25.11";
 
 }
 
