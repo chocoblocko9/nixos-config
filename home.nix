@@ -135,10 +135,7 @@
       # internet radio. Cool? Cool.
     };
   };
-
-  # Fix for UWSM/systemd conflict
-  wayland.windowManager.hyprland.systemd.enable = false;
-
+  
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
@@ -167,13 +164,6 @@
         large_text = "$album"
         small_text = ""
         display_type = "details"
-    '';
-    ".nanorc".text = ''
-      set softwrap
-      set tabsize 2
-      set zap
-      set mouse
-      set autoindent
     '';
   };
 
