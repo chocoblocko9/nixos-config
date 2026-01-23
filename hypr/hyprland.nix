@@ -150,14 +150,14 @@
       bind = $mod, mouse_down, workspace, e+1
           
       # Top row normal binds
-      bind = ,XF86Tools, exec, [float; size 1200 800] kitty rmpc # I mean it's literally a music note
+      bind = ,XF86Tools, exec, [float; size 1200 800] euphonica # I mean it's literally a music note
 
-			# mpd specific binds, might still change these but as it stands I use mpd a lot more than playerctl stuff
-      bindl = , XF86AudioNext, exec, rmpc next
-      bindl = , XF86AudioPlay, exec, rmpc togglepause
-      bindl = , XF86AudioPrev, exec, rmpc prev
-      
-      bind = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+			# mpd specific binds, I don't want it unpausing my youtube video I was watching lol
+      bindl = , XF86AudioNext, exec, playerctl --player=mpd next
+      bindl = , XF86AudioPlay, exec, playerctl --player=mpd play-pause
+      bindl = , XF86AudioPrev, exec, playerctl --player=mpd previous
+      bindl = , XF86AudioStop, exec, playerctl --player=mpd stop
+      bindl = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
       # Screenshots
       bind = , Print, exec, grim -g "$(slurp -d)" - | wl-copy

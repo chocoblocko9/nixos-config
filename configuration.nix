@@ -227,6 +227,7 @@
 
   # Audio
   services = {
+  	playerctld.enable = true;
     pulseaudio.enable = false;
     pipewire = {
       pulse.enable = true;
