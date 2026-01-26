@@ -19,7 +19,7 @@
     };
   };
 
-  # Hyprland Settings (sorry Nix I love you, you are nice to write but trying to configure	Hyprland in it was making me lose it)
+  # Hyprland Settings (sorry Nix I love you, you are nice to write but trying to configure Hyprland in it was making me lose it)
   wayland.windowManager.hyprland.extraConfig = ''
       ### PROGRAMS ###
       $terminal = kitty
@@ -150,17 +150,18 @@
       bind = $mod, mouse_down, workspace, e+1
           
       # Top row normal binds
-      bind = ,XF86Tools, exec, [float; size 1200 800] euphonica # I mean it's literally a music note
+      bind = ,XF86Tools, exec, [float; size 1200 800] lollypop # I mean it's literally a music note
 
-			# mpd specific binds, I don't want it unpausing my youtube video I was watching lol
-      bindl = , XF86AudioNext, exec, playerctl --player=mpd next
-      bindl = , XF86AudioPlay, exec, playerctl --player=mpd play-pause
-      bindl = , XF86AudioPrev, exec, playerctl --player=mpd previous
-      bindl = , XF86AudioStop, exec, playerctl --player=mpd stop
+			# Lollypop specific binds, I don't want it unpausing my youtube video I was watching lol
+      bindl = , XF86AudioNext, exec, playerctl --player=Lollypop next
+      bindl = , XF86AudioPlay, exec, playerctl --player=Lollypop play-pause
+      bindl = , XF86AudioPrev, exec, playerctl --player=Lollypop previous
+      bindl = , XF86AudioStop, exec, playerctl --player=Lollypop stop
       bindl = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
       # Screenshots
       bind = , Print, exec, grim -g "$(slurp -d)" - | wl-copy
+			layerrule = match:class selector, no_anim on # fix for weird 1px black border
 
       # Mouse binds
       bindm = $mod, mouse:272, movewindow

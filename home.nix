@@ -6,53 +6,20 @@
     ./hypr/hyprsunset.nix
   ];
 
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = "1"; 
+    XCURSOR_SIZE   = "24";
+    LASTFM_KEY     = ~/Documents/lastfmkey; # horrible horrible bad bad dont do this 
+    LASTFM_SECRET  = ~/Documents/lastfmsecret; # WHY DOES AGENIX NOT WORK???
+  };
+  
+  # Home Manager needs a bit of information about you and the paths it should manage.
   home = {
     username = "conor";
     homeDirectory = "/home/conor";
     stateVersion = "25.11";
   };
-
-	programs.nixcord = {
-		enable = true;
-		vesktop.enable = true;
-		config = {
-			themeLinks = [ https://raw.githubusercontent.com/chocoblocko9/Material-Discord-Cyan/refs/heads/master/Material-Discord.theme.css ];
-		
-
-		plugins = {
-				fakeNitro.enable = true;
-				fixSpotifyEmbeds = {
-					enable = true;
-					volume = 5.0;
-				};
-				fixYoutubeEmbeds.enable = true;
-				implicitRelationships.enable = true;
-				memberCount.enable = true;
-				mentionAvatars.enable = true;
-				moreQuickReactions = {
-					enable = true;
-					reactionCount = 6;
-				};
-				noUnblockToJump.enable = true;
-				platformIndicators = {
-					enable = true;
-					consoleIcon = "vencord";
-				};
-				previewMessage.enable = true;
-				replyTimestamp.enable = true;
-				serverInfo.enable = true;
-				translate.enable = true;
-				shikiCodeblocks.enable = true;
-				volumeBooster.enable = true;
-				webScreenShareFixes.enable = true;
-				whoReacted.enable = true;
-				youtubeAdblock.enable = true;
-			};
-		};
-	};
-	
+  
   # The home.packages option allows you to install Nix packages into your environment.
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
@@ -67,6 +34,8 @@
     jdk21_headless
     euphonica
     vlc
+    lollypop
+   
 
     # Tools
     pavucontrol
@@ -84,6 +53,7 @@
     ncdu 
     wev 
     unipicker
+    mprisence
 	
     # Themes
     adw-gtk3  
@@ -120,28 +90,18 @@
 
 	
   services = {
-  	mpd-mpris.enable = true;
-    mpd = {
-      enable = true;
-      musicDirectory = "/home/conor/1TB-Hard-Drive/Bandcamp/";
-      network.listenAddress = "any"; # if you want to allow non-localhost connections
-      network.startWhenNeeded = true; # systemd feature: only start MPD service upon connection to its socket
-      extraConfig = ''
-        audio_output {
-          type "pipewire"
-          name "PipeWire Output"
-        }
-      
-        audio_output {
-          type "fifo"
-          name "my_fifo"
-          path "/tmp/mpd.fifo"
-          format "44100:16:2"
-        }
-      '';
-    };
-  };
- 
+  	rescrobbled = {
+  		enable = true;
+  		settings = {
+  			#filter-script = "path/to/script";
+				lastfm-key = "${config.home.sessionVariables.LASTFM_KEY}";
+  		  lastfm-secret = "${config.home.sessionVariables.LASTFM_SECRET}";
+			  min-play-time = 0;
+  			player-whitelist = [ "Lollypop" ];
+  			use-track-start-timestamp = false;
+			};
+  	};
+   };
 
   # vscode
   programs.vscode = {
@@ -171,11 +131,11 @@
         font = "Monospace 12";
       };
       urgency_normal = {};
-
-
     };
   };
 
+  # Vesktop cus discord on wayland is goofy I think
+  programs.vesktop.enable = true;
 
   # Git
   programs.git = {
@@ -243,12 +203,6 @@
 #      set mouse
 #      set autoindent
 #    '';
-  };
-
-  home.sessionVariables = {
-    # EDITOR = "emacs";
-    NIXOS_OZONE_WL = "1"; 
-    XCURSOR_SIZE = "24";
   };
 
   # Let Home Manager install and manage itself.

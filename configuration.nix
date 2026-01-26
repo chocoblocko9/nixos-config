@@ -10,8 +10,8 @@
       ./hardware-configuration.nix
     ];
 
-  # Bootloader
 
+  # Bootloader
 #  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
   boot.supportedFilesystems = ["ntfs"];
@@ -116,20 +116,8 @@
     };
   };  
 
-	services.mpdscribble = {
-		enable = true;
-#	  verbose = 3;
-		journalInterval = 300;
-		endpoints = {
-			"last.fm" = {
-#				url = "https://post.audioscrobbler.com/";
-				passwordFile = "/home/conor/Documents/lastfmpass";
-			  username = "Choco988";
-			}; 
-		};
-	};
-
   services = {
+  	openssh.enable = true;
     vnstat.enable = true;
     lact.enable = true;
     flatpak = {

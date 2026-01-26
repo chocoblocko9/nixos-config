@@ -5,7 +5,6 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
-    nixcord.url = "github:FlameFlag/nixcord";
     hyprland = {
       url = "github:hyprwm/Hyprland/v0.53.1?submodules=true";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,7 +15,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-flatpak, hyprland, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, nix-flatpak, hyprland,  ... } @ inputs:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -43,12 +42,10 @@
               package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
               portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
             };
-          }
-          ./home.nix 
-          inputs.nixcord.homeModules.nixcord
+          } 
+        	./home.nix
         ];
       };
     };
   };
-
 }
