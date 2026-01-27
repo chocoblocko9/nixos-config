@@ -23,8 +23,9 @@
   wayland.windowManager.hyprland.extraConfig = ''
       ### PROGRAMS ###
       $terminal = kitty
-      $fileManager = Thunar
+      $fileManager = thunar
       $menu = wofi --show drun
+      $music = lollypop
 
       ### WINDOW RULES ###
 			windowrule = tag +defFloat, match:class org.pulseaudio.pavucontrol
@@ -38,6 +39,12 @@
 			  match:tag = defFloat
 			}
 
+			windowrule {
+				name = Lollypop float
+				float = on
+				size = 1700 900
+				match:class = lollypop
+			}
 
 			windowrule {
 			  name = opacityRules
@@ -47,7 +54,7 @@
 			
       ### EXEC ON BOOT/RELOAD ###
      
-      exec-once = firefox & vesktop & soteria
+      exec-once = firefox & vesktop & mpriscence
       exec = bash /home/conor/.files/scripts/hypr/randomwallpaper.sh
 
       ### LAYOUT ###
@@ -150,7 +157,7 @@
       bind = $mod, mouse_down, workspace, e+1
           
       # Top row normal binds
-      bind = ,XF86Tools, exec, [float; size 1200 800] lollypop # I mean it's literally a music note
+      bind = ,XF86Tools, exec, $music # I mean it's literally a music note
 
 			# Lollypop specific binds, I don't want it unpausing my youtube video I was watching lol
       bindl = , XF86AudioNext, exec, playerctl --player=Lollypop next

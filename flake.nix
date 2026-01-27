@@ -5,6 +5,11 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+    nixcord.url = "github:FlameFlag/nixcord";
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hyprland = {
       url = "github:hyprwm/Hyprland/v0.53.1?submodules=true";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,7 +20,17 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-flatpak, hyprland,  ... } @ inputs:
+  outputs = 
+  	{ 
+  		self, 
+  		nixpkgs, 
+  		home-manager, 
+  		nix-flatpak, 
+  		hyprland,  
+			stylix,
+  		... 
+  	} @ inputs:
+  	
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -36,13 +51,16 @@
         inherit pkgs;
         modules = [ 
           {
+          	imports = [ inputs.nixcord.homeModules.nixcord ];
             wayland.windowManager.hyprland = {
               enable = true;
               # set the flake package
               package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
               portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+              systemd.enable = false;
             };
           } 
+          stylix.homeModules.stylix
         	./home.nix
         ];
       };

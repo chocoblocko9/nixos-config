@@ -200,6 +200,12 @@
       package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     };
+	  nh = {
+	    enable = true;
+	    clean.enable = true;
+	    clean.extraArgs = "--keep-since 7d --keep 5";
+	    flake = "/home/conor/.files/"; # sets NH_OS_FLAKE variable for you
+	  };
   };
 
   # Is this necessary? idk

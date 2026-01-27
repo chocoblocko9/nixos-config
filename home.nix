@@ -5,20 +5,59 @@
     ./hypr/hyprpaper.nix
     ./hypr/hyprsunset.nix
   ];
-
-  home.sessionVariables = {
-    NIXOS_OZONE_WL = "1"; 
-    XCURSOR_SIZE   = "24";
-    LASTFM_KEY     = ~/Documents/lastfmkey; # horrible horrible bad bad dont do this 
-    LASTFM_SECRET  = ~/Documents/lastfmsecret; # WHY DOES AGENIX NOT WORK???
-  };
   
   # Home Manager needs a bit of information about you and the paths it should manage.
   home = {
-    username = "conor";
-    homeDirectory = "/home/conor";
-    stateVersion = "25.11";
-  };
+   	username = "conor";
+   	homeDirectory = "/home/conor";
+ 	  stateVersion = "25.11";
+	 };
+
+	stylix = {
+		enable = false;
+		base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+	};
+		
+	programs.nixcord = {
+		enable = true;
+		vesktop.enable = true;
+		config = {
+			themeLinks = [ https://raw.githubusercontent.com/chocoblocko9/Material-Discord-Cyan/refs/heads/master/Material-Discord.theme.css ];
+
+		plugins = {
+				fakeNitro.enable = true;
+				fixSpotifyEmbeds = {
+					enable = true;
+					volume = 5.0;
+				};
+				fixYoutubeEmbeds.enable = true;
+				implicitRelationships.enable = true;
+				memberCount.enable = true;
+				mentionAvatars.enable = true;
+				moreQuickReactions = {
+					enable = true;
+					reactionCount = 6;
+				};
+				noUnblockToJump.enable = true;
+				platformIndicators = {
+					enable = true;
+					consoleIcon = "vencord";
+				};
+				previewMessage.enable = true;
+				replyTimestamp.enable = true;
+				serverInfo.enable = true;
+				translate.enable = true;
+				shikiCodeblocks.enable = true;
+				volumeBooster.enable = true;
+				webScreenShareFixes.enable = true;
+				whoReacted.enable = true;
+				youtubeAdblock.enable = true;
+			};
+		};
+	};
+
+
+	
   
   # The home.packages option allows you to install Nix packages into your environment.
   nixpkgs.config.allowUnfree = true;
@@ -32,7 +71,6 @@
     python315
     nicotine-plus # Soulseek
     jdk21_headless
-    euphonica
     vlc
     lollypop
    
@@ -44,7 +82,6 @@
     unzip
     nwg-look # GTK themes manager
     jq # hyprland minimise script needs this or smth
-    mpd-discord-rpc # Shows currently playing music on MPD on discord rich presence, home-manager service was being weird unforunately
     feh # GUI image viewer
     xarchiver # GUI archive manager
 		libsForQt5.qt5ct
@@ -91,14 +128,14 @@
 	
   services = {
   	rescrobbled = {
-  		enable = true;
+  		enable = false;
   		settings = {
   			#filter-script = "path/to/script";
 				lastfm-key = "${config.home.sessionVariables.LASTFM_KEY}";
   		  lastfm-secret = "${config.home.sessionVariables.LASTFM_SECRET}";
-			  min-play-time = 0;
+			  #min-play-time = 0;
   			player-whitelist = [ "Lollypop" ];
-  			use-track-start-timestamp = false;
+  			use-track-start-timestamp = true;
 			};
   	};
    };
@@ -135,7 +172,7 @@
   };
 
   # Vesktop cus discord on wayland is goofy I think
-  programs.vesktop.enable = true;
+  #programs.vesktop.enable = true;
 
   # Git
   programs.git = {
@@ -164,16 +201,7 @@
     };
   };
 
-  # Fix for UWSM/systemd conflict
-  wayland.windowManager.hyprland.systemd.enable = false;
-
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
     ".config/gtk-3.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk3-dark.css; 
     ".config/gtk-4.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk4-dark.css; 
     ".local/share/applications/Doors.desktop".text = '' # Let me run Doors from wofi
@@ -185,24 +213,13 @@
       Exec=firefox --new-window roblox://placeId=6516141723/
       Categories=Game;
     '';        
-    ".config/discord-rpc/config.toml".text = ''
-        [format]
-        details = "$title"
-        state = "$artist"
-        timestamp = "both"
-        large_image = "notes"
-        small_image = ""
-        large_text = "$album"
-        small_text = ""
-        display_type = "details"
-    '';
-#    ".nanorc".text = ''
-#      set softwrap
-#      set tabsize 2
-#      set zap
-#      set mouse
-#      set autoindent
-#    '';
+  };
+
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = "1"; 
+    XCURSOR_SIZE   = "24";
+    LASTFM_KEY     = ~/Documents/lastfmkey; # horrible horrible bad bad dont do this 
+    LASTFM_SECRET  = ~/Documents/lastfmsecret; # WHY DOES AGENIX NOT WORK???
   };
 
   # Let Home Manager install and manage itself.
