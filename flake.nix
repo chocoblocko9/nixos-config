@@ -4,6 +4,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "nixpkgs/nixos-25.11";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     nixcord.url = "github:FlameFlag/nixcord";
     hyprland = {
@@ -16,11 +17,23 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-flatpak, hyprland, ... } @ inputs:
+   outputs = 
+  	{ 
+  		self, 
+  		nixpkgs, 
+      nixpkgs-stable,
+  		home-manager, 
+  		nix-flatpak, 
+  		hyprland,  
+			stylix,
+  		... 
+  	} @ inputs:
+
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      pkgs-stable = nixpkgs-stable.legacyPackages.${system};
     in {
     nixosConfigurations = {
       nixos = lib.nixosSystem {
@@ -39,6 +52,9 @@
           ./home.nix 
           inputs.nixcord.homeModules.nixcord
         ];
+        extraSpecialArgs = {
+          inherit pkgs-stable;
+        };
       };
     };
   };
