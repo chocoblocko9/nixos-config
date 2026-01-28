@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, pkgs-stable, inputs, ... }:
 {
   imports = [
     ./hypr/hyprland.nix
@@ -61,62 +61,54 @@
   
   # The home.packages option allows you to install Nix packages into your environment.
   nixpkgs.config.allowUnfree = true;
-  home.packages = with pkgs; [
-    # Programs
-    firefox
-    heroic # Good games launcher
-    cemu # Wii U my beloved
-    prismlauncher
-   # parallel-launcher
-    python315
-    nicotine-plus # Soulseek
-    jdk21_headless
-    vlc
-    lollypop
-   
+  home.packages = 
+  	(with pkgs; [
+	    # Programs
+	    firefox
+	    heroic # Good games launcher
+	    cemu # Wii U my beloved
+	    prismlauncher
+	   # parallel-launcher
+	    python315
+	    nicotine-plus # Soulseek
+	    jdk21_headless
+	    vlc
+	    lollypop
+	   
 
-    # Tools
-    pavucontrol
-    fastfetch
-    zip
-    unzip
-    nwg-look # GTK themes manager
-    jq # hyprland minimise script needs this or smth
-    feh # GUI image viewer
-    xarchiver # GUI archive manager
-		libsForQt5.qt5ct
-		puddletag # song file tagger
-    streamlink 
-    ncdu 
-    wev 
-    unipicker
-    mprisence
-	
-    # Themes
-    adw-gtk3  
-    numix-icon-theme
-  
-    # hyprland
-    hyprpicker
-    grim
-    slurp
-    wl-clipboard
- 
-    
+	    # Tools
+	    pavucontrol
+	    fastfetch
+	    zip
+	    unzip
+	    nwg-look # GTK themes manager
+	    jq # hyprland minimise script needs this or smth
+	    feh # GUI image viewer
+	    xarchiver # GUI archive manager
+			libsForQt5.qt5ct
+			puddletag # song file tagger
+	    streamlink 
+	    ncdu 
+	    wev 
+	    unipicker
+	    mprisence
+		
+	    # Themes
+	    adw-gtk3  
+	    numix-icon-theme
+	  
+	    # hyprland
+	    hyprpicker
+	    grim
+	    slurp
+	    wl-clipboard
+  	])
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+		++
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
-  ];
+  	(with pkgs-stable; [
+			parallel-launcher
+  	]);
 
 	# qt
 	qt = {

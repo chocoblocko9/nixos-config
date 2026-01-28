@@ -25,6 +25,7 @@
   	{ 
   		self, 
   		nixpkgs, 
+  		nixpkgs-stable,
   		home-manager, 
   		nix-flatpak, 
   		hyprland,  
@@ -36,6 +37,7 @@
       lib = nixpkgs.lib;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      pkgs-stable = nixpkgs-stable.legacyPackages.${system};
     in {
     nixosConfigurations = {
       nixos = lib.nixosSystem {
@@ -64,6 +66,9 @@
           stylix.homeModules.stylix
         	./home.nix
         ];
+        extraSpecialArgs = {
+					inherit pkgs-stable;
+        };
       };
     };
   };
