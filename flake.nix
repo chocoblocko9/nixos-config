@@ -36,20 +36,11 @@
       conor = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [ 
-          {
-            wayland.windowManager.hyprland = {
-              enable = true;
-              # set the flake package
-              package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-              portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-              systemd.enable = false;
-            };
-          }
           ./home.nix 
+          ./modules/user/hyprland/default.nix
           inputs.nixcord.homeModules.nixcord
         ];
       };
     };
   };
-
 }

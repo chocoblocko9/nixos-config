@@ -4,7 +4,4 @@ This is where I'm going to catalogue weird imperative stuff that I did, that may
 
 ## The list
 
-1. I ran "export XCURSOR_SIZE=24" to get grim + slurp screenshots working because environment variables are weird on hyprland with UWSM. HOWEVER, I did set this in my home.nix after so I don't know if this is relevant
-
-
-2. I ran "chmod +x ./scripts/rmpc/rmpc-notif" to give it execute permissions so that notifications run on song change. Don't think this is avoidable.
+1. LASTFM_KEY and LASTFM_SECRET home.sessionVaribales reference out of store files (~/Documents/lastfmkey and ~/Documents/lastfmsecret respectively) because both agenix and sops-nix are throwing the same really weird errors and rescrobbled doesn't support reading from files. I'm letting it slide because it's not like critical infrastructure. RIP purity :(

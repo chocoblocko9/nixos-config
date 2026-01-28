@@ -7,7 +7,7 @@
     };
   };
 
-  config = lib.mkIf config.systemSettings.vscode.enable {
+  config = lib.mkIf config.userSettings.vscode.enable {
     programs.vscode = {
       enable = true;
 #      profiles.conor.extensions = [ pkgs.vscode-extensions.jnoortheen.nix-ide ];
