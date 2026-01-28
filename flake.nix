@@ -4,6 +4,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "nixpkgs/nixos-25.11";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     nixcord.url = "github:FlameFlag/nixcord";
     stylix = {

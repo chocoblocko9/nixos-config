@@ -67,7 +67,7 @@
     heroic # Good games launcher
     cemu # Wii U my beloved
     prismlauncher
-    parallel-launcher
+   # parallel-launcher
     python315
     nicotine-plus # Soulseek
     jdk21_headless
