@@ -1,4 +1,11 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
+
+/*
+Hey there! You probably want to comment out lines 23-24 and 35-38 because they make this entire setup impure. 
+Alternatively you can put in your own last.fm API keys and change the path or whatever, neither agenix nor 
+sops-nix want to work for me so whatever :( Even if you do want to you have to pass --impure during build
+so yeahhh, not the best solution but it works. It's better than committing my API keys to github LOL.
+*/
 
 {
   options = {
@@ -7,83 +14,27 @@
     };
   };
 
-  config = lib.mkIf config.systemSettings.music.enable {
+  config = lib.mkIf config.userSettings.music.enable {
     services = {
-      mpd = {
-        enable = true;
-        musicDirectory = "/home/conor/1TB-Hard-Drive/Bandcamp/";
-        network.listenAddress = "any"; # if you want to allow non-localhost connections
-        network.startWhenNeeded = true; # systemd feature: only start MPD service upon connection to its socket
-        extraConfig = ''
-          audio_output {
-            type "pipewire"
-            name "PipeWire Output"
-          }
-
-          audio_output {
-            type "fifo"
-            name "my_fifo"
-            path "/tmp/mpd.fifo"
-            format "44100:16:2"
-          }
-        '';
-      };
+      rescrobbled = {
+  		  enable = true;
+  		  settings = {
+  			  #filter-script = "path/to/script";
+				  lastfm-key = "${config.home.sessionVariables.LASTFM_KEY}";
+  		    lastfm-secret = "${config.home.sessionVariables.LASTFM_SECRET}"; 
+			    #min-play-time = 0;
+  			  player-whitelist = [ "Lollypop" ];
+  			  use-track-start-timestamp = true;
+			  };
+  	  };
     };
-
-    # rmpc (MASSIVE work in progress)
-    programs.rmpc = {
-      enable = true;
-  #    config = ''
-  #      #![enable(implicit_some)]
-  #      #![enable(unwrap_newtypes)]
-  #      #![enable(unwrap_variant_newtypes)]
-  #      (
-  #        on_song_change: ["/home/conor/.files/scripts/rmpc/rmpc-notif"],
-  #        tabs: [
-  #        ( name: "Queue",  pane: Split
-  #          ( direction: Horizontal,  panes: 
-  #            [
-  #              ( size: "40%", pane: Pane(AlbumArt)),
-  #              ( size: "60%", pane: Split 
-  #                ( direction: Vertical,  panes: 
-  #                  [
-  #                    ( size: "50%", pane: Pane(Queue)),
-  #                    ( size: "50%", pane: Pane(Cava)),
-  #                  ],
-  #                ),
-  #              ), 
-  #            ],
-  #          ),
-  #        ),
-  #        ( name: "Directories",  pane: Pane(Directories),  ),
-  #        ( name: "Artists",  pane: Pane(Artists),  ),
-  #        ( name: "Album Artists",  pane: Pane(AlbumArtists), ),
-  #        ( name: "Albums", pane: Pane(Albums), ),
-  #        ( name: "Playlists",  pane: Pane(Playlists),  ),
-  #        ( name: "Search", pane: Pane(Search), ),
-  #        ],
-  #
-  #        cava: (
-  #          framerate: 60, // default 60
-  #          autosens: true, // default true
-  #          sensitivity: 100, // default 100
-  #          lower_cutoff_freq: 50, // not passed to cava if not provided
-  #          higher_cutoff_freq: 10000, // not passed to cava if not provided
-  #          input: (
-  #            method: Fifo,
-  #            source: "/tmp/mpd.fifo",
-  #            sample_rate: 44100,
-  #            channels: 2,
-  #            sample_bits: 16,
-  #          ),
-  #          smoothing: (
-  #            noise_reduction: 77, // default 77
-  #            monstercat: false, // default false
-  #            waves: true, // default false
-  #          ),  
-  #        ),
-  #      )
-  #    '';
+    home.packages = with pkgs; [
+      mprisence # discord RPC using mpris2
+      lollypop # GNOME music player (my beloved)
+    ];
+    home.sessionVariables = {
+      LASTFM_KEY       = ~/Documents/lastfmkey; # horrible horrible bad bad dont do this 
+      LASTFM_SECRET = ~/Documents/lastfmsecret; # WHY DOES AGENIX NOT WORK???
     };
   };
 }

@@ -7,7 +7,7 @@
     };
   };
 
-  config = lib.mkIf config.systemSettings.nixcord.enable {
+  config = lib.mkIf config.userSettings.nixcord.enable {
     programs.nixcord = {
 		  enable = true;
 		  vesktop.enable = true;

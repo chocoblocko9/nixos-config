@@ -7,7 +7,7 @@
     };
   };
 
-  config = lib.mkIf config.systemSettings.haskell.enable {
+  config = lib.mkIf config.userSettings.haskell.enable {
     programs.vscode.haskell.enable = true;
     services.hoogle.enable = true;
     home.packages = with pkgs; [

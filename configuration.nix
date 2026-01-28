@@ -10,9 +10,7 @@
       ./hardware-configuration.nix
     ];
 
-# Bootloader
-
-#  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Bootloader
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
   boot.supportedFilesystems = ["ntfs"];
   boot.loader = {
