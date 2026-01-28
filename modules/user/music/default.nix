@@ -31,6 +31,8 @@ so yeahhh, not the best solution but it works. It's better than committing my AP
     home.packages = with pkgs; [
       mprisence # discord RPC using mpris2
       lollypop # GNOME music player (my beloved)
+      nicotine-plus # Soulseek
+      puddletag # song file tagger
     ];
     home.sessionVariables = {
       LASTFM_KEY       = ~/Documents/lastfmkey; # horrible horrible bad bad dont do this 

@@ -47,8 +47,7 @@
   
         ### EXEC ON BOOT/RELOAD ###
 
-        exec-once = firefox & vesktop & soteria
-        exec = bash ./randomwallpaper.sh
+        exec-once = firefox & vesktop & soteria 
 
         ### LAYOUT ###
 
@@ -100,7 +99,6 @@
         $mod = SUPER 
 
         bind = $mod, Q, exec, $terminal
-        bind = $mod, C, exec, bash ./minimise.sh
         bind = $mod, F, exec, firefox
         bind = $mod, M, exec, uwsm stop
         bind = $mod, E, exec, $filemanager
