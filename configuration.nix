@@ -93,31 +93,8 @@
     LC_TIME = "en_IE.UTF-8";
   };
 
-  # "hardware" options
-  hardware = {
-    i2c.enable = true; # Enable i2c protocol for use with ddcutil (brightness changing)
-    bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-    };
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
-    amdgpu = {
-      opencl.enable = true;
-      initrd.enable = true;
-      overdrive = { # GPU overclocking stuff
-        enable = true;
-        ppfeaturemask = "0xfffd7fff";
-      };
-    };
-  };  
- 
-  services = {
-    vnstat.enable = true;
-    lact.enable = true;
-  };
+  hardware.i2c.enable = true; # Enable i2c protocol for use with ddcutil (brightness changing)
+  services.vnstat.enable = true;
 
   fonts.packages = with pkgs; [ 
     nerd-fonts._0xproto
@@ -151,50 +128,11 @@
     wget
     git
     ddcutil # Program for changing monitor brightness from keyboard
-    bluetuith 
   ];
-
-  programs = {
-  	obs-studio = {
-			enable = true;
-	  	enableVirtualCamera = true;
-  	};
-    steam.enable = true;
-    thunar = {
-      enable = true;
-      plugins = with pkgs.xfce; [ thunar-volman thunar-media-tags-plugin thunar-archive-plugin thunar-vcs-plugin ];
-    };
-    hyprland = {
-      enable = true;
-      withUWSM = true;
-      xwayland.enable = true;
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-    };
-  };
 
   # Is this necessary? idk
   environment.sessionVariables = {
   	NIXOS_OZONE_WL = "1"; 
-  };
-
-  # Security options
-  security = {
-  	rtkit.enable = true;
-  	soteria.enable = true;
-  };
-
-  # Audio
-  services = {
-    pulseaudio.enable = false;
-    pipewire = {
-      pulse.enable = true;
-      enable = true;
-      alsa = {
-        enable = true;
-        support32Bit = true;
-      };
-    };
   };
 
   # Open ports in the firewall.
@@ -202,6 +140,5 @@
   networking.firewall.allowedUDPPorts = [	2234 25565 ];
 
   system.stateVersion = "25.11";
-
 }
 

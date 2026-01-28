@@ -12,7 +12,7 @@
       enable = true;
       settings = {
         # Uses local setup.sh file because it can't find default with home manager managing bash I think? I feel like that shouldn't be it but this makes it work so hey!
-        setup_cmd = "$HOME/.files/scripts/ly/lysetup.sh";
+        setup_cmd = "./lysetup.sh";
   
         # Config
         allow_empty_password = false;

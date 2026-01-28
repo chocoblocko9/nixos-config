@@ -48,7 +48,7 @@
         ### EXEC ON BOOT/RELOAD ###
 
         exec-once = firefox & vesktop & soteria
-        exec = bash /home/conor/.files/scripts/hypr/randomwallpaper.sh
+        exec = bash ./randomwallpaper.sh
 
         ### LAYOUT ###
 
@@ -100,7 +100,7 @@
         $mod = SUPER 
 
         bind = $mod, Q, exec, $terminal
-        bind = $mod, C, exec, bash ~/.files/scripts/hypr/minimise.sh
+        bind = $mod, C, exec, bash ./minimise.sh
         bind = $mod, F, exec, firefox
         bind = $mod, M, exec, uwsm stop
         bind = $mod, E, exec, $filemanager

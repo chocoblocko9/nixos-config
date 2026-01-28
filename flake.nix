@@ -37,7 +37,6 @@
         inherit pkgs;
         modules = [ 
           ./home.nix 
-          ./modules/user/hyprland/default.nix
           inputs.nixcord.homeModules.nixcord
         ];
       };

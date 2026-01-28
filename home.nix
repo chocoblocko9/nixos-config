@@ -18,10 +18,6 @@
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     # Programs
-    heroic # Good games launcher
-    cemu # Wii U my beloved
-    prismlauncher
-    parallel-launcher
     python315
     nicotine-plus # Soulseek
     jdk21_headless
@@ -34,7 +30,7 @@
     unzip
     nwg-look # GTK themes manager
     jq # hyprland minimise script needs this or smth
-    mpd-discord-rpc # Shows currently playing music on MPD on discord rich presence, home-manager service was being weird unforunately
+    mprisence
     feh # GUI image viewer
     xarchiver # GUI archive manager
 		libsForQt5.qt5ct
@@ -128,43 +124,15 @@
       rebuild = "sudo nixos-rebuild switch --flake ."; # Command is way too long to be typing out constantly
       ll = "ls -la"; 
       icat = "kitten icat";
-      ets2 = "streamlink -p vlc -a \"-vvv - --sout \#transcode{vcodec=none,acodec=mp3,ab=320,scodec=none}:standard{access=http,mux=raw,dst=127.0.0.1:8080}\" --twitch-disable-hosting --twitch-disable-ads https://www.youtube.com/watch?v=edqlOxtnvL0 144p"; 
-      # basically this starts a VLC HTTP stream at localhost:8080 of the mau5trap
-      # Airplane Mode 24/7 stream and Euro Truck Simulator can then download that
-      # and play it as an in-game radio because it functions like any over the 
-      # internet radio. Cool? Cool.
     };
   };
   
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
+    # This is probably like a comically bad way of doing this but it works okay!! Custom GTK themes are annoying.
     ".config/gtk-3.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk3-dark.css; 
-    ".config/gtk-4.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk4-dark.css; 
-    ".local/share/applications/Doors.desktop".text = '' # Let me run Doors from wofi
-      [Desktop Entry]
-      Name=Doors
-      Comment=Play doors on Roblox
-      Type=Application
-      Terminal=false
-      Exec=firefox --new-window roblox://placeId=6516141723/
-      Categories=Game;
-    '';        
-    ".config/discord-rpc/config.toml".text = ''
-        [format]
-        details = "$title"
-        state = "$artist"
-        timestamp = "both"
-        large_image = "notes"
-        small_image = ""
-        large_text = "$album"
-        small_text = ""
-        display_type = "details"
-    '';
+    ".config/gtk-4.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk4-dark.css;      
   };
 
   home.sessionVariables = {
