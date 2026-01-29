@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   options = {
@@ -8,7 +8,7 @@
   };
 
   config = lib.mkIf config.systemSettings.bluetooth.enable {
-    services.bluetooth = {
+    hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;
     };

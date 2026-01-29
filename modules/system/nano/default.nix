@@ -17,7 +17,7 @@
         set zap
         set mouse
         set autoindent
-      ''
-    }
+      '';
+    };
   };
 }

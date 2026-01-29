@@ -25,7 +25,6 @@
   		home-manager, 
   		nix-flatpak, 
   		hyprland,  
-			stylix,
   		... 
   	} @ inputs:
 
@@ -41,17 +40,17 @@
         inherit system;
         specialArgs = { inherit inputs; };
         modules = [ 
-          ./. + "/profiles/${profile}/configuration.nix"
+          (./. + "/profiles/${profile}/configuration.nix")
           ./modules/system/default.nix
           nix-flatpak.nixosModules.nix-flatpak
-        ]
+        ];
       };
     };
     homeConfigurations = {
       conor = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          ./. + "/profiles/${profile}/home.nix"
+          (./. + "/profiles/${profile}/home.nix")
           ./modules/user/default.nix
           inputs.nixcord.homeModules.nixcord
         ];

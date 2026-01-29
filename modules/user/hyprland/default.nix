@@ -288,7 +288,7 @@
 
           wallpaper = [ 
             {
-              #monitor = "HDMI-A-2"
+              monitor = "HDMI-A-2";
               path = "./wallpapers/wallpaper.jpg";
             }
           ];

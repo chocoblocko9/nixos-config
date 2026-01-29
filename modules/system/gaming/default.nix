@@ -9,6 +9,11 @@
 
   config = lib.mkIf config.systemSettings.gaming.enable {
     hardware = {
+      opengl = {
+        enable = true;
+        driSupport = true;
+        driSupport32Bit = true;
+      };
       graphics = {
         enable = true;
         enable32Bit = true;
@@ -23,8 +28,18 @@
       };
     };
 
-    services.lact.enable = true;
+    services = { 
+      lact.enable = true;
+      xserver.videoDrivers = [ "amdgpu" ];
+    };
 
-    programs.steam.enable = true;
+    programs = {
+      steam = { 
+        enable = true;
+        gamescopeSession.enable = true;
+      };
+      
+      gamemode.enable = true;
+    };
   };
 }
