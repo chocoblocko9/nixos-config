@@ -1,11 +1,5 @@
 { config, lib, pkgs, pkgs-stable, inputs, ... }:
 {
-  imports = [
-    ./hypr/hyprland.nix
-    ./hypr/hyprpaper.nix
-    ./hypr/hyprsunset.nix
-  ];
-
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home = {

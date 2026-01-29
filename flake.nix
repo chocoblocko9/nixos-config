@@ -34,22 +34,25 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       pkgs-stable = nixpkgs-stable.legacyPackages.${system};
+      profile = "Slip"; # Change this to configure what profile you're building
     in {
     nixosConfigurations = {
       nixos = lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs; };
         modules = [ 
-          ./configuration.nix 
+          ./. + "/profiles/${profile}/configuration.nix"
+          ./modules/system/default.nix
           nix-flatpak.nixosModules.nix-flatpak
-        ];
+        ]
       };
     };
     homeConfigurations = {
       conor = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [ 
-          ./home.nix 
+        modules = [
+          ./. + "/profiles/${profile}/home.nix"
+          ./modules/user/default.nix
           inputs.nixcord.homeModules.nixcord
         ];
         extraSpecialArgs = {
@@ -59,3 +62,4 @@
     };
   };
 }
+
