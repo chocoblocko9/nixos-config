@@ -1,5 +1,24 @@
 { config, pkgs, ...}:
 
+{
+	services.hyprpaper = {
+    enable = true;
+    settings = {
+      ipc = true;
+      splash = false;
+
+      wallpaper = [ 
+        {
+          monitor = "HDMI-A-2";
+          path = "/home/conor/.files/hypr/wallpapers/wallpaper.jpg";
+          fit_mode = "cover";
+        }
+      ];
+    };
+  };
+}
+
+
 /*
 {
   services.hyprpaper = {
@@ -21,20 +40,3 @@
 }
 */
 
-
-{
-	services.hyprpaper = {
-    enable = true;
-    settings = {
-      ipc = true;
-      splash = false;
-
-      wallpaper = [ 
-        {
-          #monitor = "HDMI-A-2"
-          path = "/home/conor/.files/hypr/wallpapers/wallpaper.jpg";
-        }
-      ];
-    };
-  };
-}

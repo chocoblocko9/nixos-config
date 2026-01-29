@@ -177,7 +177,7 @@
       # Press and hold binds
       bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
       bindel = ,XF86AudioLowerVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-
-      bindel = $mod, F2, exec, ddcutil --sleep-multiplier .1 --bus=8 setvcp 10 - 10 # brightness down
-      bindel = $mod, F3, exec, ddcutil --sleep-multiplier .1 --bus=8 setvcp 10 + 10 # brightness up            
+      bindel = $mod, F2, exec, ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 - 10 # brightness down
+      bindel = $mod, F3, exec, ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 + 10 # brightness up            
     '';
 }
