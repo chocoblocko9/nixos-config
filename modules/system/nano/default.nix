@@ -17,6 +17,9 @@
         set zap
         set mouse
         set autoindent
+        set afterends
+        set indicator
+        set linenumbers
       '';
     };
   };
