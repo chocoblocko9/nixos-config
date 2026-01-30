@@ -5,12 +5,16 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "nixpkgs/nixos-25.11";
+
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     nixcord.url = "github:FlameFlag/nixcord";
-    hyprland = {
-      url = "github:hyprwm/Hyprland/v0.53.1?submodules=true";
-      inputs.nixpkgs.follows = "nixpkgs";
+
+    hyprland.url = "github:hyprwm/Hyprland/v0.53.1?submodules=true";
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
     };
+    
     home-manager = {
       url = "github:nix-community/home-manager/master"; 
       inputs.nixpkgs.follows = "nixpkgs";

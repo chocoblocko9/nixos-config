@@ -11,6 +11,7 @@
     ./nh/default.nix
     ./obs/default.nix
     ./polkit/default.nix
+    ./theming/default.nix
     ./thunar/default.nix
     ./vnstat/default.nix
   ];
