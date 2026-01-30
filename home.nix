@@ -92,6 +92,7 @@
 	    wev 
 	    unipicker
 	    mprisence
+	    mpris-scrobbler
 		
 	    # Themes
 	    adw-gtk3  
@@ -116,21 +117,6 @@
 		style.name = "adwaita-dark";
 		style.package = pkgs.adwaita-qt;
 	};
-
-	
-  services = {
-  	rescrobbled = {
-  		enable = false;
-  		settings = {
-  			#filter-script = "path/to/script";
-				lastfm-key = "${config.home.sessionVariables.LASTFM_KEY}";
-  		  lastfm-secret = "${config.home.sessionVariables.LASTFM_SECRET}";
-			  #min-play-time = 0;
-  			player-whitelist = [ "Lollypop" ];
-  			use-track-start-timestamp = true;
-			};
-  	};
-   };
 
   # vscode
   programs.vscode = {
