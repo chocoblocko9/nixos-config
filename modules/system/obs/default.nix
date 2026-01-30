@@ -17,7 +17,7 @@
         obs-gradient-source
         obs-plugin-countdown
         obs-pipewire-audio-capture
-      ]
+      ];
   	};
   };
 }

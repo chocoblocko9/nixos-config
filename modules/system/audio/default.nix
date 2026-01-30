@@ -1,8 +1,8 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   options = {
-    systemSettings.Audio = {
+    systemSettings.audio = {
       enable = lib.mkEnableOption "Enable audio related things";
     };
   };

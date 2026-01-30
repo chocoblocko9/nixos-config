@@ -2,12 +2,12 @@
 
 {
   options = {
-    systemSettings.bluetooth = {
-      enable = lib.mkEnableOption "Enable bluetooth";
+    systemSettings.polkit= {
+      enable = lib.mkEnableOption "Enable polkit with soteria";
     };
   };
 
-  config = lib.mkIf config.systemSettings.bluetooth.enable {
+  config = lib.mkIf config.systemSettings.polkit.enable {
     security.soteria.enable = true;
   };
 }

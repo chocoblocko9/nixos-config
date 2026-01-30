@@ -46,5 +46,9 @@
         clock = "%H:%M:%S %a, %d/%m/%Y";  
       };
     };
+
+    # Make brightness changing work
+    hardware.i2c.enable = true;
+    environment.systemPackages = [ pkgs.ddcutil ];
   };
 }

@@ -10,6 +10,24 @@
       ./hardware-configuration.nix
     ];
 
+  systemSettings = {
+    audio.enable = true;
+    bluetooth.enable = true;
+    firefox.enable = true;
+    flatpak.enable = true;
+    gaming.enable = true;
+    hyprland.enable = true;
+    ly.enable = true;
+    nano.enable = true;
+    nh.enable = true;
+    obs.enable = true;
+    polkit.enable = true;
+    theming.enable = true;
+    thunar.enable = true;
+    vnstat.enable = true;
+  };
+
+
   # Bootloader
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
   boot.supportedFilesystems = ["ntfs"];
@@ -93,16 +111,6 @@
     LC_TIME = "en_IE.UTF-8";
   };
 
-  hardware.i2c.enable = true; # Enable i2c protocol for use with ddcutil (brightness changing)
-  services.vnstat.enable = true;
-
-  fonts.packages = with pkgs; [ 
-    nerd-fonts._0xproto
-    nerd-fonts.hack
-    nerd-fonts.symbols-only 
-    noto-fonts
-  ];
-
   # Configure keyboard layout
   console.useXkbConfig = true;
   services.xserver.xkb = {
@@ -115,20 +123,10 @@
     isNormalUser = true;
     description = "Conor";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    git
-    ddcutil # Program for changing monitor brightness from keyboard
-  ];
 
   # Is this necessary? idk
   environment.sessionVariables = {
