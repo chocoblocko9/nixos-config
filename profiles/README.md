@@ -1,4 +1,3 @@
-# Profiles
 This is where my different profiles live! Click in to them to explore them or read their purposes below.
 ---
 - ### Slip

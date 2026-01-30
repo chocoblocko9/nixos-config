@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }: 
+{ inputs, lib, config, pkgs, ... }: 
 
 {
   options = {
@@ -20,6 +20,10 @@
       package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
       systemd.enable = false;
+      plugins = with hyprlandPlugins; [
+        inputs.hyprland-plugins.packages.${pkgs.system}.hyprfocus
+        inputs.hyprland-plugins.packages.${pkgs.system}.borders-plus-plus
+      ];
       extraConfig = ''
         ### PROGRAMS ###
         $terminal = kitty
