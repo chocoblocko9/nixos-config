@@ -1,5 +1,6 @@
 {
   imports = [
+    ./apps/default.nix
     ./bash/default.nix
     ./btop/default.nix
     ./dunst/default.nix

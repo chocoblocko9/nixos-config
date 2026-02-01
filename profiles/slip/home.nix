@@ -3,6 +3,7 @@
 {
 	config = {
 		userSettings = {
+			apps.enable = true;
     	bash.enable = true;
       btop.enable = true;
       dunst.enable = true;
@@ -32,41 +33,6 @@
   
   # The home.packages option allows you to install Nix packages into your environment.
   nixpkgs.config.allowUnfree = true;
-  home.packages = 
-  	(with pkgs; [
-	    # Programs
-	    python315
-	    jdk21_headless
-	    vlc
-
-	    # Tools
-	    fastfetch
-	    zip
-	    unzip
-	    feh # GUI image viewer
-	    xarchiver # GUI archive manager
-	    ncdu 
-	    wev 
-	    unipicker
-  	])
-
-		++
-
-  	(with pkgs-stable; [
-			parallel-launcher
-  	]);
-
-
-  # vscode
-  programs.vscode = {
-    enable = true;
-#    profiles.conor.extensions = [ pkgs.vscode-extensions.jnoortheen.nix-ide ];
-  };
-
-  home.file = {
-		".config/gtk-3.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk3-dark.css; 
-    ".config/gtk-4.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink /home/conor/.files/themes/adw-colors/adw-solarized/gtk4-dark.css;   
-  };
 
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1"; 

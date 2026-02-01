@@ -10,7 +10,6 @@
   config = lib.mkIf config.userSettings.vscode.enable {
     programs.vscode = {
       enable = true;
-      /*
       profiles.conor.extensions = with pkgs.vscode-extensions; [ 
         jnoortheen.nix-ide
         justusadam.language-haskell
@@ -21,7 +20,6 @@
         github.copilot
         github.copilot-chat
       ];
-      */
     };
   };
 }
