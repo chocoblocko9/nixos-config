@@ -1,0 +1,19 @@
+{
+  imports = [
+    ./audio/default.nix
+    ./bluetooth/default.nix
+    ./firefox/default.nix
+    ./flatpak/default.nix
+    ./gaming/default.nix
+    ./hyprland/default.nix
+    ./ly/default.nix
+    ./nano/default.nix
+    ./networking/default.nix
+    ./nh/default.nix
+    ./obs/default.nix
+    ./polkit/default.nix
+    ./theming/default.nix
+    ./thunar/default.nix
+    ./vnstat/default.nix
+  ];
+}

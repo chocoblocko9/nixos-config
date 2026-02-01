@@ -1,6 +1,13 @@
 {
 
   description = "System flake that I'm scared of (how does this work)";
+  /*
+  nixConfig = {
+      substituters = ["https://hyprland.cachix.org"];
+      trusted-substituters = ["https://hyprland.cachix.org"];
+      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+  };
+  */
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
@@ -13,7 +20,6 @@
     };
     hyprland = {
       url = "github:hyprwm/Hyprland/v0.53.1?submodules=true";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
       url = "github:nix-community/home-manager/master"; 
@@ -40,35 +46,28 @@
       pkgs-stable = nixpkgs-stable.legacyPackages.${system};
     in {
     nixosConfigurations = {
-      nixos = lib.nixosSystem {
+      slip = lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs; };
         modules = [ 
-          ./configuration.nix 
           nix-flatpak.nixosModules.nix-flatpak
+          ./profiles/slip/configuration.nix 
+          ./modules/system/default.nix
         ];
       };
     };
     homeConfigurations = {
       conor = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [ 
-          {
-          	imports = [ inputs.nixcord.homeModules.nixcord ];
-            wayland.windowManager.hyprland = {
-              enable = true;
-              # set the flake package
-              package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-              portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-              systemd.enable = false;
-            };
-          } 
-          stylix.homeModules.stylix
-        	./home.nix
-        ];
         extraSpecialArgs = {
 					inherit pkgs-stable;
+          inherit inputs;
         };
+        modules = [ 
+          stylix.homeModules.stylix
+        	./profiles/slip/home.nix
+          ./modules/user/default.nix
+        ];
       };
     };
   };
