@@ -3,6 +3,7 @@
 {
 	config = {
 		userSettings = {
+			ashell.enable = true;
 			apps.enable = true;
     	bash.enable = true;
       btop.enable = true;
@@ -15,6 +16,7 @@
 			hyprsunset.enable = true;
       music.enable = true;
 			nixcord.enable = true;
+			stylix.enable = true;
 			theming.enable = true;
       vscode.enable = true;
 		};
@@ -25,11 +27,6 @@
    	homeDirectory = "/home/conor";
  	  stateVersion = "25.11";
 	 };
-
-	stylix = {
-		enable = false;
-		base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-	};
   
   # The home.packages option allows you to install Nix packages into your environment.
   nixpkgs.config.allowUnfree = true;

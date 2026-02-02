@@ -18,9 +18,7 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland = {
-      url = "github:hyprwm/Hyprland/v0.53.1?submodules=true";
-    };
+    hyprland.url = "github:hyprwm/Hyprland/v0.53.1?submodules=true";
     home-manager = {
       url = "github:nix-community/home-manager/master"; 
       inputs.nixpkgs.follows = "nixpkgs";

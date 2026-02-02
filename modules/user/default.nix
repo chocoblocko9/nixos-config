@@ -1,6 +1,7 @@
 {
   imports = [
     ./apps/default.nix
+    ./ashell/default.nix
     ./bash/default.nix
     ./btop/default.nix
     ./dunst/default.nix
@@ -12,6 +13,7 @@
     ./hyprsunset/default.nix
     ./music/default.nix
     ./nixcord/default.nix
+    ./stylix/default.nix
     ./theming/default.nix
     ./vscode/default.nix
   ];

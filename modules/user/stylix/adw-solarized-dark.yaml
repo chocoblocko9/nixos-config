@@ -1,0 +1,21 @@
+system: "base16"
+name: "Adwaita Solarized Dark"
+author: "@lassekongo83, adapted to base16 by Conor"
+variant: "dark"
+palette:
+  base00: "#001e26" # Default background
+  base01: "#002731" # Alternate background
+  base02: "#006388" # Selection background
+  base03: "#3a8298" # 
+  base04: "#74a2a9" # Alternative text
+  base05: "#aec2ba" # Default text
+  base06: "#e9e2cb"
+  base07: "#fcf4dc"
+  base08: "#d01b24" # Error
+  base09: "#a57705" # Urgent
+  base0A: "#178dc7" # Warning
+  base0B: "#6bbe6c"
+  base0C: "#259185"
+  base0D: "#2075c7"
+  base0E: "#c61b6e"
+  base0F: "#680d12"

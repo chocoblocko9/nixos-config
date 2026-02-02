@@ -18,17 +18,28 @@
     ];
 
     programs = {
-      wofi.enable = true;
+      wofi = { 
+        enable = true;
+        settings = {
+          width = "62%";
+          height = "50%";
+        };
+        style = ''
+          * {
+            font-size: 22px;
+          }
+        '';
+      };
       kitty = {
         enable = true;
         enableGitIntegration = true;
         settings = {
           background = "#001e26";
-          background_opacity = "0.4";
+          background_opacity = "0.6";
           background_blur = 32;
         };
         font = { 
-          size = 12;
+          size = 14;
           name = "monospace";
         };
       };
@@ -77,7 +88,8 @@
   
         ### EXEC ON BOOT/RELOAD ###
        
-        exec-once = firefox & vesktop & mpriscence
+        exec-once = firefox & vesktop
+        exec-once = mprisence 
   
         ### LAYOUT ###
   

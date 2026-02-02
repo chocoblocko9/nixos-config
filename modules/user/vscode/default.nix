@@ -19,6 +19,8 @@
         ms-python.vscode-pylance
         github.copilot
         github.copilot-chat
+        redhat.vscode-yaml
+        naumovs.color-highlight
       ];
     };
   };

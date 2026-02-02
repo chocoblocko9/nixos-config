@@ -29,9 +29,9 @@
         sleep_cmd = "systemctl sleep";
         brightness_down_key = "F5";
         brightness_up_key = "F6";
-        # I'm crying what is he doing
-        brightness_down_cmd = "/nix/store/qrxy1rq5bj4lm9i1qy08mackjpg0r4j2-ddcutil-2.2.3/bin/ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 - 10";
-        brightness_up_cmd = "/nix/store/qrxy1rq5bj4lm9i1qy08mackjpg0r4j2-ddcutil-2.2.3/bin/ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 + 10";
+        # PATH no worky I guess
+        brightness_down_cmd = "/run/current-system/sw/bin/ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 - 10";
+        brightness_up_cmd = "/run/current-system/sw/bin/ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 + 10";
   
         # Styling
         animation = "colormix";
