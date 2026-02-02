@@ -25,6 +25,13 @@
           package = pkgs.nerd-fonts.jetbrains-mono;
         };
       };
+      cursor = {
+        # name = "Latte Blue";
+        # package = pkgs.catppuccin-cursors.latteBlue;
+        name = "Phinger Cursors";
+        package = pkgs.phinger-cursors;
+        size = 24;
+      };
 	  };
   };
 }

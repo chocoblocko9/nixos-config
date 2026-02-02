@@ -18,6 +18,7 @@
       adw-gtk3  
       numix-icon-theme
       libsForQt5.qt5ct
+      catppuccin-cursors.latteBlue
       #nwg-look # GTK themes manager
     ];
 
