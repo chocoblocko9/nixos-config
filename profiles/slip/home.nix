@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgs-stable, inputs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
 	config = {
@@ -21,22 +21,21 @@
       vscode.enable = true;
 		};
 
-  # Home Manager needs a bit of information about you and the paths it should manage.
-  home = {
-   	username = "conor";
-   	homeDirectory = "/home/conor";
- 	  stateVersion = "25.11";
-	 };
+    # Home Manager needs a bit of information about you and the paths it should manage.
+    home = {
+   	  username = "conor";
+   	  homeDirectory = "/home/conor";
+ 	    stateVersion = "25.11";
+	  };
+    
+    nixpkgs.config.allowUnfree = true;
   
-  # The home.packages option allows you to install Nix packages into your environment.
-  nixpkgs.config.allowUnfree = true;
-
-  home.sessionVariables = {
-    NIXOS_OZONE_WL = "1"; 
-    XCURSOR_SIZE   = "24";
+    home.sessionVariables = {
+      NIXOS_OZONE_WL = "1"; 
+      XCURSOR_SIZE   = "24";
+    };
+  
+    # Let Home Manager install and manage itself.
+    programs.home-manager.enable = true;
   };
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-};
 }

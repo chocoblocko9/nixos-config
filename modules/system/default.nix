@@ -11,6 +11,7 @@
     ./networking/default.nix
     ./nh/default.nix
     ./obs/default.nix
+    ./plasma/default.nix
     ./polkit/default.nix
     ./theming/default.nix
     ./thunar/default.nix
