@@ -5,8 +5,8 @@
     systemSettings.ly = {
       enable = lib.mkEnableOption "Enable ly display manager";
       profiles = {
-        "slip" = lib.mkOption "Use profile slip";
-        "sleepless" = lib.mkOption "Use profile sleepless";
+        "slip" = lib.mkEnableOption "Use profile slip";
+        "sleepless" = lib.mkEnableOption "Use profile sleepless";
       };
     };
   };

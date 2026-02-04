@@ -10,7 +10,7 @@
   config = lib.mkIf config.systemSettings.plasma.enable {
     services = {
       xserver.enable = true;
-      desktopManager.plasma.enable = true;
-    }
+      desktopManager.plasma6.enable = true;
+    };
   };
 }
