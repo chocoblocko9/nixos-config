@@ -1,4 +1,4 @@
-{ lib, config, pkgs, pkgs-stable, ... }:
+{ lib, config, pkgs, nixpkgs-stable, ... }:
 
 {
   options = {
@@ -30,7 +30,7 @@
 
 		++
 
-  	(with pkgs-stable; [
+  	(with nixpkgs-stable; [
 			parallel-launcher # N64 emulator
       # newest version in unstable fails to build yippee!
   	]);

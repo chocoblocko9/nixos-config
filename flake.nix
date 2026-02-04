@@ -42,7 +42,7 @@
       lib = nixpkgs.lib;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      pkgs-stable = nixpkgs-stable.legacyPackages.${system};
+      nixpkgs-stable = nixpkgs-stable.legacyPackages.${system};
       nixpkgs-overlayed = import nixpkgs {
         system = "x86_64-linux";
         overlays = [
@@ -57,7 +57,7 @@
         inherit system;
         specialArgs = { 
           inherit inputs; 
-          inherit pkgs-overlayed;
+          inherit nixpkgs-overlayed;
         };
         modules = [ 
           nix-flatpak.nixosModules.nix-flatpak
@@ -70,7 +70,7 @@
       conor = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
-					inherit pkgs-stable;
+					inherit nixpkgs-stable;
           inherit inputs;
         };
         modules = [ 
