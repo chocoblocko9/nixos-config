@@ -10,7 +10,7 @@
   config = lib.mkIf config.userSettings.ashell.enable {
     programs.ashell = {
       enable = true;
-      # systemd.enable = true;
+      systemd.enable = true;
       settings = {
         enable_esc_key = true;
         position = "Top";

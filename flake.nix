@@ -11,7 +11,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "nixpkgs/nixos-25.11";
+    pkgs-stable.url = "nixpkgs/nixos-25.11";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     nixcord.url = "github:FlameFlag/nixcord";
     stylix = {
@@ -30,7 +30,7 @@
   	{ 
   		self, 
   		nixpkgs, 
-  		nixpkgs-stable,
+  		pkgs-stable,
   		home-manager, 
   		nix-flatpak, 
   		hyprland,  
@@ -42,7 +42,7 @@
       lib = nixpkgs.lib;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      nixpkgs-stable = nixpkgs-stable.legacyPackages.${system};
+      nixpkgs-stable = pkgs-stable.legacyPackages.${system};
       nixpkgs-overlayed = import nixpkgs {
         system = "x86_64-linux";
         overlays = [
@@ -92,11 +92,9 @@
       ezra = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
-					inherit pkgs-stable;
           inherit inputs;
         };
         modules = [ 
-          stylix.homeModules.stylix
         	./profiles/superliminal/home.nix
           ./modules/user/default.nix
         ];
