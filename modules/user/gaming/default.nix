@@ -15,6 +15,17 @@
       prismlauncher # Minecraft
       # parallel-launcher
       streamlink # thing for the ets2 radio stream
+      (sm64coopdx.overrideAttrs { # update to 1.4.1
+        pname = "sm64coopdx";
+        version = "1.4.1";
+
+        src = fetchFromGitHub {
+          owner = "coop-deluxe";
+          repo = "sm64coopdx";
+          rev = "6092488d1c4fc741b16a0789ef9c08ec0279333f";
+          hash = "sha256-BIdKKIp6q9Vp2DByXzT9CJzOszFhjriiWBEqFwUT28M=";
+        };
+      })
   	])
 
 		++

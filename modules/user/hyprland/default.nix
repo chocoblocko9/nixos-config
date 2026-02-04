@@ -1,6 +1,8 @@
 { lib, config, pkgs, inputs, ...}:
 
 {
+  imports = [ inputs.hyprcursor-phinger.homeManagerModules.hyprcursor-phinger ];
+
   options = {
     userSettings.hyprland = {
       enable = lib.mkEnableOption "Enable hyprland in home-manager";
@@ -18,6 +20,7 @@
     ];
 
     programs = {
+      hyprcursor-phinger.enable = true; # hyprcursor
       wofi = { 
         enable = true;
         settings = {
@@ -88,8 +91,9 @@
   
         ### EXEC ON BOOT/RELOAD ###
        
-        exec-once = firefox & vesktop
+        exec-once = firefox
         exec-once = mprisence 
+        exec-once = soteria
   
         ### LAYOUT ###
   
@@ -137,6 +141,10 @@
           animation = borderangle, 1, 100, linear, loop
         }
   
+        ### CURSOR ###
+        env = HYPRCURSOR_THEME,phinger-cursors-dark
+        env = HYPRCURSOR_SIZE,28
+
         ### BINDS ###
         $mod = SUPER 
         

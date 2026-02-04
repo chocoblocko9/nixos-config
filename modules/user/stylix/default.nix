@@ -1,6 +1,8 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, inputs, ... }:
 
 {
+  imports = [ inputs.stylix.homeModules.stylix ];
+
   options = {
     userSettings.stylix = {
       enable = lib.mkEnableOption "Enable stylix theming";

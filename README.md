@@ -6,8 +6,8 @@ This is my NixOS config! (quite self explanatory)
 #### Not in order of priority
 
 - [ ] Install waybar and make it look not horrible (23/11/25)
+ - [x] Got ashell up and running but the customisation options of waybar is tempting... (03/02/26)
 - [ ] Get Docker and WinApps running as an Experiment (23/11/25)
-- [ ] Install a cursor theme to get rid of this Stupid Logo (24/11/25)
 - [ ] Make profile for my laptop (BIG maybe, need to use Microsoft apps and stuff on it so if it causes big problems then its a no) (24/11/25)
   - [x] All the systems are in place so just has to actually happen! (01/02/26)
 - [ ] Add wayy more animations to hyprland (30/11/25)
@@ -55,7 +55,9 @@ This is my NixOS config! (quite self explanatory)
 	- Did this a couple days ago but I forgot, has a very smooth almost unnoticeable curve (26/01/26)
 - [x] Figure out how to manage Vesktop properly, currently have to reapply all themes and plugins after restarts (21/01/26)
   - Forgot to mark this off but nixcord does the trick! (01/02/24)
-	
+- [x] Install a cursor theme to get rid of this Stupid Logo (24/11/25)
+  - Went with Phinger cursors, they look nice! (03/02/26)
+
 ## Background
 
 ### Why?

@@ -19,7 +19,7 @@
           frame_color = "#073642";
           background = "#000000C0";
           progress_bar = "true";
-          #font = "Monospace 12";
+          font = "Monospace 11";
         };
         urgency_normal = {};
       };

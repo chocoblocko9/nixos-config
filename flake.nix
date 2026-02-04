@@ -19,6 +19,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland/v0.53.1?submodules=true";
+    hyprcursor-phinger.url = "github:jappie3/hyprcursor-phinger";
     home-manager = {
       url = "github:nix-community/home-manager/master"; 
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,11 +43,22 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       pkgs-stable = nixpkgs-stable.legacyPackages.${system};
+      nixpkgs-overlayed = import nixpkgs {
+        system = "x86_64-linux";
+        overlays = [
+          (final: prev: {
+            soteria = prev.callPackage ./overlays/soteria.nix {};
+          })
+        ];
+      };
     in {
     nixosConfigurations = {
       slip = lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs; };
+        specialArgs = { 
+          inherit inputs; 
+          inherit pkgs-overlayed;
+        };
         modules = [ 
           nix-flatpak.nixosModules.nix-flatpak
           ./profiles/slip/configuration.nix 
@@ -62,7 +74,6 @@
           inherit inputs;
         };
         modules = [ 
-          stylix.homeModules.stylix
         	./profiles/slip/home.nix
           ./modules/user/default.nix
         ];
