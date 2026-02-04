@@ -91,9 +91,8 @@
   
         ### EXEC ON BOOT/RELOAD ###
        
-        exec-once = firefox
-        exec-once = mprisence 
-        exec-once = soteria
+        exec-once = firefox & vesktop & mprisence & soteria
+        execr-once = nicotine -n
   
         ### LAYOUT ###
   

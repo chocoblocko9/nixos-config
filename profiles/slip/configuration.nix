@@ -14,7 +14,10 @@
       flatpak.enable = true;
       gaming.enable = true;
       hyprland.enable = true;
-      ly.enable = true;
+      ly = {
+        enable = true;
+        profile.sleepless = true; 
+      };
       nano.enable = true;
       networking.enable = true;
       nh.enable = true;

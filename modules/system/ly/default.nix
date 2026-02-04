@@ -4,7 +4,7 @@
   options = {
     systemSettings.ly = {
       enable = lib.mkEnableOption "Enable ly display manager";
-      profiles = {
+      profile = {
         "slip" = lib.mkEnableOption "Use profile slip";
         "sleepless" = lib.mkEnableOption "Use profile sleepless";
       };
@@ -14,7 +14,7 @@
   config = lib.mkIf config.systemSettings.ly.enable {
     services.displayManager.ly = {
       enable = true;
-      settings = (lib.mkIf config.systemSettings.ly.profiles.slip {
+      settings = (lib.mkIf config.systemSettings.ly.profile.slip {
         setup_cmd = "~/.files/modules/system/ly/lysetup.sh";
   
         # Config
@@ -52,7 +52,7 @@
       
       // # Allows choosing between ly profiles
       
-      (lib.mkIf config.systemSettings.ly.profiles.sleepless {
+      (lib.mkIf config.systemSettings.ly.profile.sleepless {
         setup_cmd = "~/.files/modules/system/ly/lysetup.sh";
   
         # Config
