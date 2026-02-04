@@ -6,7 +6,7 @@ This is my NixOS config! (quite self explanatory)
 #### Not in order of priority
 
 - [ ] Install waybar and make it look not horrible (23/11/25)
- - [x] Got ashell up and running but the customisation options of waybar is tempting... (03/02/26)
+  - [x] Got ashell up and running but the customisation options of waybar is tempting... (03/02/26)
 - [ ] Get Docker and WinApps running as an Experiment (23/11/25)
 - [ ] Make profile for my laptop (BIG maybe, need to use Microsoft apps and stuff on it so if it causes big problems then its a no) (24/11/25)
   - [x] All the systems are in place so just has to actually happen! (01/02/26)
