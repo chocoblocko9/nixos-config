@@ -5,8 +5,8 @@
     systemSettings.ly = {
       enable = lib.mkEnableOption "Enable ly display manager";
       profiles = {
-        slip = lib.mkEnableOption "Use profile slip";
-        sleepless = lib.mkEnableOption "Use profile sleepless";
+        "slip" = lib.mkOption "Use profile slip";
+        "sleepless" = lib.mkOption "Use profile sleepless";
       };
     };
   };
@@ -14,7 +14,7 @@
   config = lib.mkIf config.systemSettings.ly.enable {
     services.displayManager.ly = {
       enable = true;
-      settings = lib.mkIf config.systemSettings.profiles.slip {
+      settings = (lib.mkIf config.systemSettings.ly.profiles.slip {
         setup_cmd = "~/.files/modules/system/ly/lysetup.sh";
   
         # Config
@@ -48,9 +48,11 @@
         bigclock = "en";
         bigclock_seconds = "true"; 
         clock = "%H:%M:%S %a, %d/%m/%Y";  
-      };
-
-      settings = lib.mkIf config.systemSettings.profiles.sleepless {
+      }) 
+      
+      // # Allows choosing between ly profiles
+      
+      (lib.mkIf config.systemSettings.ly.profiles.sleepless {
         setup_cmd = "~/.files/modules/system/ly/lysetup.sh";
   
         # Config
@@ -84,7 +86,7 @@
         bigclock = "en";
         bigclock_seconds = "true"; 
         clock = "%H:%M:%S %a, %d/%m/%Y";  
-      };
+      });
     };
 
     # Make brightness changing work
