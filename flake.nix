@@ -53,7 +53,17 @@
           ./modules/system/default.nix
         ];
       };
+
+      superliminal = lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./profiles/superliminal/configuration.nix
+          ./modules/system/default.nix
+        ];
+      };
     };
+
     homeConfigurations = {
       conor = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
@@ -64,6 +74,19 @@
         modules = [ 
           stylix.homeModules.stylix
         	./profiles/slip/home.nix
+          ./modules/user/default.nix
+        ];
+      };
+
+      ezra = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = {
+					inherit pkgs-stable;
+          inherit inputs;
+        };
+        modules = [ 
+          stylix.homeModules.stylix
+        	./profiles/superliminal/home.nix
           ./modules/user/default.nix
         ];
       };

@@ -8,6 +8,6 @@
   };
 
   config = lib.mkIf config.systemSettings.polkit.enable {
-    security.soteria.enable = true;
+    environment.systemPackages = [ pkgs.soteria ]
   };
 }
