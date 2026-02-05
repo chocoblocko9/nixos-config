@@ -13,7 +13,10 @@
       firefox.enable = true;
       flatpak.enable = true;
       gaming.enable = true;
-      ly.enable = true;
+      ly = {
+        enable = true;
+        profile = "superliminal";
+      };
       nano.enable = true;
       networking.enable = true;
       nh.enable = true;
