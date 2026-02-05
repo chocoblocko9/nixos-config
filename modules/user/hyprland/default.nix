@@ -6,6 +6,10 @@
   options = {
     userSettings.hyprland = {
       enable = lib.mkEnableOption "Enable hyprland in home-manager";
+      profile = lib.mkOption { 
+        default = "slip";  
+        type = lib.types.str;
+      };
     };
   };
 
