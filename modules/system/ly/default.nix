@@ -3,7 +3,9 @@
 {
 
   imports = [
-    ./profiles/slip.nix
+    ./configs/slip.nix
+    ./configs/superliminal.nix
+    ./configs/sleepless.nix
   ];
 
   options = {
