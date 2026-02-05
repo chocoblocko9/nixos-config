@@ -42,6 +42,23 @@
         "$fileManager" = "thunar";
         "$menu" = "wofi --show drun";
         "$music" = "lollypop";
+
+        ### BINDS ###
+        "$mod" = "SUPER";
+         
+        # Mouse binds
+        bindm = [
+          "$mod, mouse:272, movewindow"
+          "$mod, mouse:273, resizewindow"
+        ];
+
+        # Press and hold binds
+        bindel = [
+          ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+          ",XF86AudioLowerVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-"
+          "$mod, F2, exec, ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 - 10 # brightness down"
+          "$mod, F3, exec, ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 + 10 # brightness up"
+        ];
       };
       extraConfig = ''
         ### PROGRAMS ###
@@ -131,7 +148,7 @@
         env = HYPRCURSOR_SIZE,28
 
         ### BINDS ###
-        $mod = SUPER 
+        # $mod = SUPER 
         
         bind = $mod, Q, exec, $terminal
         bind = $mod, C, exec, bash ~/.files/modules/user/hyprland/minimise.sh
@@ -198,14 +215,14 @@
 			  layerrule = match:class selector, no_anim on # fix for weird 1px black border
   
         # Mouse binds
-        bindm = $mod, mouse:272, movewindow
-        bindm = $mod, mouse:273, resizewindow
+        # bindm = $mod, mouse:272, movewindow
+        # bindm = $mod, mouse:273, resizewindow
   
         # Press and hold binds
-        bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
-        bindel = ,XF86AudioLowerVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-
-        bindel = $mod, F2, exec, ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 - 10 # brightness down
-        bindel = $mod, F3, exec, ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 + 10 # brightness up            
+        # bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+        # bindel = ,XF86AudioLowerVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-
+        # bindel = $mod, F2, exec, ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 - 10 # brightness down
+        # bindel = $mod, F3, exec, ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 + 10 # brightness up            
       '';
     };
   };
