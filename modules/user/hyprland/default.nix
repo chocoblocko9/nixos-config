@@ -19,34 +19,7 @@
       jq # minimise steam script depends on this
     ];
 
-    programs = {
-      hyprcursor-phinger.enable = true; # hyprcursor
-      wofi = { 
-        enable = true;
-        settings = {
-          width = "62%";
-          height = "50%";
-        };
-        style = ''
-          * {
-            font-size: 22px;
-          }
-        '';
-      };
-      kitty = {
-        enable = true;
-        enableGitIntegration = true;
-        settings = {
-          background = "#001e26";
-          background_opacity = "0.6";
-          background_blur = 32;
-        };
-        font = { 
-          size = 14;
-          name = "monospace";
-        };
-      };
-    };
+    programs.hyprcursor-phinger.enable = true; # hyprcursor
   
     home.sessionVariables.NIXOS_OZONE_WL = "1"; # tells electron apps to use wayland or somthing
 

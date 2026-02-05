@@ -11,10 +11,12 @@
     ./hyprland/default.nix
     ./hyprpaper/default.nix
     ./hyprsunset/default.nix
+    ./kitty/default.nix
     ./music/default.nix
     ./nixcord/default.nix
     ./stylix/default.nix
     ./theming/default.nix
     ./vscode/default.nix
+    ./wofi/default.nix
   ];
 }

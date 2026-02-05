@@ -14,11 +14,13 @@
 			hyprland.enable = true;
 			hyprpaper.enable = true;
 			hyprsunset.enable = true;
+      kitty.enable = true;
       music.enable = true;
 			nixcord.enable = true;
 			stylix.enable = true;
 			theming.enable = true;
       vscode.enable = true;
+      wofi.enable = true;
 		};
 
     # Home Manager needs a bit of information about you and the paths it should manage.
