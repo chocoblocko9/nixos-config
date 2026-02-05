@@ -74,6 +74,15 @@
           ./modules/system/default.nix
         ];
       };
+
+      sleepless = lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./profiles/sleepless/configuration.nix
+          ./modules/system/default.nix
+        ];
+      };
     };
 
     homeConfigurations = {
