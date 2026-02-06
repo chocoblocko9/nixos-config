@@ -16,7 +16,8 @@
 
         wallpaper = [ 
           {
-            monitor = "HDMI-A-2";
+            # This is a little ugly but it works perfectly for 2 profiles
+            monitor = (if "$HOSTNAME" == "slip" then "HDMI-A-2" else "eDP-1");
             path = "~/.files/modules/user/hyprpaper/wallpapers/wallpaper.jpg";
             fit_mode = "cover";
           }
