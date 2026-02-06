@@ -1,13 +1,15 @@
 { lib, config, ... }:
 
-{
+let
+  cfg = config.userSettings;
+in {
   options = {
     userSettings.hyprpaper = {
       enable = lib.mkEnableOption "Enable hyprpaper";
     };
   };
 
-  config = lib.mkIf config.userSettings.hyprpaper.enable {
+  config = lib.mkIf cfg.hyprpaper.enable {
     services.hyprpaper = {
       enable = true;
       settings = {
@@ -16,9 +18,9 @@
 
         wallpaper = [ 
           {
-            # This is a little ugly but it works perfectly for 2 profiles
-            monitor = (if "$HOSTNAME" == "slip" then "HDMI-A-2" else "eDP-1");
-            path = "~/.files/modules/user/hyprpaper/wallpapers/wallpaper.jpg";
+            # monitor = (if cfg.hyprland.profile == "slip" then "HDMI-A-2" else "eDP-1"); # Old logic
+            monitor = ""; # abuse fallback (I'm poor and don't have a second monitor rip)
+            path = "~/.files/modules/user/hyprpaper/wallpapers/wallpaper14.jpg";
             fit_mode = "cover";
           }
         ];

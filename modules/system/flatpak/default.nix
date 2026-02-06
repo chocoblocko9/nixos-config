@@ -1,6 +1,8 @@
-{ lib, config, ... }:
+{ lib, config, inputs, ... }:
 
 {
+  imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
+
   options = {
     systemSettings.flatpak = {
       enable = lib.mkEnableOption "Enable flatpak through nix-flatpak";

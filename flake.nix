@@ -46,9 +46,9 @@
       nixpkgs-overlayed = import nixpkgs {
         system = "x86_64-linux";
         overlays = [
-          (final: prev: {
-            soteria = prev.callPackage ./overlays/soteria.nix {};
-          })
+          # (final: prev: {
+            # cheese = prev.callPackage ./overlays/cheese.nix {};
+          # })
         ];
       };
     in {
@@ -60,7 +60,6 @@
           inherit nixpkgs-overlayed;
         };
         modules = [ 
-          nix-flatpak.nixosModules.nix-flatpak
           ./profiles/slip/configuration.nix 
           ./modules/system/default.nix
         ];
@@ -82,7 +81,6 @@
 	 				inherit nixpkgs-overlayed;
 				};
         modules = [
-          nix-flatpak.nixosModules.nix-flatpak
           ./profiles/sleepless/configuration.nix
           ./modules/system/default.nix
         ];

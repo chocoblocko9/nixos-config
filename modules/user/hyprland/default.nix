@@ -1,7 +1,11 @@
 { lib, config, pkgs, inputs, ...}:
 
 {
-  imports = [ inputs.hyprcursor-phinger.homeManagerModules.hyprcursor-phinger ];
+  imports = [ 
+    inputs.hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
+    ./configs/slip.nix
+    ./configs/sleepless.nix
+  ];
 
   options = {
     userSettings.hyprland = {
@@ -54,8 +58,8 @@
 
         # Press and hold binds
         bindel = [
-          ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-          ",XF86AudioLowerVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-"
+          ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 10%+"
+          ",XF86AudioLowerVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 10%-"
           "$mod, F2, exec, ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 - 10 # brightness down"
           "$mod, F3, exec, ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 + 10 # brightness up"
         ];
@@ -106,12 +110,11 @@
         }
   
         ### INPUT ###
-        input {
-          kb_layout = ie
-          # kb_variant = qwerty
-  
-          follow_mouse = 1
-        }
+        # input {
+        #   kb_layout = de
+        #   kb_variant = qwerty
+        #   follow_mouse = 1
+        # }
   
         ### LOOK AND FEEL ### 
         general {

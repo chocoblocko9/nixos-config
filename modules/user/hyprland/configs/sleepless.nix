@@ -5,7 +5,11 @@ let
 in {
   config.wayland.windowManager.hyprland = lib.mkIf (cfg == "sleepless") {
     settings = {
-
+      ### INPUT ###
+      input = {
+          "kb_layout" = "ie";
+          "follow_mouse" = 1;
+      };
     };
   };
 }
