@@ -107,8 +107,8 @@
   
         ### INPUT ###
         input {
-          kb_layout = de
-          kb_variant = qwerty
+          kb_layout = ie
+          # kb_variant = qwerty
   
           follow_mouse = 1
         }

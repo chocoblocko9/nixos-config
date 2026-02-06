@@ -77,8 +77,12 @@
 
       sleepless = lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs; };
+        specialArgs = { 
+	  			inherit inputs; 
+	 				inherit nixpkgs-overlayed;
+				};
         modules = [
+          nix-flatpak.nixosModules.nix-flatpak
           ./profiles/sleepless/configuration.nix
           ./modules/system/default.nix
         ];
