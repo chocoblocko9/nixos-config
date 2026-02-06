@@ -18,7 +18,7 @@
       hyprland.enable = true;
       ly = {
         enable = true;
-        profile = "slip";
+        profile = "sleepless";
       };
       nano.enable = true;
       networking.enable = true;

@@ -47,6 +47,9 @@
 
     # Make brightness changing work
     hardware.i2c.enable = true;
-    environment.systemPackages = [ pkgs.ddcutil ];
+    environment.systemPackages = with pkgs; [ 
+      ddcutil 
+      brightnessctl
+    ];
   };
 }

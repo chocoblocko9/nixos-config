@@ -33,7 +33,9 @@
           sensor = "k10temp Tctl";
         };
 
-        setting = {
+        settings = {
+          battery_format = "IconAndPercentage";
+          indicators = [ "Battery" "Bluetooth" "Network" "Audio" ];
           shutdown_cmd = "systemctl poweroff";
           suspend_cmd = "systemctl sleep";
           reboot_cmd = "systemctl reboot";
