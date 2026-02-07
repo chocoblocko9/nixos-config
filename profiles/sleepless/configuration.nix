@@ -39,6 +39,10 @@
     experimental-features = [ "nix-command" "flakes" ];
   };  
 
+  environment.systemPackages = with pkgs; [
+    git
+  ];
+
   # Bootloader & Kernel
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
