@@ -51,14 +51,68 @@
 
         ### BINDS ###
         "$mod" = "SUPER";
-         
+        
+        # Normal binds
+        bind = [
+          "$mod, Q, exec, $terminal"
+          "$mod, C, exec, bash ~/.files/modules/user/hyprland/minimise.sh"
+          "$mod, F, exec, firefox"
+          "$mod, M, exec, uwsm stop"
+          "$mod, E, exec, $filemanager"
+          "$mod, V, togglefloating,"
+          "$mod, D, exec, $menu"
+          "$mod, P, pseudo,"
+          "$mod, J, togglesplit,"
+
+          "$mod, left, movefocus, l"
+          "$mod, down, movefocus, d"
+          "$mod, up, movefocus, u"
+          "$mod, right, movefocus, r"
+
+          "$mod, 1, workspace, 1"
+          "$mod, 2, workspace, 2"
+          "$mod, 3, workspace, 3"
+          "$mod, 4, workspace, 4"
+          "$mod, 5, workspace, 5"
+          "$mod, 6, workspace, 6"
+          "$mod, 7, workspace, 7"
+          "$mod, 8, workspace, 8"
+          "$mod, 9, workspace, 9"
+          "$mod, 0, workspace, 10"
+
+          "$mod SHIFT, 1, movetoworkspace, 1"
+          "$mod SHIFT, 2, movetoworkspace, 2"
+          "$mod SHIFT, 3, movetoworkspace, 3"
+          "$mod SHIFT, 4, movetoworkspace, 4"
+          "$mod SHIFT, 5, movetoworkspace, 5"
+          "$mod SHIFT, 6, movetoworkspace, 6"
+          "$mod SHIFT, 7, movetoworkspace, 7"
+          "$mod SHIFT, 8, movetoworkspace, 8"
+          "$mod SHIFT, 9, movetoworkspace, 9"
+          "$mod SHIFT, 0, movetoworkspace, 10"
+
+          "$mod, mouse_up, workspace, e-1"
+          "$mod, mouse_down, workspace, e+1"
+
+          ",XF86Tools, exec, $music"
+
+          ", Print, exec, grim -g \"$(slurp -d)\" - | wl-copy"
+        ];
+        
         # Mouse binds
         bindm = [
           "$mod, mouse:272, movewindow"
           "$mod, mouse:273, resizewindow"
         ];
 
-        # Press and hold binds
+        # Top row media keys binds
+        bindl = [
+          ", XF86AudioNext, exec, playerctl --player=Lollypop next"
+          ", XF86AudioPlay, exec, playerctl --player=Lollypop play-pause"
+          ", XF86AudioPrev, exec, playerctl --player=Lollypop previous"
+          ", XF86AudioStop, exec, playerctl --player=Lollypop stop"
+          ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ];
         bindel = [
           ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 10%+"
           ",XF86AudioLowerVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 10%-"
@@ -67,12 +121,6 @@
         ];
       };
       extraConfig = ''
-        ### PROGRAMS ###
-        # $terminal = kitty
-        # $fileManager = thunar
-        # $menu = wofi --show drun
-        # $music = lollypop
-  
         ### WINDOW RULES ###
 			  windowrule = tag +defFloat, match:class org.pulseaudio.pavucontrol
 			  windowrule = tag +defFloat, match:class nwg-look
@@ -104,21 +152,15 @@
         execr-once = nicotine -n
   
         ### LAYOUT ###
-  
+
         dwindle {
           pseudotile = true 
           preserve_split = true
           smart_split = true
         }
-  
-        ### INPUT ###
-        # input {
-        #   kb_layout = de
-        #   kb_variant = qwerty
-        #   follow_mouse = 1
-        # }
-  
+
         ### LOOK AND FEEL ### 
+
         general {
           gaps_in = 5
           gaps_out = 5,10,10,10
@@ -151,83 +193,9 @@
         ### CURSOR ###
         env = HYPRCURSOR_THEME,phinger-cursors-dark
         env = HYPRCURSOR_SIZE,28
-
-        ### BINDS ###
-        # $mod = SUPER 
-        
-        bind = $mod, Q, exec, $terminal
-        bind = $mod, C, exec, bash ~/.files/modules/user/hyprland/minimise.sh
-        bind = $mod, F, exec, firefox
-        bind = $mod, M, exec, uwsm stop
-        bind = $mod, E, exec, $filemanager
-        bind = $mod, V, togglefloating,
-        bind = $mod, D, exec, $menu
-        bind = $mod, P, pseudo,
-        bind = $mod, J, togglesplit,
-  
-        bind = $mod, left, movefocus, l
-        bind = $mod, down, movefocus, d
-        bind = $mod, up, movefocus, u
-        bind = $mod, right, movefocus, r
-  
-        bind = $mod, 1, workspace, 1
-        bind = $mod, 2, workspace, 2
-        bind = $mod, 3, workspace, 3
-        bind = $mod, 4, workspace, 4
-        bind = $mod, 5, workspace, 5
-        bind = $mod, 6, workspace, 6
-        bind = $mod, 7, workspace, 7
-        bind = $mod, 8, workspace, 8
-        bind = $mod, 9, workspace, 9
-        bind = $mod, 0, workspace, 10
-      
-        bind = $mod SHIFT, 1, movetoworkspace, 1
-        bind = $mod SHIFT, 2, movetoworkspace, 2
-        bind = $mod SHIFT, 3, movetoworkspace, 3
-        bind = $mod SHIFT, 4, movetoworkspace, 4
-        bind = $mod SHIFT, 5, movetoworkspace, 5
-        bind = $mod SHIFT, 6, movetoworkspace, 6
-        bind = $mod SHIFT, 7, movetoworkspace, 7
-        bind = $mod SHIFT, 8, movetoworkspace, 8
-        bind = $mod SHIFT, 9, movetoworkspace, 9
-        bind = $mod SHIFT, 0, movetoworkspace, 10
-            
-        # bind = $mod, S, togglespecialworkspace, magic
-        bind = $mod SHIFT, S, movetoworkspace, special:magic
-  
-        bind = $mod, S, togglespecialworkspace, magic
-        bind = $mod, S, movetoworkspace, +0
-        bind = $mod, S, togglespecialworkspace, magic
-        bind = $mod, S, movetoworkspace, special:magic
-        bind = $mod, S, togglespecialworkspace, magic
-  
-     
-        bind = $mod, mouse_up, workspace, e-1
-        bind = $mod, mouse_down, workspace, e+1
-            
-        # Top row normal binds
-        bind = ,XF86Tools, exec, $music # I mean it's literally a music note
-  
-			  # Lollypop specific binds, I don't want it unpausing my youtube video I was watching lol
-        bindl = , XF86AudioNext, exec, playerctl --player=Lollypop next
-        bindl = , XF86AudioPlay, exec, playerctl --player=Lollypop play-pause
-        bindl = , XF86AudioPrev, exec, playerctl --player=Lollypop previous
-        bindl = , XF86AudioStop, exec, playerctl --player=Lollypop stop
-        bindl = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
   
         # Screenshots
-        bind = , Print, exec, grim -g "$(slurp -d)" - | wl-copy
-			  layerrule = match:class selector, no_anim on # fix for weird 1px black border
-  
-        # Mouse binds
-        # bindm = $mod, mouse:272, movewindow
-        # bindm = $mod, mouse:273, resizewindow
-  
-        # Press and hold binds
-        # bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
-        # bindel = ,XF86AudioLowerVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-
-        # bindel = $mod, F2, exec, ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 - 10 # brightness down
-        # bindel = $mod, F3, exec, ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 + 10 # brightness up            
+			  layerrule = match:class selector, no_anim on # fix for weird 1px black border        
       '';
     };
   };
