@@ -7,9 +7,9 @@ in {
     settings = {
       ### INPUT ###
       input = {
-          "kb_layout" = "de";
-          "kb_variant" = "qwerty";
-          "follow_mouse" = 1;
+        "kb_layout" = "de";
+        "kb_variant" = "qwerty";
+        "follow_mouse" = 1;
       };
     };
   };

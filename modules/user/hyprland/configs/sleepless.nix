@@ -7,9 +7,13 @@ in {
     settings = {
       ### INPUT ###
       input = {
-          "kb_layout" = "ie";
-          "follow_mouse" = 1;
+        "kb_layout" = "ie";
+        "follow_mouse" = 1;
       };
+
+      gesture = [
+        "2, horizontal, workspace"
+      ];
     };
   };
 }
