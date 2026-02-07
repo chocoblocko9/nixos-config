@@ -26,21 +26,18 @@
       wofi.enable = true;
 		};
 
-    # Home Manager needs a bit of information about you and the paths it should manage.
     home = {
    	  username = "conor";
    	  homeDirectory = "/home/conor";
  	    stateVersion = "25.11";
+
+      sessionVariables = {
+        NIXOS_OZONE_WL = "1"; 
+        XCURSOR_SIZE   = "24";
+      };
 	  };
     
     nixpkgs.config.allowUnfree = true;
-  
-    home.sessionVariables = {
-      NIXOS_OZONE_WL = "1"; 
-      XCURSOR_SIZE   = "24";
-    };
-  
-    # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
   };
 }
