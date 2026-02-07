@@ -51,10 +51,12 @@
 
     programs.bash.shellAliases = {
       ets2 = "streamlink -p vlc -a \"-vvv - --sout \#transcode{vcodec=none,acodec=mp3,ab=320,scodec=none}:standard{access=http,mux=raw,dst=127.0.0.1:8080}\" --twitch-disable-hosting --twitch-disable-ads https://www.youtube.com/watch?v=edqlOxtnvL0 144p"; 
-      # basically this starts a VLC HTTP stream at localhost:8080 of the mau5trap
-      # Airplane Mode 24/7 stream and Euro Truck Simulator can then download that
-      # and play it as an in-game radio because it functions like any over the 
-      # internet radio. Cool? Cool.
+      /*
+      Basically this starts a VLC HTTP stream at localhost:8080 of the mau5trap
+      Airplane Mode 24/7 stream and Euro Truck Simulator 2 can then download that
+      and play it as an in-game radio because it functions like any over the 
+      internet radio. Cool? Cool.
+      */
     };
   };
 }
