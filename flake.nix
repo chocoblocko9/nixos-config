@@ -47,7 +47,7 @@
         system = "x86_64-linux";
         overlays = [
           # (final: prev: {
-            # cheese = prev.callPackage ./overlays/cheese.nix {};
+            # example = prev.callPackage ./overlays/example.nix {};
           # })
         ];
       };
@@ -67,7 +67,9 @@
 
       superliminal = lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs; };
+        specialArgs = { 
+          inherit inputs; 
+        };
         modules = [
           ./profiles/superliminal/configuration.nix
           ./modules/system/default.nix
