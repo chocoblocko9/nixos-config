@@ -3,7 +3,6 @@
 {
 	config = {
 		userSettings = {
-			ashell.enable = true;
 			apps.enable = true;
     	bash.enable = true;
       btop.enable = true;
@@ -24,6 +23,7 @@
 			stylix.enable = true;
 			theming.enable = true;
       vscode.enable = true;
+      waybar.enable = true;
       wofi.enable = true;
 		};
 
