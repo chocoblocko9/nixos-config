@@ -169,10 +169,7 @@
           resize_on_border = true
           hover_icon_on_border = true
           extend_border_grab_area = 25
-  
-          col.active_border = rgb(072242) rgb(2A7B9B) 90deg
-          col.inactive_border = rgba(595959E6) rgba(000000E6) 30deg
-  
+
           allow_tearing = false
           layout = dwindle
         }
@@ -184,11 +181,6 @@
           dim_inactive = true
           dim_strength = 0.35
         } 
-  
-        animation {
-          bezier = linear,0,0,1,1
-          animation = borderangle, 1, 100, linear, loop
-        }
   
         ### CURSOR ###
         env = HYPRCURSOR_THEME,phinger-cursors-dark

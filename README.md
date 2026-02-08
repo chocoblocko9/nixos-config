@@ -16,7 +16,8 @@ This is my NixOS config! (quite self explanatory)
 - [ ] Expand hyprland functionality:
   - [ ] Any one of the 50 clipboard managers
   ##### Optional
-  - [ ] hyprland-qt-support, hyprsysteminfo, hyprqt6engine  
+  - [ ] hyprland-qt-support, hyprsysteminfo, hyprqt6engine 
+- [ ] Switch to using home-manager as a NixOS module
 
 ### To-Done list
 - [ ] ~~Package discord-rpmpris myself (scary) (23/11/25)~~

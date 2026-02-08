@@ -10,7 +10,10 @@
       dunst.enable = true;
       git.enable = true;
       haskell.enable = true;
-			hyprland.enable = true;
+			hyprland = {
+        enable = true;
+        profile = "sleepless";
+      };
 			hyprpaper.enable = true;
 			hyprsunset.enable = true;
       kitty.enable = true;
