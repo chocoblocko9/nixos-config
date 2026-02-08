@@ -14,6 +14,7 @@
     ./kitty/default.nix
     ./music/default.nix
     ./nixcord/default.nix
+    ./rstudio/default.nix
     ./stylix/default.nix
     ./theming/default.nix
     ./vscode/default.nix

@@ -20,6 +20,7 @@
       kitty.enable = true;
       music.enable = true;
 			nixcord.enable = true;
+      rstudio.enable = true;
 			stylix.enable = true;
 			theming.enable = true;
       vscode.enable = true;
