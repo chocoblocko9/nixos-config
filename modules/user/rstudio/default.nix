@@ -9,7 +9,7 @@
 
   config = lib.mkIf config.userSettings.rstudio.enable {
     home.packages = with pkgs; [
-      RStudio-with-my-packages = rstudioWrapper.override{ packages = with rPackages; [ ggplot2 dplyr xts ]; };
+      (rstudioWrapper.override{ packages = with rPackages; [ ggplot2 tidyverse titanic ]; })
     ];
   };
 }
