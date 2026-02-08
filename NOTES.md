@@ -4,6 +4,6 @@ This is where I'm going to catalogue weird imperative stuff that I did, that may
 
 ## The list
 
-1. mv ~/.vscode/extensions ~/.vscode/extensions.bak (idk, here until further investigation, might not be necessary on a fresh build)
+1. mv ~/.vscode/extensions ~/.vscode/extensions.bak (shouldn't be necessary, I think it only arrises from having plugins already installed but I'm leaving it here JUST IN CASE)
 
 2. Building this configuration with userSettings.gaming.enable = true requires a clean Super Mario 64 rom so either comment sm64coopdx out or follow the instructions provided in the build error
