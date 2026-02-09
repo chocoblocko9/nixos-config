@@ -18,6 +18,7 @@
     ./stylix/default.nix
     ./theming/default.nix
     ./vscode/default.nix
+    ./waybar/default.nix
     ./wofi/default.nix
   ];
 }

@@ -10,7 +10,7 @@
   config = lib.mkIf config.systemSettings.audio.enable {
     # PipeWire uses this apparently? Debatable if it should be in here but whatever when amn't I enabling AUDIO
     security.rtkit.enable = true;
-
+    
     services = {
       pulseaudio.enable = false;
       pipewire = {
