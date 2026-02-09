@@ -9,6 +9,8 @@ in {
         col.active_border = rgb(2A7B9B) 
         col.inactive_border = rgba(000000E6)
       }
+
+      monitor = eDP-1, 1920x1080, 0x0, 1.25
     '';
 
     settings = {

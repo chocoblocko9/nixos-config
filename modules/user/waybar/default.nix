@@ -24,7 +24,8 @@
           modules-center = [ "wireplumber" "custom/waybar-mpris" ];
           modules-right = [ 
             #"group/group-power" 
-            "memory"
+            "backlight/slider"
+            "battery"
             "tray" 
             "clock" 
           ];
@@ -41,7 +42,16 @@
               stopped = "⏹";
             };
           };
-  
+
+          "battery" = {
+            format = "{capacity}% {icon}";
+            format-icons = [ "" "" "" "" "" ];
+            states = {
+              warning = 25;
+              critical = 10;
+            };
+          };
+
           "custom/waybar-mpris" = {
             return-type = "json";
             exec = "waybar-mpris --position --pause \"▶\" --play \"⏸\"";
@@ -51,6 +61,12 @@
             on-scroll-down = "waybar-mpris --send prev";
             on-click-right = "waybar-mpris --send player-next";
             escape = true;
+          };
+
+          "backlight/slider" = {
+            min = 0;
+            max = 100;
+            orientation = "horizontal";
           };
 
           "wireplumber" = {
@@ -63,6 +79,7 @@
           "memory" = {
             format = "{used} / {total} ({percentage}%)";
           };
+
           "group/group-power" = {
             orientation = "inherit";
             drawer = {
@@ -101,8 +118,34 @@
         };
       };
       style = ''
+        * {
+          font-size: 15px;
+          color: #2aa198;
+        }
 
-      '';
+        #pulseaudio-slider trough, #backlight-slider trough {
+          min-height: 10px;
+          min-width: 80px;
+        }
+
+        #backlight-slider highlight {
+          background-color: #2aa198;
+        }
+
+        #backlight-slider slider {
+          min-width: 5px;
+          min-height: 10px;
+          background-color: #2aa198;
+        }
+
+        #battery.warning {
+          color: yellow;
+        }
+
+        #battery.critical {
+          color: red;
+        }
+      ''; 
     };
   };
 }

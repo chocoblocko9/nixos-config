@@ -3,7 +3,6 @@
 {
 	config = {
 		userSettings = {
-			ashell.enable = true;
 			apps.enable = true;
     	bash.enable = true;
       btop.enable = true;
@@ -19,10 +18,11 @@
       kitty.enable = true;
       music.enable = true;
 			nixcord.enable = true;
-      rstudio.enable = true;
+#      rstudio.enable = true;
 			stylix.enable = true;
 			theming.enable = true;
       vscode.enable = true;
+      waybar.enable = true;
       wofi.enable = true;
 		};
 
