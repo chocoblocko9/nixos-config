@@ -60,6 +60,7 @@
             on-scroll-up = "waybar-mpris --send next";
             on-scroll-down = "waybar-mpris --send prev";
             on-click-right = "waybar-mpris --send player-next";
+            on-click-forward = "waybar-mpris --send prev";
             escape = true;
           };
 
@@ -72,8 +73,8 @@
           "wireplumber" = {
             format = "{volume}% {icon}";
             format-muted = "";
-            on-click = "helvum";
-            format-icons = ["" "" ""];
+            on-click = "pavucontrol";
+            format-icons = [" " " " " "];
           };
 
           "memory" = {

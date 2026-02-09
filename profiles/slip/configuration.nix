@@ -22,6 +22,7 @@
       networking.enable = true;
       nh.enable = true;
       obs.enable = true;
+      plasma.enable = true;
       polkit.enable = true;
       theming.enable = true;
       thunar.enable = true;
