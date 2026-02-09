@@ -18,8 +18,8 @@
       	NIXOS_OZONE_WL = "1"; 
       	XCURSOR_SIZE   = "24";
 	 		};
-	
-  	nixpkgs.config.allowUnfree = true;
-  	programs.home-manager.enable = true;
 	};
+  	nixpkgs.config.allowUnfree = true;
+ 	 	programs.home-manager.enable = true;
+};
 }
