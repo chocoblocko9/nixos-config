@@ -18,6 +18,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland/v0.53.3?submodules=true";
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
     hyprcursor-phinger.url = "github:jappie3/hyprcursor-phinger";
     home-manager = {
       url = "github:nix-community/home-manager/master"; 
