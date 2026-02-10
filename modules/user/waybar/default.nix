@@ -45,7 +45,10 @@
 
           "battery" = {
             format = "{capacity}% {icon}";
-            format-icons = [ "" "" "" "" "" ];
+            format-icons = {
+              default = ["󰂎 " "󰁺 " "󰁻 " "󰁼 " "󰁽 " "󰁾 " "󰁿 " "󰂀 " "󰂁 " "󰂂 " "󰁹 "];
+              charging = ["󰢟 " "󰢜 " "󰂆 " "󰂇 " "󰂈 " "󰢝 " "󰂉 " "󰢞 " "󰂊 " "󰂋 " "󰂅 "];
+            };
             states = {
               warning = 25;
               critical = 10;

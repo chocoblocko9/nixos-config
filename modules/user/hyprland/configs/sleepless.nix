@@ -25,6 +25,11 @@ in {
         "3, down, close"
         "3, swipe, mod: ALT, resize"
       ];
+
+      bindel = [
+        ",XF86MonBrightnessUp, exec, brightnessctl -q -n s +10%"
+        ",XF86MonBrightnessDown, exec, brightnessctl -q -n s 10%-"
+      ];
     };
   };
 }

@@ -11,6 +11,11 @@ in {
         "kb_variant" = "qwerty";
         "follow_mouse" = 1;
       };
+
+      bindel = [
+        "$mod, F2, exec, ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 - 10 # brightness down"
+        "$mod, F3, exec, ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 + 10 # brightness up"
+      ];
     };
     extraConfig = ''
       animation {
