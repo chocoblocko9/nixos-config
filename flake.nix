@@ -17,11 +17,12 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland.url = "github:hyprwm/Hyprland/v0.53.3?submodules=true";
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
+    # hyprland.url = "github:hyprwm/Hyprland/v0.53.1?submodules=true";
+    hyprland.url = "github:hyprwm/Hyprland";
+    #hyprland-plugins = {
+    #  url = "github:hyprwm/hyprland-plugins";
+    #  inputs.hyprland.follows = "hyprland";
+    #};
     hyprcursor-phinger.url = "github:jappie3/hyprcursor-phinger";
     home-manager = {
       url = "github:nix-community/home-manager/master"; 
@@ -61,6 +62,7 @@
         specialArgs = { 
           inherit inputs; 
           inherit nixpkgs-overlayed;
+          inherit nixpkgs-stable;
         };
         modules = [ 
           ./profiles/slip/configuration.nix 

@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, nixpkgs-stable, ... }:
 
 {
 
@@ -21,6 +21,7 @@
   config = lib.mkIf config.systemSettings.ly.enable {
     services.displayManager.ly = {
       enable = true;
+      package = nixpkgs-stable.ly;
       settings = {
         # Config
         allow_empty_password = false;

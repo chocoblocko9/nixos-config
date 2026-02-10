@@ -37,9 +37,7 @@
     wayland.windowManager.hyprland = {
       enable = true;
       # set the flake package
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland.overrideAttrs {
-        patches = [ ./../../../overlays/temp_fix_hyprland.patch ];
-      };
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
       systemd.enable = false; # Using UWSM
       settings = {

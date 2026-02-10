@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, nixpkgs-stable, ... }:
 
 {
   options = {
@@ -8,8 +8,8 @@
   };
 
   config = lib.mkIf config.userSettings.rstudio.enable {
-    home.packages = with pkgs; [
-      (rstudioWrapper.override{ packages = with rPackages; [ ggplot2 tidyverse titanic ]; })
+    home.packages = with nixpkgs-stable; [
+      (rstudioWrapper.override{ packages = with rPackages; [ tidyverse titanic ]; })
     ];
   };
 }
