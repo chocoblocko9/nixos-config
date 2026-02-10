@@ -9,6 +9,10 @@
 			theming.enable = true;
 		};
 
+		home.packages = with pkgs; [
+			hello
+    ];
+
   	home = {
    		username = "ezra";
    		homeDirectory = "/home/ezra";
@@ -18,8 +22,8 @@
       	NIXOS_OZONE_WL = "1"; 
       	XCURSOR_SIZE   = "24";
 	 		};
-	};
+		};
   	nixpkgs.config.allowUnfree = true;
  	 	programs.home-manager.enable = true;
-};
+	};
 }

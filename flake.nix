@@ -1,5 +1,4 @@
 {
-
   description = "System flake that I'm scared of (how does this work)";
   /*
   nixConfig = {

@@ -16,6 +16,7 @@
       mpris-scrobbler # Last.fm scrobbler for mpris2
       nicotine-plus # Soulseek
       puddletag # song file tagger
+      cava # visualiser
     ];
   };
 }
