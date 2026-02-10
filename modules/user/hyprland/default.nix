@@ -111,50 +111,51 @@
           ", XF86AudioStop, exec, playerctl --player=Lollypop stop"
           ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
         ];
+
         bindel = [
           ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 10%+"
           ",XF86AudioLowerVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 10%-"
         ];
-      };
-      extraConfig = ''
+
         ### WINDOW RULES ###
-			  windowrule = tag +defFloat, match:class org.pulseaudio.pavucontrol
-			  windowrule = tag +defFloat, match:class nwg-look
-			  windowrule = tag +defFloat, match:title File Operation Progress
-        
-			  windowrule {
-  			  name = Default Float Behaviour
-			    float = on
-			    size = 1200 800
-			    match:tag = defFloat
-			  }
-  
-			  windowrule {
-				  name = Lollypop float
-				  float = on
-				  size = 1700 900
-				  match:class = lollypop
-			  }
-  
-			  windowrule {
-			    name = opacityRules
-			    opacity = 0.96 0.75
-			    match:class = negative:kitty
-			  }
-  
-        ### EXEC ON BOOT/RELOAD ###
+        windowrule = [ 
+          "tag +defFloat, match:class org.pulseaudio.pavucontrol"
+			    "tag +defFloat, match:class nwg-look"
+			    "tag +defFloat, match:title File Operation Progress"
+
+          {
+            name = "Default Float Behaviour";
+			      float = "on";
+			      size = "1200 800";
+			      "match:tag" = "defFloat";
+          }
+
+          {
+				    name = "Lollypop float";
+				    float = "on";
+				    size = "1700 900";
+				    "match:class" = "lollypop";
+			    }
+          {
+			      name = "opacityRules";
+			      opacity = "0.96 0.75";
+			      "match:class" = "negative:kitty";
+			    }
+        ];
+
+        ### EXEC ON BOOT ###
        
-        exec-once = firefox & vesktop & mprisence & soteria
-        execr-once = nicotine -n
-  
+        exec-once = "firefox & vesktop & mprisence & soteria & nicotine";
+
         ### LAYOUT ###
 
-        dwindle {
-          pseudotile = true 
-          preserve_split = true
-          smart_split = true
-        }
-
+        dwindle = {
+          pseudotile = "true";
+          preserve_split = "true";
+          smart_split = "true";
+        };
+      };
+      extraConfig = '' 
         ### LOOK AND FEEL ### 
 
         general {
