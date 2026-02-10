@@ -143,10 +143,6 @@
 			    }
         ];
 
-        ### EXEC ON BOOT ###
-       
-        exec-once = "firefox & vesktop & mprisence & soteria & nicotine";
-
         ### LAYOUT ###
 
         dwindle = {

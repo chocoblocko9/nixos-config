@@ -26,10 +26,17 @@ in {
         "col.active_border" = "rgb(072242) rgb(2A7B9B) 90deg";
         "col.inactive_border" = "rgba(595959E6) rgba(000000E6) 30deg";
       };
+
+      bind = [
+        "$mod, S, togglespecialworkspace, music"
+        # "$mod SHIFT, S, movetoworkspace, special:magic"
+      ];
+
+      exec-once = "firefox & vesktop & mprisence & soteria & nicotine & ";
     };
 
     extraConfig = ''
-      
+      exec-once = [workspace special:music silent] lollypop
     '';
   };
 }

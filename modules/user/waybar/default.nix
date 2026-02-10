@@ -48,6 +48,7 @@
             format-icons = {
               default = ["󰂎 " "󰁺 " "󰁻 " "󰁼 " "󰁽 " "󰁾 " "󰁿 " "󰂀 " "󰂁 " "󰂂 " "󰁹 "];
               charging = ["󰢟 " "󰢜 " "󰂆 " "󰂇 " "󰂈 " "󰢝 " "󰂉 " "󰢞 " "󰂊 " "󰂋 " "󰂅 "];
+              # full
             };
             states = {
               warning = 25;
@@ -57,7 +58,7 @@
 
           "custom/waybar-mpris" = {
             return-type = "json";
-            exec = "waybar-mpris --position --pause \"▶\" --play \"⏸\"";
+            exec = "waybar-mpris --position --pause \"▶\" --play \"⏸\" --order \"ARTIST:TITLE:POSITION\"";
             on-click = "waybar-mpris --send toggle";
 
             on-scroll-up = "waybar-mpris --send next";
@@ -74,7 +75,7 @@
           };
 
           "wireplumber" = {
-            format = "{volume}% {icon}";
+            format = "{volume}% {icon} |";
             format-muted = "";
             on-click = "pavucontrol";
             format-icons = [" " " " " "];
