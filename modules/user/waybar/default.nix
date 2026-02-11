@@ -21,13 +21,13 @@
           position = "top";
           height = 36;
           modules-left = [ "hyprland/workspaces" ];
-          modules-center = [ "wireplumber" "custom/waybar-mpris" ];
-          modules-right = [ 
-            #"group/group-power" 
-            "backlight/slider"
+          modules-center = [ "group/group-audio" ];
+          modules-right = [            
             "battery"
-            "tray" 
+            "tray"
+            "custom/dunst"
             "clock" 
+            "group/group-power" 
           ];
 
           "mpris" = {
@@ -54,6 +54,23 @@
               warning = 25;
               critical = 10;
             };
+          };
+
+          "group/group-audio" = {
+            orientation = "inherit";
+            modules = [
+              "wireplumber"
+              "custom/waybar-mpris"
+            ];
+          };
+
+          "custom/dunst" = {
+            #return-type = "json";
+            exec = ./dunst.sh;
+            exec-on-event = true;
+            on-click = "dunstctl set-paused toggle";
+            format = "{}";
+            interval = 60; # idk man i should probably use signals but this works 
           };
 
           "hyprland/workspaces" = {
@@ -90,7 +107,7 @@
 
           "wireplumber" = {
             format = "{volume}% {icon} |";
-            format-muted = "";
+            format-muted = " ";
             on-click = "pavucontrol";
             format-icons = [" " " " " "];
           };
@@ -108,29 +125,29 @@
             };
             modules = [
               "custom/power"
-              "custom/quit"
+              "custom/hibernate"
               "custom/lock"
               "custom/reboot"
             ];
           };
 
-          "custom/quit" = {
-            format = "󰗼";
+          "custom/hibernate" = {
+            format = "󰤄 ";
             tooltip = false;
             on-click = "uwsm stop";
           };
           "custom/lock" = {
-            format = "󰍁";
+            format = "󰍁 ";
             tooltip = false;
-            on-click = "swaylock";
+            on-click = "hyprlock";
           };
           "custom/reboot" = {
-            format = "󰜉";
+            format = "󰜉 ";
             tooltip = false;
             on-click = "reboot";
           };
           "custom/power" = {
-            format = "";
+            format = " ";
             tooltip = false;
             on-click = "shutdown now";
           };

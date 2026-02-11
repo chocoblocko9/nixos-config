@@ -135,14 +135,7 @@
       extraGroups = [ "networkmanager" "wheel" ];
     };
   
-    # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
-  
-    # Is this necessary? idk
-    environment.sessionVariables = {
-  	  NIXOS_OZONE_WL = "1"; 
-    };
-  
     system.stateVersion = "25.11";
   };
 }

@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { inputs, config, pkgs, ... }:
 
 {
@@ -41,7 +37,6 @@
 
   environment.systemPackages = with pkgs; [
     git
-    discord
   ];
 
   # Bootloader & Kernel
@@ -56,7 +51,6 @@
 
 
   networking.hostName = "sleepless";
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Locales
   time.timeZone = "Europe/Dublin";
@@ -88,13 +82,18 @@
     packages = with pkgs; [];
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  environment.sessionVariables = {
-  	NIXOS_OZONE_WL = "1"; 
+  systemd.sleep.extraConfig = ''
+    HibernateDelaySec=3600
+  '';
+  
+  services = {
+    logind.settings.Login = { 
+      HandleLidSwitch = "suspend-then-hibernate"; 
+      };
+    libinput.enable = true;
   };
 
+  nixpkgs.config.allowUnfree = true;
   system.stateVersion = "25.11";
   };
 }
