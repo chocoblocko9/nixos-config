@@ -8,8 +8,6 @@ This is my NixOS config! (quite self explanatory)
 - [ ] Install waybar and make it look not horrible (23/11/25)
   - [x] Got ashell up and running but the customisation options of waybar is tempting... (03/02/26)
 - [ ] Get Docker and WinApps running as an Experiment (23/11/25)
-- [ ] Make profile for my laptop (BIG maybe, need to use Microsoft apps and stuff on it so if it causes big problems then its a no) (24/11/25)
-  - [x] All the systems are in place so just has to actually happen! (01/02/26)
 - [ ] Add wayy more animations to hyprland (30/11/25)
 - [ ] Install hyprplugins
 - [ ] Set-up Haskell dev shell
@@ -58,6 +56,9 @@ This is my NixOS config! (quite self explanatory)
   - Forgot to mark this off but nixcord does the trick! (01/02/24)
 - [x] Install a cursor theme to get rid of this Stupid Logo (24/11/25)
   - Went with Phinger cursors, they look nice! (03/02/26)
+- [x] Make profile for my laptop (BIG maybe, need to use Microsoft apps and stuff on it so if it causes big problems then its a no) (24/11/25)
+  - [x] All the systems are in place so just has to actually happen! (01/02/26)
+  - Alright, 90% of functionality is done so I'm marking this as complete. (11/02/26)
 
 ## Background
 
