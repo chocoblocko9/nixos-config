@@ -22,12 +22,11 @@
           height = 36;
           modules-left = [ "hyprland/workspaces" ];
           modules-center = [ "wireplumber" "custom/waybar-mpris" ];
-          modules-right = [ 
-            #"group/group-power" 
-            "backlight/slider"
+          modules-right = [            
             "battery"
             "tray" 
             "clock" 
+            "group/group-power" 
           ];
 
           "mpris" = {
@@ -94,29 +93,29 @@
             };
             modules = [
               "custom/power"
-              "custom/quit"
+              "custom/hibernate"
               "custom/lock"
               "custom/reboot"
             ];
           };
 
-          "custom/quit" = {
-            format = "󰗼";
+          "custom/hibernate" = {
+            format = "󰤄 ";
             tooltip = false;
             on-click = "uwsm stop";
           };
           "custom/lock" = {
-            format = "󰍁";
+            format = "󰍁 ";
             tooltip = false;
-            on-click = "swaylock";
+            on-click = "hyprlock";
           };
           "custom/reboot" = {
-            format = "󰜉";
+            format = "󰜉 ";
             tooltip = false;
             on-click = "reboot";
           };
           "custom/power" = {
-            format = "";
+            format = " ";
             tooltip = false;
             on-click = "shutdown now";
           };
