@@ -21,10 +21,11 @@
           position = "top";
           height = 36;
           modules-left = [ "hyprland/workspaces" ];
-          modules-center = [ "wireplumber" "custom/waybar-mpris" ];
+          modules-center = [ "group/group-audio" ];
           modules-right = [            
             "battery"
-            "tray" 
+            "tray"
+            "custom/dunst"
             "clock" 
             "group/group-power" 
           ];
@@ -55,6 +56,23 @@
             };
           };
 
+          "group/group-audio" = {
+            orientation = "inherit";
+            modules = [
+              "wireplumber"
+              "custom/waybar-mpris"
+            ];
+          };
+
+          "custom/dunst" = {
+            #return-type = "json";
+            exec = ./dunst.sh;
+            exec-on-event = true;
+            on-click = "dunstctl set-paused toggle";
+            format = "{}";
+            interval = 60; # idk man i should probably use signals but this works 
+          };
+
           "custom/waybar-mpris" = {
             return-type = "json";
             exec = "waybar-mpris --position --pause \"▶\" --play \"⏸\" --order \"ARTIST:TITLE:POSITION\"";
@@ -75,7 +93,7 @@
 
           "wireplumber" = {
             format = "{volume}% {icon} |";
-            format-muted = "";
+            format-muted = " ";
             on-click = "pavucontrol";
             format-icons = [" " " " " "];
           };
