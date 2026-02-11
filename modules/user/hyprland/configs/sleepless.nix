@@ -13,7 +13,7 @@ in {
 
       gesture = [
         "3, horizontal, workspace"
-        "3, down, close"
+        "3, up, close"
         "3, swipe, mod: ALT, resize"
       ];
 
