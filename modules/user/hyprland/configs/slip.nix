@@ -29,7 +29,7 @@ in {
 
       bind = [
         "$mod, S, togglespecialworkspace, music"
-        # "$mod SHIFT, S, movetoworkspace, special:magic"
+        "$mod SHIFT, S, movetoworkspace, special:music"
       ];
 
       exec-once = "firefox & vesktop & mprisence & soteria & nicotine & ";
