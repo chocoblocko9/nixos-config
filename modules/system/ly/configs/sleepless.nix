@@ -5,7 +5,7 @@ let
 in {
   config.services.displayManager.ly = lib.mkIf (cfg == "sleepless") {
     settings = {
-      # Patch for hyprland with UWSM not booting for some reason
+      # Patch for hyprland with UWSM not booting for some reason (how does this work???)
       setup_cmd = "~/.files/modules/system/ly/lysetup.sh";
 
       # PATH no worky I guess

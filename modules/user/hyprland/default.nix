@@ -40,6 +40,9 @@
       package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
       systemd.enable = false; # Using UWSM
+      plugins = [
+        inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprexpo
+      ];
       settings = {
         ### PROGRAMS ###
         "$terminal" = "kitty";
@@ -176,6 +179,22 @@
         */
       };
       extraConfig = '' 
+        exec-once = hyprctl plugin load "$HYPR_PLUGIN_DIR/lib/libhyprexpo.so"
+
+        plugin {
+          hyprexpo {
+            columns = 3
+            gap_size = 5
+            bg_col = rgb(111111)
+            workspace_method = center current # [center/first] [workspace] e.g. first 1 or center m+1
+            skip_empty = true;
+
+            gesture_distance = 300 # how far is the "max" for the gesture
+          }
+        }
+
+        bind = $mod, g, hyprexpo:expo, toggle
+
         ### LOOK AND FEEL ### 
 
         general {
