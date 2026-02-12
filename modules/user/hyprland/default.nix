@@ -41,7 +41,7 @@
       portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
       systemd.enable = false; # Using UWSM
       plugins = [
-        inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
+        inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprexpo
       ];
       settings = {
         ### PROGRAMS ###
