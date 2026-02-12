@@ -21,6 +21,11 @@
       url = "github:nix-community/home-manager/master"; 
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.darwin.follows = "";
+    };
   };
 
   outputs = 
@@ -32,6 +37,7 @@
   		nix-flatpak, 
   		hyprland,  
 			stylix,
+      agenix,
   		... 
   	} @ inputs:
   	
@@ -58,8 +64,12 @@
           inherit nixpkgs-stable;
         };
         modules = [ 
+          agenix.nixosModules.default
           ./profiles/slip/configuration.nix 
           ./modules/system/default.nix
+          {
+            environment.systemPackages = [ agenix.packages.${system}.default ];
+          }
         ];
       };
 
