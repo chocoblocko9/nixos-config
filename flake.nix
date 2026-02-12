@@ -3,9 +3,12 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    pkgs-stable.url = "nixpkgs/nixos-25.11";
+    nixpkgs-2511.url = "nixpkgs/nixos-25.11";
+
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+
     nixcord.url = "github:FlameFlag/nixcord";
+
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,14 +20,21 @@
       inputs.hyprland.follows = "hyprland";
     };
     hyprcursor-phinger.url = "github:jappie3/hyprcursor-phinger";
+
     home-manager = {
       url = "github:nix-community/home-manager/master"; 
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.darwin.follows = "";
+    };
+
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -32,12 +42,13 @@
   	{ 
   		self, 
   		nixpkgs, 
-  		pkgs-stable,
+  		nixpkgs-2511,
   		home-manager, 
   		nix-flatpak, 
   		hyprland,  
 			stylix,
       agenix,
+      nixvim,
   		... 
   	} @ inputs:
   	
@@ -45,7 +56,7 @@
       lib = nixpkgs.lib;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      nixpkgs-stable = pkgs-stable.legacyPackages.${system};
+      nixpkgs-stable = nixpkgs-2511.legacyPackages.${system};
       nixpkgs-overlayed = import nixpkgs {
         system = "x86_64-linux";
         overlays = [
