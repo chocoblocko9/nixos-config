@@ -150,6 +150,30 @@
           preserve_split = "true";
           smart_split = "true";
         };
+
+        ### LOOK AND FEEL ### 
+        /*
+        general = {
+          gaps_in = "5";
+          gaps_out = "5,10,10,10";
+
+          border_size = "3";
+          resize_on_border = "true";
+          hover_icon_on_border = "true";
+          extend_border_grab_area = "25";
+
+          allow_tearing = "false";
+          layout = "dwindle";
+        };
+  
+        decoration = {
+          rounding = 29;
+          rounding_power = 1;
+  
+          dim_inactive = true;
+          dim_strength = 0.35;
+        };
+        */
       };
       extraConfig = '' 
         ### LOOK AND FEEL ### 
@@ -161,7 +185,7 @@
           border_size = 3
           resize_on_border = true
           hover_icon_on_border = true
-          extend_border_grab_area = 25
+          extend_border_grab_area = 20
 
           allow_tearing = false
           layout = dwindle
