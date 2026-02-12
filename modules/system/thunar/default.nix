@@ -10,7 +10,12 @@
   config = lib.mkIf config.systemSettings.thunar.enable {
     programs.thunar = {
       enable = true;
-      plugins = with pkgs; [ thunar-volman thunar-media-tags-plugin thunar-archive-plugin thunar-vcs-plugin ];
+      plugins = with pkgs; [ 
+        thunar-volman 
+        thunar-media-tags-plugin 
+        thunar-archive-plugin 
+        thunar-vcs-plugin 
+      ];
     };
   };
 }
