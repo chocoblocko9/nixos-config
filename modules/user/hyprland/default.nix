@@ -62,6 +62,7 @@ in {
           "$mod, D, exec, $menu"
           "$mod, P, pseudo,"
           "$mod, J, togglesplit,"
+          "$mod, G, hyprexpo:expo, toggle"
 
           "$mod, left, movefocus, l"
           "$mod, down, movefocus, d"
@@ -93,8 +94,10 @@ in {
           "$mod, mouse_up, workspace, e-1"
           "$mod, mouse_down, workspace, e+1"
 
+          # Open music app
           ",XF86Tools, exec, $music"
 
+          # Screenshot bind
           ", Print, exec, grim -g \"$(slurp -d)\" - | wl-copy"
         ];
         
@@ -175,24 +178,19 @@ in {
           dim_strength = 0.35;
         };
         */
-      };
-      extraConfig = '' 
-        exec-once = hyprctl plugin load "$HYPR_PLUGIN_DIR/lib/libhyprexpo.so"
-
-        plugin {
-          hyprexpo {
-            columns = 3
-            gap_size = 5
-            bg_col = rgb(111111)
-            workspace_method = center current # [center/first] [workspace] e.g. first 1 or center m+1
+        plugin = {
+          hyprexpo = {
+            columns = 3;
+            gap_size = 5;
+            bg_col = "rgb(111111)";
+            workspace_method = "center current"; # [center/first] [workspace] e.g. first 1 or center m+1
             skip_empty = true;
 
-            gesture_distance = 300 # how far is the "max" for the gesture
-          }
-        }
-
-        bind = $mod, g, hyprexpo:expo, toggle
-
+            gesture_distance = 300; # how far is the "max" for the gesture
+          };
+        };
+      };
+      extraConfig = '' 
         ### LOOK AND FEEL ### 
 
         general {

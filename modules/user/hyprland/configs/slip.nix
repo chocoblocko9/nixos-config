@@ -35,6 +35,7 @@ in {
       exec-once = [ 
         "firefox & vesktop & mprisence & soteria & nicotine -s"
         "[workspace special:music silent] lollypop"
+        "hyprctl plugin load \"$HYPR_PLUGIN_DIR/lib/libhyprexpo.so\""
       ];
     };
 

@@ -20,4 +20,13 @@ palette:
   base0D: "#268bd2"
   base0E: "#6c71c4"
   base0F: "#d33682"
+
+  #base08: "#cc0403"
+  #base09: "#FF5C00"
+  #base0A: "#cecb00"
+  #base0B: "#19cb00"
+  #base0C: "#0dcdcd"
+  #base0D: "#0d73cc"
+  #base0E: "#cb1ed1"
+  #base0F: "#6c71c4"
   

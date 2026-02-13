@@ -15,6 +15,9 @@
         rebuild = "sudo nixos-rebuild switch --flake .";
         ll = "ls -la"; 
         icat = "kitten icat";
+        nho = "nh os switch";
+        nhh = "nh home switch";
+        update = "nix flake update && nh os switch && nh home switch";
       };
     };
   };

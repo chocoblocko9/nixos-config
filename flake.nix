@@ -1,43 +1,6 @@
 {
   description = "System flake that I'm scared of (how does this work)";
 
-  inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-2511.url = "nixpkgs/nixos-25.11";
-
-    nix-flatpak.url = "github:gmodena/nix-flatpak";
-
-    nixcord.url = "github:FlameFlag/nixcord";
-
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    # hyprland.url = "github:hyprwm/Hyprland/v0.53.1?submodules=true";
-    hyprland.url = "github:hyprwm/Hyprland";
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
-    hyprcursor-phinger.url = "github:jappie3/hyprcursor-phinger";
-
-    home-manager = {
-      url = "github:nix-community/home-manager/master"; 
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.darwin.follows = "";
-    };
-
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
-
   outputs = 
   	{ 
   		self, 
@@ -143,6 +106,43 @@
           ./modules/user/modules.nix
         ];
       };
+    };
+  };
+
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs-2511.url = "nixpkgs/nixos-25.11";
+
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
+
+    nixcord.url = "github:FlameFlag/nixcord";
+
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # hyprland.url = "github:hyprwm/Hyprland/v0.53.1?submodules=true";
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
+    hyprcursor-phinger.url = "github:jappie3/hyprcursor-phinger";
+
+    home-manager = {
+      url = "github:nix-community/home-manager/master"; 
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.darwin.follows = "";
+    };
+
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 }
