@@ -10,6 +10,7 @@ in {
         "kb_layout" = "de";
         "kb_variant" = "qwerty";
         "follow_mouse" = 1;
+        "float_switch_override_focus" = 2;
       };
 
       bindel = [
@@ -35,7 +36,9 @@ in {
       exec-once = [ 
         "firefox & vesktop & mprisence & soteria & nicotine -s"
         "[workspace special:music silent] lollypop"
+        "[workspace 2 silent] code"
         "hyprctl plugin load \"$HYPR_PLUGIN_DIR/lib/libhyprexpo.so\""
+        "bash ~/.files/modules/user/hyprland/raiseonhover.sh"
       ];
     };
 

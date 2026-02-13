@@ -26,6 +26,7 @@ in {
 	    slurp
 	    wl-clipboard
 
+      socat
       jq # minimise steam script depends on this
     ];
 
@@ -140,11 +141,30 @@ in {
 				    size = "1700 900";
 				    "match:class" = "lollypop";
 			    }
+
           {
 			      name = "opacityRules";
 			      opacity = "0.96 0.75";
 			      "match:class" = "negative:kitty";
 			    }
+
+          {
+            name = "firefox behaviour";
+            float = "on";
+            size = "1463 1023";
+            move = "444 44";
+            workspace = 1;
+            "match:class" = "firefox";
+          }
+
+          {
+            name = "vesktop behaviour";
+            float = "on";
+            size = "1463 1023";
+            move = "12 44";
+            workspace = 1;
+            "match:class" = "vesktop";
+          }
         ];
 
         ### LAYOUT ###
