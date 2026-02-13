@@ -2,7 +2,9 @@
 
 {
   imports = with lib; 
-    filter (hasSuffix "default.nix") (fileset.toList ./.);
+    filter 
+      (hasSuffix "default.nix") # function (only returns paths ending in 'default.nix')
+      (fileset.toList ./.); # list to operate on (recursively returns every path from current directory)
 }
 /*
 Generates a list of all files ending in "default.nix" in this directory.
