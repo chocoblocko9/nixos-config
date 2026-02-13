@@ -32,11 +32,14 @@ in {
         "$mod SHIFT, S, movetoworkspace, special:music"
       ];
 
-      exec-once = "firefox & vesktop & mprisence & soteria & nicotine & ";
+      exec-once = [ 
+        "firefox & vesktop & mprisence & soteria & nicotine -s"
+        "[workspace special:music silent] lollypop"
+      ];
     };
 
     extraConfig = ''
-      exec-once = [workspace special:music silent] lollypop
+
     '';
   };
 }

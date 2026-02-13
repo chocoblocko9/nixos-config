@@ -1,6 +1,8 @@
 { lib, config, pkgs, inputs, ...}:
 
-{
+let 
+  plugin-source = inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system};
+in {
   imports = [ 
     inputs.hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
     ./configs/slip.nix
@@ -28,20 +30,16 @@
     ];
 
     programs.hyprcursor-phinger.enable = true; # hyprcursor
-  
     home.sessionVariables.NIXOS_OZONE_WL = "1"; # tells electron apps to use wayland or somthing
 
-    # Hyprland Settings (sorry Nix I love you, you are nice to write but trying to configure Hyprland in it was making me lose it)
-    # ^^^ Might start undoing that now
-    
     wayland.windowManager.hyprland = {
       enable = true;
-      # set the flake package
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+      # uses packages defined in modules/system/hyprland/default.nix
+      package = null;
+      portalPackage = null;
       systemd.enable = false; # Using UWSM
-      plugins = [
-        inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprexpo
+      plugins = with plugin-source; [
+        hyprexpo
       ];
       settings = {
         ### PROGRAMS ###
