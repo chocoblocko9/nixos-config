@@ -21,7 +21,6 @@
   config = lib.mkIf config.systemSettings.ly.enable {
     services.displayManager.ly = {
       enable = true;
-      package = nixpkgs-stable.ly;
       settings = {
         # Config
         allow_empty_password = false;
