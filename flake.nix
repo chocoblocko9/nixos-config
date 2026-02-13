@@ -77,7 +77,7 @@
         modules = [ 
           agenix.nixosModules.default
           ./profiles/slip/configuration.nix 
-          ./modules/system/default.nix
+          ./modules/system/modules.nix
           {
             environment.systemPackages = [ agenix.packages.${system}.default ];
           }
@@ -91,7 +91,7 @@
         };
         modules = [
           ./profiles/superliminal/configuration.nix
-          ./modules/system/default.nix
+          ./modules/system/modules.nix
         ];
       };
 
@@ -104,7 +104,7 @@
 				};
         modules = [
           ./profiles/sleepless/configuration.nix
-          ./modules/system/default.nix
+          ./modules/system/modules.nix
         ];
       };
     };
@@ -118,7 +118,7 @@
         };
         modules = [ 
         	./profiles/slip/home.nix
-          ./modules/user/default.nix
+          ./modules/user/modules.nix
         ];
       };
 
@@ -129,7 +129,7 @@
         };
         modules = [ 
         	./profiles/sleepless/home.nix
-          ./modules/user/default.nix
+          ./modules/user/modules.nix
         ];
       };
 
@@ -140,7 +140,7 @@
         };
         modules = [ 
         	./profiles/superliminal/home.nix
-          ./modules/user/default.nix
+          ./modules/user/modules.nix
         ];
       };
     };
