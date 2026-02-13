@@ -74,17 +74,8 @@
           };
 
           "hyprland/workspaces" = {
-            "format" = "{icon}";
+            "format" = "{id}";
             "show-special" = "true";
-            "format-icons" = {
-		          "1" = "I";
-		          "2" = "II";
-		          "3" = "III";
-		          "4" = "IV";
-		          "5" = "V";
-              "6" = "VI";
-              "default" = "{id}";
-	          };
           };
 
           "custom/waybar-mpris" = {
