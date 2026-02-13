@@ -1,7 +1,8 @@
 { lib, ... }:
 
 {
-  imports = lib.filter (lib.hasSuffix "default.nix") (lib.fileset.toList ./.);
+  imports = with lib; 
+    filter (hasSuffix "default.nix") (fileset.toList ./.);
 }
 /*
 Generates a list of all files ending in "default.nix" in this directory.
