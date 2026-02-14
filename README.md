@@ -9,7 +9,6 @@ This is my NixOS config! (quite self explanatory)
   - [x] Got ashell up and running but the customisation options of waybar is tempting... (03/02/26)
 - [ ] Get Docker and WinApps running as an Experiment (23/11/25)
 - [ ] Add wayy more animations to hyprland (30/11/25)
-- [ ] Install hyprplugins
 - [ ] Set-up Haskell dev shell
 - [ ] Expand hyprland functionality:
   - [ ] Any one of the 50 clipboard managers
@@ -59,6 +58,8 @@ This is my NixOS config! (quite self explanatory)
 - [x] Make profile for my laptop (BIG maybe, need to use Microsoft apps and stuff on it so if it causes big problems then its a no) (24/11/25)
   - [x] All the systems are in place so just has to actually happen! (01/02/26)
   - Alright, 90% of functionality is done so I'm marking this as complete. (11/02/26)
+- [x] Install hyprplugins
+  - Got hyprexpo, other ones seem kinda useless 
 
 ## Background
 

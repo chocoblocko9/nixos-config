@@ -14,12 +14,16 @@
 		  enable = true;
       base16Scheme = ./solarized.yaml;
       #image = ../hyprpaper/wallpapers/wallpaper.jpg;
-      #polarity = "dark";
+      polarity = "dark";
       targets = { 
         nixcord.enable = false;
         wofi.enable = false;
         kitty.enable = false;
         dunst.enable = false;
+        qt = {
+          enable = true;
+          standardDialogs = "gtk3";
+        };
       };
       fonts = {
         monospace = {
