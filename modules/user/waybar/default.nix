@@ -74,8 +74,12 @@
           };
 
           "hyprland/workspaces" = {
-            "format" = "{id}";
-            "show-special" = "true";
+            format = "{icon}";
+            show-special = "true";
+            format-icons = {
+		          "1" = " 󰈹 ";
+		          "2" = " ";
+	          };
           };
 
           "custom/waybar-mpris" = {
