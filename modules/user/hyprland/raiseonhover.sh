@@ -9,14 +9,16 @@ handle() {
       window_class=$(echo "$1" | cut -d'>' -f3 | cut -d',' -f1)
       
       # Only raise window if it's Firefox or Vesktop
-      if [[ "$window_class" == "firefox" ]] || [[ "$window_class" == "vesktop" ]]; then
-        hyprctl dispatch bringactivetotop
+      if [[ "$window_class" == "firefox" ]] then
+        hyprctl dispatch alterzorder bottom,class:vesktop
+      elif [[ "$window_class" == "vesktop" ]] then
+        hyprctl dispatch alterzorder bottom,class:firefox
       fi
       ;;
   esac
 }
 
-# Listen to Hyprland events from socket
+# Listen to Hyprland events from socket (Claude did this idek what's happening)
 socat -U - UNIX-CONNECT:"$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" | while read -r line; do
   handle "$line"
 done
