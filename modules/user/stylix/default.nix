@@ -19,16 +19,39 @@
         nixcord.enable = false;
         wofi.enable = false;
         kitty.enable = false;
-        dunst.enable = false;
+        hyprland.enable = false;
+        dunst = {
+          enable = false;
+          fonts.enable = true;
+          fonts.override = {
+            sansSerif = config.stylix.fonts.monospace;
+          };
+          colors = {
+            enable = true;
+            override = {
+              withHashtag = { 
+                base0D = "#073642"; 
+                # base0D = config.lib.stylix.colors.base00; # Why doesn't this work??
+                base05 = config.lib.stylix.colors.base06;
+              }; 
+            };
+          };
+        };
         qt = {
           enable = true;
           standardDialogs = "gtk3";
         };
       };
+      
+      opacity.popups = 0.5;
+
       fonts = {
         monospace = {
           name = "JetBrainsMono Nerd Font";
           package = pkgs.nerd-fonts.jetbrains-mono;
+        };
+        sizes = {
+          popups = 12;
         };
       };
       cursor = {
