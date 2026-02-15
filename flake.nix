@@ -42,7 +42,9 @@
           ./profiles/slip/configuration.nix 
           ./modules/system/modules.nix
           {
-            environment.systemPackages = [ agenix.packages.${system}.default ];
+            environment.systemPackages = [ 
+              agenix.packages.${system}.default 
+            ];
           }
         ];
       };

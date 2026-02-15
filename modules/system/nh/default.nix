@@ -10,8 +10,10 @@
   config = lib.mkIf config.systemSettings.nh.enable {
     programs.nh = {
 	    enable = true;
-	    clean.enable = true;
-	    clean.extraArgs = "--keep-since 7d --keep 5";
+	    clean = {
+        enable = true;
+	      extraArgs = "--keep-since 7d --keep 5";
+      };
 	    flake = "/home/conor/.files/"; # sets NH_OS_FLAKE variable for you
 	  };
   };

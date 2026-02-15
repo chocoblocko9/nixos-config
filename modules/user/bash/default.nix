@@ -17,7 +17,7 @@
         icat = "kitten icat";
         nho = "nh os switch";
         nhh = "nh home switch";
-        update = "nix flake update && nh os switch && nh home switch";
+        update = "nix flake update --flake ~/.files && nh os switch && nh home switch";
       };
     };
   };
