@@ -114,7 +114,14 @@ in {
           ", XF86AudioPlay, exec, playerctl --player=Lollypop play-pause"
           ", XF86AudioPrev, exec, playerctl --player=Lollypop previous"
           ", XF86AudioStop, exec, playerctl --player=Lollypop stop"
-          ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+          ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+
+          # Zoom
+          "$mod, Z, exec,hyprctl keyword cursor:zoom_factor 2.5"
+        ];
+
+        bindrl = [ 
+          "$mod, Z, exec,hyprctl keyword cursor:zoom_factor 1"
         ];
 
         bindel = [
@@ -167,6 +174,11 @@ in {
           }
         ];
 
+        ### LAYER RULES ###
+			  layerrule = [
+          "match:class selector, no_anim on" # fix for weird 1px black border on screenshots
+        ];
+
         ### LAYOUT ###
 
         dwindle = {
@@ -176,11 +188,11 @@ in {
         };
 
         ### LOOK AND FEEL ### 
-        /*
+        
         general = {
           gaps_in = "5";
           gaps_out = "5,10,10,10";
-
+        
           border_size = "3";
           resize_on_border = "true";
           hover_icon_on_border = "true";
@@ -188,8 +200,9 @@ in {
 
           allow_tearing = "false";
           layout = "dwindle";
+        
         };
-  
+        
         decoration = {
           rounding = 29;
           rounding_power = 1;
@@ -197,7 +210,8 @@ in {
           dim_inactive = true;
           dim_strength = 0.35;
         };
-        */
+        
+        ### PLUGINS ###
         plugin = {
           hyprexpo = {
             columns = 3;
@@ -211,35 +225,12 @@ in {
         };
       };
       extraConfig = '' 
-        ### LOOK AND FEEL ### 
-
-        general {
-          gaps_in = 5
-          gaps_out = 5,10,10,10
-  
-          border_size = 3
-          resize_on_border = true
-          hover_icon_on_border = true
-          extend_border_grab_area = 20
-
-          allow_tearing = false
-          layout = dwindle
-        }
-  
-        decoration {
-          rounding = 29
-          rounding_power = 1
-  
-          dim_inactive = true
-          dim_strength = 0.35
-        } 
-  
         ### CURSOR ###
         env = HYPRCURSOR_THEME,phinger-cursors-dark
         env = HYPRCURSOR_SIZE,28
   
         # Screenshots
-			  layerrule = match:class selector, no_anim on # fix for weird 1px black border        
+			  layerrule = match:class selector, no_anim on # fix for weird 1px black border      
       '';
     };
   };
