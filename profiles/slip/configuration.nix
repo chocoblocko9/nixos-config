@@ -21,8 +21,9 @@
       nano.enable = true;
       networking.enable = true;
       nh.enable = true;
+      niri.enable = false;
       obs.enable = true;
-      plasma.enable = true;
+      plasma.enable = false;
       polkit.enable = true;
       theming.enable = true;
       thunar.enable = true;
