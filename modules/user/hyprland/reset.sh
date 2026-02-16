@@ -1,27 +1,19 @@
-getpos() {
-	local window_name=$1
-	get_class_line=$(hyprctl clients | grep -n ".*class: ${window_name}" | cut -d':' -f1)
-	# Prints hyprctl clients, pipes into grep -n which returns line with the line number appended
-	# to it, and pipes that into cut which has the delimiter : so it leaves just the line number.
-	
-	get_pos_line=$((${get_class_line} -6))
-	# Thankfully hyprctl clients is consistent in its values, and the "at: x y" field is always
-	# 6 lines before the "class: x" field. (Might need to fix with updates...)
-	
-	pos=$(hyprctl clients | sed "${get_pos_line}q;d")
-	# Sed uses the line number to only return that exact line number
-	
-	cut_pos=${pos:5}
-	# And some final cutting to return just the window position. Cool!
-	
-	echo ${cut_pos}
+getposandsize() {
+	local window_class=$1
+    hyprctl clients -j | jq -r ".[] | select(.class == \"$window_class\") | \"\(.size[0]),\(.size[1]),\(.at[0]),\(.at[1])\""
+    # outputs hyprctl clients in json format for jq
+    # it's all wrapped in an array, so select that array
+    # find the object where "class" = "$window_class" (vesktop or firefox here)
+    # get width, height, xpos and ypos in "w,h,x,y" format
 }
 
-if [[ $(getpos "vesktop") != "12,44" || $(getpos "firefox") != "444,44" ]]; then                                                                                               
-    hyprctl "dispatch movewindowpixel exact 12 44,class:vesktop"
-    hyprctl "dispatch movewindowpixel exact 444 44,class:firefox"
-else 
-    hyprctl "dispatch movewindowpixel -1463 0,class:vesktop"
-    hyprctl "dispatch movewindowpixel 1463 0,class:firefox"
-fi
+if [[ $(getposandsize "vesktop") != "1463,1023,12,44" || $(getposandsize "firefox") != "1463,1023,444,44" ]]; then   
+    hyprctl --batch "\
+dispatch movewindowpixel exact 12 44,class:vesktop;\
+dispatch movewindowpixel exact 444 44,class:firefox;\
+dispatch resizewindowpixel exact 1463 1023,class:vesktop;\
+dispatch resizewindowpixel exact 1463 1023,class:firefox"
 
+else 
+    hyprctl --batch "dispatch movewindowpixel -1463 0,class:vesktop;dispatch movewindowpixel 1463 0,class:firefox"
+fi

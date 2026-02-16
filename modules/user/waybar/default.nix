@@ -103,7 +103,7 @@
           "wireplumber" = {
             format = "{volume}% {icon} |";
             format-muted = " ";
-            on-click = "pavucontrol";
+            on-click = "pavucontrol --tab=3";
             format-icons = [" " " " " "];
           };
 

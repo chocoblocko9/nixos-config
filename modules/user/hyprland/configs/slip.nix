@@ -28,6 +28,14 @@ in {
         "col.inactive_border" = "rgba(595959E6) rgba(000000E6) 30deg";
       };
 
+      windowrule = [
+        {
+			    name = "opacityRules";
+		      opacity = "0.96 0.75";
+		      "match:class" = "negative:kitty";
+		    }
+      ];
+
       bind = [
         "$mod, S, togglespecialworkspace, music"
         "$mod SHIFT, S, movetoworkspace, special:music"
