@@ -130,7 +130,17 @@ in {
           ",XF86AudioLowerVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 10%-"
         ];
 
+        ### EXECUTE ON BOOT ###
+
+        exec-once = [ 
+          "firefox & vesktop & soteria"
+          "[workspace 2 silent] code"
+          "hyprctl plugin load \"$HYPR_PLUGIN_DIR/lib/libhyprexpo.so\""
+          "bash ~/.files/modules/user/hyprland/raiseonhover.sh"
+        ];
+
         ### WINDOW RULES ###
+
         windowrule = [ 
           "tag +defFloat, match:class org.pulseaudio.pavucontrol"
 			    "tag +defFloat, match:class nwg-look"

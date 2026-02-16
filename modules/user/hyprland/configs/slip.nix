@@ -34,11 +34,8 @@ in {
       ];
 
       exec-once = [ 
-        "firefox & vesktop & mprisence & soteria & nicotine -s"
+        "mprisence & nicotine -s"
         "[workspace special:music silent] lollypop"
-        "[workspace 2 silent] code"
-        "hyprctl plugin load \"$HYPR_PLUGIN_DIR/lib/libhyprexpo.so\""
-        "bash ~/.files/modules/user/hyprland/raiseonhover.sh"
       ];
     };
 

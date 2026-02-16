@@ -27,12 +27,7 @@ in {
         "col.inactive_border" = "rgba(000000E6)";
       };
 
-      monitor = "eDP-1, 1920x1080, 0x0, 1.25";
-
-      exec-once = [
-        "firefox & vesktop & soteria"
-        "hyprctl plugin load \"$HYPR_PLUGIN_DIR/lib/libhyprexpo.so\""
-      ];
+      monitor = "eDP-1, 1920x1080, 0x0, 1";
     };
 
     extraConfig = ''
