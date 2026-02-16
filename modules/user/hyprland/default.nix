@@ -64,6 +64,7 @@ in {
           "$mod, P, pseudo,"
           "$mod, J, togglesplit,"
           "$mod, G, hyprexpo:expo, toggle"
+          "$mod, R, exec, bash ~/.files/modules/user/hyprland/reset.sh"
 
           "$mod, left, movefocus, l"
           "$mod, down, movefocus, d"
