@@ -26,8 +26,11 @@ in {
 	    slurp
 	    wl-clipboard
 
+      runapp
+
+      # script stuff
       socat
-      jq # minimise steam script depends on this
+      jq 
     ];
 
     programs.hyprcursor-phinger.enable = true; # hyprcursor
@@ -54,13 +57,13 @@ in {
         
         # Normal binds
         bind = [
-          "$mod, Q, exec, $terminal"
+          "$mod, Q, exec, runapp $terminal"
           "$mod, C, exec, bash ~/.files/modules/user/hyprland/minimise.sh"
-          "$mod, F, exec, firefox"
+          "$mod, F, exec, runapp firefox"
           "$mod, M, exec, uwsm stop"
-          "$mod, E, exec, $filemanager"
+          "$mod, E, exec, runapp $filemanager"
           "$mod, V, togglefloating,"
-          "$mod, D, exec, $menu"
+          "$mod, D, exec, runapp $menu"
           "$mod, P, pseudo,"
           "$mod, J, togglesplit,"
           "$mod, G, hyprexpo:expo, toggle"
@@ -133,8 +136,8 @@ in {
         ### EXECUTE ON BOOT ###
 
         exec-once = [ 
-          "firefox & vesktop & soteria"
-          "[workspace 2 silent] code"
+          "runapp firefox & runapp vesktop & runapp soteria"
+          "[workspace 2 silent] runapp code"
           "hyprctl plugin load \"$HYPR_PLUGIN_DIR/lib/libhyprexpo.so\""
           "bash ~/.files/modules/user/hyprland/raiseonhover.sh"
         ];
@@ -244,5 +247,12 @@ in {
 			  layerrule = match:class selector, no_anim on # fix for weird 1px black border      
       '';
     };
+
+    home.file.".config/hypr/xdph.conf".text = ''
+      screencopy {
+        max_fps = 60
+        allow_token_by_default = true
+      }
+    '';
   };
 }
