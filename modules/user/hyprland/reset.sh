@@ -17,15 +17,9 @@ getpos() {
 	echo ${cut_pos}
 }
 
-# Split components
-vesktop_x=$(getpos "vesktop" | cut -d',' -f1)
-vesktop_y=$(getpos "vesktop" | cut -d',' -f2)
-firefox_x=$(getpos "firefox" | cut -d',' -f1)
-firefox_y=$(getpos "firefox" | cut -d',' -f2)
-
 if [[ $(getpos "vesktop") != "12,44" || $(getpos "firefox") != "444,44" ]]; then                                                                                               
-    hyprctl "dispatch movewindowpixel $(( 12 - ${vesktop_x})) $(( 44 - ${vesktop_y})),class:vesktop"
-    hyprctl "dispatch movewindowpixel $(( 444 - ${firefox_x})) $(( 44 - ${firefox_y})),class:firefox"
+    hyprctl "dispatch movewindowpixel exact 12 44,class:vesktop"
+    hyprctl "dispatch movewindowpixel exact 444 44,class:firefox"
 else 
     hyprctl "dispatch movewindowpixel -1463 0,class:vesktop"
     hyprctl "dispatch movewindowpixel 1463 0,class:firefox"
