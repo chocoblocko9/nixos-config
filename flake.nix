@@ -75,7 +75,7 @@
     };
 
     homeConfigurations = {
-      conor = home-manager.lib.homeManagerConfiguration {
+      "conor@slip" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
 					inherit nixpkgs-stable;
@@ -87,7 +87,7 @@
         ];
       };
 
-      conor-sleepless = home-manager.lib.homeManagerConfiguration {
+      "conor@sleepless" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
           inherit inputs;
@@ -98,7 +98,7 @@
         ];
       };
 
-      ezra = home-manager.lib.homeManagerConfiguration {
+      "ezra@superliminal" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
           inherit inputs;

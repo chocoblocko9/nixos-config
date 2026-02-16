@@ -26,7 +26,7 @@ firefox_y=$(getpos "firefox" | cut -d',' -f2)
 #hyprctl "dispatch movewindowpixel $(( 444 - ${firefox_x})) $(( 44 - ${firefox_y})),class:firefox"
 
 # this if statement is a tab broken but it does the functionality, will fix it tomorrow hopefully
-if [[ $(getpos "vesktop") != "12,44" || $(getpos "discord" != "444,44") ]]; then                                                                                               
+if [[ $(getpos "vesktop") != "12,44" || $(getpos "firefox") != "444,44" ]]; then                                                                                               
     hyprctl "dispatch movewindowpixel $(( 12 - ${vesktop_x})) $(( 44 - ${vesktop_y})),class:vesktop"
     hyprctl "dispatch movewindowpixel $(( 444 - ${firefox_x})) $(( 44 - ${firefox_y})),class:firefox"
 else 
