@@ -66,7 +66,7 @@ in {
           "$mod, D, exec, runapp $menu"
           "$mod, P, pseudo,"
           "$mod, J, togglesplit,"
-          "$mod, G, hyprexpo:expo, toggle"
+          #"$mod, G, hyprexpo:expo, toggle"
           "$mod, R, exec, bash ~/.files/modules/user/hyprland/reset.sh"
 
           "$mod, left, movefocus, l"
@@ -136,10 +136,11 @@ in {
         ### EXECUTE ON BOOT ###
 
         exec-once = [ 
-          "runapp firefox & runapp vesktop & runapp soteria"
-          "[workspace 2 silent] runapp code"
+          "firefox & vesktop & soteria"
+          "[workspace 2 silent] code"
           "hyprctl plugin load \"$HYPR_PLUGIN_DIR/lib/libhyprexpo.so\""
           "bash ~/.files/modules/user/hyprland/raiseonhover.sh"
+         # "bash ~/.files/modules/user/hyprland/fullscreen.sh"
         ];
 
         ### WINDOW RULES ###
@@ -152,21 +153,15 @@ in {
           {
             name = "Default Float Behaviour";
 			      float = "on";
-			      size = "1200 800";
+			      size = "(monitor_w*0.75) (monitor_h*0.75)";
 			      "match:tag" = "defFloat";
           }
 
           {
 				    name = "Lollypop float";
 				    float = "on";
-				    size = "1700 900";
+            size = "(monitor_w*0.9) (monitor_h*0.9)";
 				    "match:class" = "lollypop";
-			    }
-
-          {
-			      name = "opacityRules";
-			      opacity = "0.96 0.75";
-			      "match:class" = "negative:kitty";
 			    }
 
           {
@@ -188,6 +183,12 @@ in {
           }
         ];
 
+        ### WORKSPACE RULES ###
+        workspace = [
+          "4, layout:monocle"
+          "5, layout:scrolling"
+        ];
+
         ### LAYER RULES ###
 			  layerrule = [
           "match:class selector, no_anim on" # fix for weird 1px black border on screenshots
@@ -202,21 +203,20 @@ in {
         };
 
         ### LOOK AND FEEL ### 
-        
+
         general = {
           gaps_in = "5";
           gaps_out = "5,10,10,10";
-        
+
           border_size = "3";
           resize_on_border = "true";
           hover_icon_on_border = "true";
           extend_border_grab_area = "25";
 
           allow_tearing = "false";
-          layout = "dwindle";
-        
+          layout = "dwindle";        
         };
-        
+
         decoration = {
           rounding = 29;
           rounding_power = 1;
@@ -224,7 +224,7 @@ in {
           dim_inactive = true;
           dim_strength = 0.35;
         };
-        
+
         ### PLUGINS ###
         plugin = {
           hyprexpo = {
@@ -234,17 +234,14 @@ in {
             workspace_method = "center current"; # [center/first] [workspace] e.g. first 1 or center m+1
             skip_empty = true;
 
-            gesture_distance = 300; # how far is the "max" for the gesture
+            # gesture_distance = 300; # how far is the "max" for the gesture
           };
         };
       };
       extraConfig = '' 
         ### CURSOR ###
         env = HYPRCURSOR_THEME,phinger-cursors-dark
-        env = HYPRCURSOR_SIZE,28
-  
-        # Screenshots
-			  layerrule = match:class selector, no_anim on # fix for weird 1px black border      
+        env = HYPRCURSOR_SIZE,28   
       '';
     };
 
