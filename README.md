@@ -10,11 +10,6 @@ This is my NixOS config! (quite self explanatory)
 - [ ] Get Docker and WinApps running as an Experiment (23/11/25)
 - [ ] Add wayy more animations to hyprland (30/11/25)
 - [ ] Set-up Haskell dev shell
-- [ ] Expand hyprland functionality:
-  - [ ] Any one of the 50 clipboard managers
-  ##### Optional
-  - [ ] hyprland-qt-support, hyprsysteminfo, hyprqt6engine 
-- [ ] Switch to using home-manager as a NixOS module
 
 ### To-Done list
 - [ ] ~~Package discord-rpmpris myself (scary) (23/11/25)~~
@@ -60,6 +55,9 @@ This is my NixOS config! (quite self explanatory)
   - Alright, 90% of functionality is done so I'm marking this as complete. (11/02/26)
 - [x] Install hyprplugins
   - Got hyprexpo, other ones seem kinda useless 
+- [x] Expand hyprland functionality:
+  - [x] Any one of the 50 clipboard managers
+  - I did this like 500 years ago (17/02/26)
 
 ## Background
 

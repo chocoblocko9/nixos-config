@@ -7,6 +7,7 @@
     	bash.enable = true;
       btop.enable = true;
       dunst.enable = true;
+      fuzzel.enable = true;
       git.enable = true;
       haskell.enable = true;
 			hyprland = {

@@ -4,9 +4,11 @@
 	config = {
 		userSettings = {
 			apps.enable = true;
+      ashell.enable = false;
     	bash.enable = true;
       btop.enable = true;
       dunst.enable = true;
+      fuzzel.enable = true;
      	gaming.enable = true;
       git.enable = true;
       haskell.enable = true;
