@@ -12,13 +12,9 @@
       enable = true;
       enableGitIntegration = true;
       settings = {
-        background = "#001e26";
-        background_opacity = "0.6";
+        #background = "#001e26";
+        #background_opacity = "0.6";
         background_blur = 32;
-      };
-      font = { 
-        size = 14;
-        name = "monospace";
       };
     };
   };
