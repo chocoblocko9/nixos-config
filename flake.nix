@@ -131,6 +131,11 @@
     };
     hyprcursor-phinger.url = "github:jappie3/hyprcursor-phinger";
 
+    hyprland-layouts-rethonked = {
+      url = "github:vaxerski/Hyprland/layouts-rethonked";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/master"; 
       inputs.nixpkgs.follows = "nixpkgs";

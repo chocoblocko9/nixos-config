@@ -1,7 +1,8 @@
 { lib, config, pkgs, inputs, ... }:
 
 let
-  source = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
+  #source = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
+  source = inputs.hyprland-layouts-rethonked.packages.${pkgs.stdenv.hostPlatform.system};
   cfg = config.systemSettings.hyprland;
 in {
   options = {
