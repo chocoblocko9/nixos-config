@@ -49,7 +49,7 @@ in {
         ### PROGRAMS ###
         "$terminal" = "kitty";
         "$fileManager" = "thunar";
-        "$menu" = "wofi --show drun";
+        "$menu" = "fuzzel --launch-prefix=runapp";
         "$music" = "lollypop";
 
         ### BINDS ###
@@ -61,9 +61,9 @@ in {
           "$mod, C, exec, bash ~/.files/modules/user/hyprland/minimise.sh"
           "$mod, F, exec, runapp firefox"
           "$mod, M, exec, uwsm stop"
-          "$mod, E, exec, runapp $filemanager"
+          "$mod, E, exec, runapp $fileManager"
           "$mod, V, togglefloating,"
-          "$mod, D, exec, runapp $menu"
+          "$mod, D, exec, $menu"
           "$mod, P, pseudo,"
           "$mod, J, togglesplit,"
           "$mod, G, hyprexpo:expo, toggle"
@@ -136,8 +136,8 @@ in {
         ### EXECUTE ON BOOT ###
 
         exec-once = [ 
-          "runapp firefox & runapp vesktop & runapp soteria"
-          "[workspace 2 silent] runapp code"
+          "firefox & vesktop & soteria"
+          "[workspace 2 silent] code"
           "hyprctl plugin load \"$HYPR_PLUGIN_DIR/lib/libhyprexpo.so\""
           "bash ~/.files/modules/user/hyprland/raiseonhover.sh"
         ];
