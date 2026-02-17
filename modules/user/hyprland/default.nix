@@ -49,7 +49,7 @@ in {
         ### PROGRAMS ###
         "$terminal" = "kitty";
         "$fileManager" = "thunar";
-        "$menu" = "fuzzel --launch-prefix=runapp";
+        "$menu" = "fuzzel";
         "$music" = "lollypop";
 
         ### BINDS ###

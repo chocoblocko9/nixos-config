@@ -20,6 +20,8 @@
         set afterends
         set indicator
         set linenumbers
+        set guidestripe 100
+        set stripecolor bold,white,blue
       '';
     };
   };

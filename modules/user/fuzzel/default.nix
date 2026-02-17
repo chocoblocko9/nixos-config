@@ -10,7 +10,10 @@
   config = lib.mkIf config.userSettings.fuzzel.enable {
     programs.fuzzel = {
       enable = true;
-      #settings = 
+      settings = {
+        border.width = 3;
+        main.launch-prefix = "runapp";
+      };
     };
   };
 }
