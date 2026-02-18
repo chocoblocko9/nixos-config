@@ -23,7 +23,7 @@
 			nixcord.enable = true;
       rstudio.enable = true;
 			stylix.enable = true;
-			theming.enable = true;
+			theming.enable = false;
       vscode.enable = true;
       waybar.enable = true;
       wofi.enable = true;

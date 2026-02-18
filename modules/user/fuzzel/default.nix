@@ -12,7 +12,10 @@
       enable = true;
       settings = {
         border.width = 3;
-        main.launch-prefix = "runapp";
+        main = {
+          launch-prefix = "runapp";
+          use-bold = true;
+        };
       };
     };
   };
