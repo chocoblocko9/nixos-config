@@ -17,9 +17,14 @@
       polarity = "dark";
       targets = { 
         nixcord.enable = false;
-        wofi.enable = false;
-        kitty.enable = true;
+        kitty.fonts.override.sizes.terminal = 14;
         hyprland.enable = false;
+        vscode.colors.override = {
+          withHashtag = {
+            base02 = "#85858558";
+            base0E = "#7579bd";
+          };
+        };
         dunst = {
           enable = false;
           fonts.enable = true;
@@ -55,9 +60,10 @@
         };
         sizes = {
           popups = 12;
-          terminal = 14;
+          terminal = 13;
         };
       };
+
       cursor = {
         name = "Phinger Cursors";
         package = pkgs.phinger-cursors;

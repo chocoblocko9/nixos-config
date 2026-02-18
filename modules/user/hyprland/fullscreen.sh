@@ -1,13 +1,13 @@
 handle() {
   case $1 in
     fullscreen*)
-      # Extract the window class from the event
-      # Format is: activewindow>>CLASS,TITLE
+      # Extract the fullscreen status
+      # Format is: fullscreen>>(0/1)
       fullscreen_status=$(echo "$1" | cut -d'>' -f3)
       
-      # Only raise window if it's Firefox or Vesktop
-      if [[ "$fullscreen_status" == "0" ]] then
-        hyprctl dispatch movewindowpixel exact 444 44,class:firefox
+      # Yes, this moves firefox when ANYTHING unfullscreens, whatever I don't fullscreen much else
+      if [[ "$fullscreen_status" == "0" ]]; then
+        hyprctl dispatch 'movewindowpixel exact 444 44,class:firefox'
       fi
       ;;
   esac

@@ -66,7 +66,7 @@ in {
           "$mod, D, exec, $menu"
           "$mod, P, pseudo,"
           "$mod, J, togglesplit,"
-          #"$mod, G, hyprexpo:expo, toggle"
+          "$mod, G, hyprexpo:expo, toggle"
           "$mod, R, exec, bash ~/.files/modules/user/hyprland/reset.sh"
 
           "$mod, left, movefocus, l"
@@ -140,7 +140,7 @@ in {
           "[workspace 2 silent] code"
           "hyprctl plugin load \"$HYPR_PLUGIN_DIR/lib/libhyprexpo.so\""
           "bash ~/.files/modules/user/hyprland/raiseonhover.sh"
-         # "bash ~/.files/modules/user/hyprland/fullscreen.sh"
+          "bash ~/.files/modules/user/hyprland/fullscreen.sh"
         ];
 
         ### WINDOW RULES ###
@@ -234,7 +234,7 @@ in {
             workspace_method = "center current"; # [center/first] [workspace] e.g. first 1 or center m+1
             skip_empty = true;
 
-            # gesture_distance = 300; # how far is the "max" for the gesture
+            gesture_distance = 300; # how far is the "max" for the gesture
           };
         };
       };
@@ -245,10 +245,11 @@ in {
       '';
     };
 
+    # XDPH settings
     home.file.".config/hypr/xdph.conf".text = ''
       screencopy {
         max_fps = 60
-        allow_token_by_default = true
+        allow_token_by_default = true # BANGER option right here
       }
     '';
   };

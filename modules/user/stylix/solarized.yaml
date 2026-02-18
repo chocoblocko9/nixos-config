@@ -1,6 +1,6 @@
 system: "base16"
 name: "Solarized Dark"
-author: "Ethan Schoonover (https://ethanschoonover.com/), modified by aramisgithub)"
+author: "Ethan Schoonover (https://ethanschoonover.com/), modified by aramisgithub and chocoblocko9)"
 variant: "dark"
 palette:
   base00: "#011e25"
@@ -12,12 +12,13 @@ palette:
   base05: "#cac6b8"
   base06: "#eee8d5"
   base07: "#fdf6e3"
-  base08: "#cc0403"
+  #base08: "#cc0403"
+  base08: "#dc322f"
   base09: "#FF5C00"
   base0A: "#cecb00"
   base0B: "#19cb00"
   base0C: "#0dcdcd"
   base0D: "#0d73cc"
   base0E: "#cb1ed1"
-  base0F: "#6c71c4"
+  base0F: "#7579bd"
   
