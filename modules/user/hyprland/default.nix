@@ -185,8 +185,9 @@ in {
 
         ### WORKSPACE RULES ###
         workspace = [
-          "4, layout:monocle"
-          "5, layout:scrolling"
+          "3, persistent:true"
+          "4, persistent:true, layout:monocle"
+          "5, persistent:true, layout:scrolling"
         ];
 
         ### LAYER RULES ###
@@ -238,13 +239,20 @@ in {
             "easeInOutBack, 0.68, -0.6, 0.32, 1.6"
             "easeInOutSine, 0.37, 0, 0.63, 1"
 
+            "easeInExpo, 0.7, 0, 0.84, 0"
 
             "easeOutQuart, 0.25, 1, 0.5, 1"        
             "easeOutExpo, 0.16, 1, 0.3, 1"
             "easeOutExpoOvershoot, 0.16, 1, 0.3, 1.05"
+            "easeOutCirc, 0.85, 0, 0.15, 1"
+
+            "bouncyThing, 0.15, 0.60, 0.66, -0.61"
           ];
 
           animation = [
+            "windowsIn, 1, 2.5, easeOutExpo, popin"
+            "windowsOut, 1, 4, easeOutExpo, popin 10%"
+
             "workspaces, 1, 0.8, easeInOutSine, slidefade 50%"
             "specialWorkspaceIn, 1, 2.8, easeOutExpoOvershoot, slide top"
             "specialWorkspaceOut, 1, 5, easeInOutBack, slide bottom"
