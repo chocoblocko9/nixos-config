@@ -10,7 +10,6 @@ in {
         "kb_layout" = "de";
         "kb_variant" = "qwerty";
         "follow_mouse" = 1;
-        "float_switch_override_focus" = 2;
       };
 
       bindel = [
