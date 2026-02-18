@@ -1,4 +1,4 @@
-{ lib, config, pkgs, nixpkgs-overlayed, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   options = {
@@ -8,11 +8,6 @@
   };
 
   config = lib.mkIf config.systemSettings.polkit.enable {
-    environment.systemPackages = [ pkgs.soteria ];
-
-    security = {
-      polkit.enable = true;
-      # soteria.enable = true; # broken :( 
-    };
+    security.soteria.enable = true;
   };
 }

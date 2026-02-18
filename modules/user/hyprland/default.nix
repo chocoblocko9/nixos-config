@@ -136,7 +136,7 @@ in {
         ### EXECUTE ON BOOT ###
 
         exec-once = [ 
-          "firefox & vesktop & soteria"
+          "firefox & vesktop" #& soteria"
           "[workspace 2 silent] code"
           "hyprctl plugin load \"$HYPR_PLUGIN_DIR/lib/libhyprexpo.so\""
           "bash ~/.files/modules/user/hyprland/raiseonhover.sh"
@@ -223,7 +223,34 @@ in {
   
           dim_inactive = true;
           dim_strength = 0.35;
+
+          blur = {
+            special = true;
+          };
         };
+
+        ### ANIMATIONS ###
+        animations = {
+          enabled = true;
+          workspace_wraparound = true;
+
+          bezier = [
+            "easeInOutBack, 0.68, -0.6, 0.32, 1.6"
+            "easeInOutSine, 0.37, 0, 0.63, 1"
+
+
+            "easeOutQuart, 0.25, 1, 0.5, 1"        
+            "easeOutExpo, 0.16, 1, 0.3, 1"
+            "easeOutExpoOvershoot, 0.16, 1, 0.3, 1.05"
+          ];
+
+          animation = [
+            "workspaces, 1, 0.8, easeInOutSine, slidefade 50%"
+            "specialWorkspaceIn, 1, 2.8, easeOutExpoOvershoot, slide top"
+            "specialWorkspaceOut, 1, 5, easeInOutBack, slide bottom"
+          ];
+        };
+        
 
         ### PLUGINS ###
         plugin = {
