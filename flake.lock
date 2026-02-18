@@ -692,7 +692,7 @@
     "hyprland-plugins": {
       "inputs": {
         "hyprland": [
-          "hyprland"
+          "hyprland-layouts-rethonked"
         ],
         "nixpkgs": [
           "hyprland-plugins",
