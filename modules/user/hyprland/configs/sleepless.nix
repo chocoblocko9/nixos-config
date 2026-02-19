@@ -22,6 +22,10 @@ in {
         ",XF86MonBrightnessDown, exec, brightnessctl -q -n s 10%-"
       ];
 
+      exec-once = [ 
+        "firefox"
+      ];
+
       general = {
         "col.active_border" = "rgb(2A7B9B)";
         "col.inactive_border" = "rgba(000000E6)";

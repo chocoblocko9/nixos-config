@@ -34,14 +34,14 @@ in {
 		      "match:class" = "negative:kitty";
 		    }
 
-        {
-          name = "firefox behaviour";
-          float = "on";
-          size = "1463 1023";
-          move = "444 44";
-          workspace = 1;
-          "match:class" = "firefox";
-        }
+        # {
+          # name = "firefox behaviour";
+          # float = "on";
+          # size = "1463 1023";
+          # move = "444 44";
+          # workspace = 1;
+          # "match:class" = "firefox";
+        # }
         
         {
           name = "vesktop behaviour";
@@ -59,7 +59,8 @@ in {
       ];
 
       exec-once = [ 
-        "mprisence & vesktop & nicotine -s"
+        "[workspace 1; float; size 1463 1023; move 444 44] firefox"
+        "mprisence & nicotine -s"
         "[workspace special:music silent] lollypop"
       ];
     };
