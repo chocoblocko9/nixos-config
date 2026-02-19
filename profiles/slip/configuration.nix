@@ -130,8 +130,8 @@
     # Configure keyboard layout
     console.useXkbConfig = true;
     services.xserver.xkb = {
-      layout = "de";
-      variant = "qwerty";
+      layout = "eu";
+      variant = "";
     };
   
     # Define a user account. Don't forget to set a password with ‘passwd’.
