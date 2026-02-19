@@ -1,3 +1,5 @@
+#!/usr/bin/env bash 
+
 if [[ "$(dunstctl is-paused)" == "false" ]]; then
     echo "󰂚 "
 else

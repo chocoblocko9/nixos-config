@@ -1,3 +1,5 @@
+#!/usr/bin/env bash 
+
 handle() {
   case $1 in
     fullscreen*)

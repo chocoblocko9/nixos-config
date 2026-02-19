@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 getposandsize() {
 	local window_class=$1
     hyprctl clients -j | jq -r ".[] | select(.class == \"$window_class\") | \"\(.size[0]),\(.size[1]),\(.at[0]),\(.at[1])\""

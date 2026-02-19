@@ -1,3 +1,5 @@
+#!/usr/bin/env bash 
+
 # Script to automatically raise specific floating windows when hovered over in Hyprland
 # Only applies to Firefox and Vesktop
 
