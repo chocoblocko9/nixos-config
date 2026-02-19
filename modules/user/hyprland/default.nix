@@ -34,7 +34,12 @@ in {
     ];
 
     programs.hyprcursor-phinger.enable = true; # hyprcursor
-    home.sessionVariables.NIXOS_OZONE_WL = "1"; # tells electron apps to use wayland or somthing
+
+    home.sessionVariables = { 
+      NIXOS_OZONE_WL = "1"; # tells electron apps to use wayland or something
+      HYPRCURSOR_THEME = "phinger-cursors-dark";
+      HYPRCURSOR_SIZE = "28";
+    };  
 
     wayland.windowManager.hyprland = {
       enable = true;
@@ -139,7 +144,7 @@ in {
         ### EXECUTE ON BOOT ###
 
         exec-once = [ 
-          "firefox" #& soteria"
+          "firefox & vesktop & soteria"
           "[workspace 2 silent] code"
           "hyprctl plugin load \"$HYPR_PLUGIN_DIR/lib/libhyprexpo.so\""
           "bash ~/.files/modules/user/hyprland/raiseonhover.sh"
@@ -256,9 +261,7 @@ in {
         };
       };
       extraConfig = '' 
-        ### CURSOR ###
-        env = HYPRCURSOR_THEME,phinger-cursors-dark
-        env = HYPRCURSOR_SIZE,28   
+
       '';
     };
 
