@@ -14,7 +14,7 @@ in {
       colormix_col1 = "0xFF000000";
       colormix_col2 = "0x00009494";
       colormix_col3 = "0x00000080";
-      asterisk = ">";
+      asterisk = "*";
       bg = "0x00000000"; 
       clock = "%I:%M:%S %p %a, %d/%m/%Y";
       bigclock_12hr = true;
