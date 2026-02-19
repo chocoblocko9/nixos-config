@@ -123,16 +123,16 @@
             };
             modules = [
               "custom/power"
-              "custom/hibernate"
+              "custom/sleep"
               "custom/lock"
               "custom/reboot"
             ];
           };
 
-          "custom/hibernate" = {
+          "custom/sleep" = {
             format = "󰤄 ";
             tooltip = false;
-            on-click = "uwsm stop";
+            on-click = "systemctl sleep";
           };
           "custom/lock" = {
             format = "󰍁 ";

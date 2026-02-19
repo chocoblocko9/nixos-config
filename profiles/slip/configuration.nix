@@ -29,7 +29,7 @@
       thunar.enable = true;
       vnstat.enable = true;
     };
-  
+
     age = {
       secrets.secret1.file = ../../secrets/secret1.age;
       identityPaths = [ "/home/conor/.ssh/id_ed25519" ];
