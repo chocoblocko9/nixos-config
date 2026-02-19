@@ -166,24 +166,6 @@ in {
             size = "(monitor_w*0.9) (monitor_h*0.9)";
 				    "match:class" = "lollypop";
 			    }
-
-          {
-            name = "firefox behaviour";
-            float = "on";
-            size = "1463 1023";
-            move = "444 44";
-            workspace = 1;
-            "match:class" = "firefox";
-          }
-
-          {
-            name = "vesktop behaviour";
-            float = "on";
-            size = "1463 1023";
-            move = "12 44";
-            workspace = 1;
-            "match:class" = "vesktop";
-          }
         ];
 
         ### WORKSPACE RULES ###
