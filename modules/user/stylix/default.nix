@@ -12,7 +12,7 @@
   config = lib.mkIf config.userSettings.stylix.enable {
     stylix = {
 		  enable = true;
-      base16Scheme = ./solarized.yaml;
+      base16Scheme = ../../../themes/solarized/solarized.yaml;
       #image = ../hyprpaper/wallpapers/wallpaper.jpg;
       polarity = "dark";
       targets = { 
