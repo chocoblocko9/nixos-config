@@ -18,8 +18,7 @@ in {
 
         wallpaper = [ 
           {
-            # monitor = (if cfg.hyprland.profile == "slip" then "HDMI-A-2" else "eDP-1"); # Old logic
-            monitor = ""; # abuse fallback (I'm poor and don't have a second monitor rip)
+            monitor = "";
             path = "~/.files/modules/user/hyprpaper/wallpapers/wallpaper14.jpg";
             fit_mode = "cover";
           }
