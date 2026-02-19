@@ -7,8 +7,8 @@ in {
     settings = {
       ### INPUT ###
       input = {
-        "kb_layout" = "de";
-        "kb_variant" = "qwerty";
+        "kb_layout" = "eu";
+        "kb_variant" = "";
         "follow_mouse" = 1;
       };
 
