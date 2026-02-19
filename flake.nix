@@ -127,14 +127,12 @@
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland-layouts-rethonked";
-      #inputs.hyprland.follows = "hyprland";
+      inputs.hyprland.follows = "hyprland";
     };
     hyprcursor-phinger.url = "github:jappie3/hyprcursor-phinger";
 
     hyprland-layouts-rethonked = {
       url = "github:vaxerski/Hyprland/layouts-rethonked";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {

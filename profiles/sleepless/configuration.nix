@@ -79,7 +79,6 @@
     isNormalUser = true;
     description = "Conor";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
   };
 
   systemd.sleep.extraConfig = ''

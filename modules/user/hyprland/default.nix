@@ -139,11 +139,10 @@ in {
         ### EXECUTE ON BOOT ###
 
         exec-once = [ 
-          "firefox & vesktop" #& soteria"
+          "firefox" #& soteria"
           "[workspace 2 silent] code"
           "hyprctl plugin load \"$HYPR_PLUGIN_DIR/lib/libhyprexpo.so\""
           "bash ~/.files/modules/user/hyprland/raiseonhover.sh"
-          "bash ~/.files/modules/user/hyprland/fullscreen.sh"
         ];
 
         ### WINDOW RULES ###
@@ -189,8 +188,6 @@ in {
         ### WORKSPACE RULES ###
         workspace = [
           "3, persistent:true"
-          "4, persistent:true, layout:monocle"
-          "5, persistent:true, layout:scrolling"
         ];
 
         ### LAYER RULES ###

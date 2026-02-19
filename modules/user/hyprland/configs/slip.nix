@@ -41,7 +41,7 @@ in {
       ];
 
       exec-once = [ 
-        "mprisence & nicotine -s"
+        "mprisence & vesktop & nicotine -s"
         "[workspace special:music silent] lollypop"
       ];
     };
