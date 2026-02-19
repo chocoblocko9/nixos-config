@@ -69,6 +69,13 @@
         package = pkgs.phinger-cursors;
         size = 24;
       };
+
+      icons = {
+        enable = true;
+        package = pkgs.numix-icon-theme;
+        dark = "Numix";
+        light = "Numix-Light";
+      };
 	  };
   };
 }

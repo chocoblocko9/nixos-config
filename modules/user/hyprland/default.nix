@@ -99,6 +99,9 @@ in {
           "$mod, mouse_up, workspace, e-1"
           "$mod, mouse_down, workspace, e+1"
 
+          "$mod, mouse_right, layoutmsg, cyclenext"
+          "$mod, mouse_left, layoutmsg, cycleprev"
+
           # Open music app
           ",XF86Tools, exec, $music"
 
