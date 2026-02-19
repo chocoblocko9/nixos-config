@@ -14,12 +14,11 @@ in {
 
       # Styling
       animation = "colormix";
-      colormix_col1 = "0xFF000000";
-      colormix_col2 = "0x00009494";
-      # colormix_col1 = "0x0066FF33";
-      colormix_col3 = "0x00000080";
+      colormix_col1 = "0x20000000";
+      colormix_col2 = "0x01009494";
+      colormix_col3 = "0x01000080";
       asterisk = ">";
-      bg = "0x00000000"; 
+      bg = "0x20000000"; 
       clock = "%H:%M:%S %a, %d/%m/%Y";  
       bigclock_12hr = false;
     };
