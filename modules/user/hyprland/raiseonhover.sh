@@ -20,7 +20,7 @@ handle() {
   esac
 }
 
-# Listen to Hyprland events from socket (Claude did this idek what's happening)
+# Listen to Hyprland events from socket
 socat -U - UNIX-CONNECT:"$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" | while read -r line; do
   handle "$line"
 done
