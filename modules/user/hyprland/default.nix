@@ -73,7 +73,6 @@ in {
           "$mod, J, togglesplit,"
           "$mod, G, hyprexpo:expo, toggle"
           "$mod, R, exec, bash ~/.files/modules/user/hyprland/reset.sh"
-          "$mod, S, togglespecialworkspace, magic"
           "$mod, B, exec, bash ~/.files/modules/user/hyprland/minimisetospecial.sh"
 
           "$mod, left, movefocus, l"
