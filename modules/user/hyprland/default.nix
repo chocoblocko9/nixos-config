@@ -63,7 +63,7 @@ in {
         # Normal binds
         bind = [
           "$mod, Q, exec, runapp $terminal"
-          "$mod, C, exec, bash ~/.files/modules/user/hyprland/minimise.sh"
+          "$mod, C, exec, bash ~/.files/modules/user/hyprland/minimisesteam.sh"
           "$mod, F, exec, runapp firefox"
           "$mod, M, exec, uwsm stop"
           "$mod, E, exec, runapp $fileManager"
@@ -73,6 +73,8 @@ in {
           "$mod, J, togglesplit,"
           "$mod, G, hyprexpo:expo, toggle"
           "$mod, R, exec, bash ~/.files/modules/user/hyprland/reset.sh"
+          "$mod, S, togglespecialworkspace, magic"
+          "$mod, B, exec, bash ~/.files/modules/user/hyprland/minimisetospecial.sh"
 
           "$mod, left, movefocus, l"
           "$mod, down, movefocus, d"
