@@ -60,8 +60,11 @@ in {
 
       exec-once = [ 
         "[workspace 1; float; size 1463 1023; move 444 44] firefox"
-        "mprisence & nicotine -s"
+        "vesktop & mprisence & nicotine -s"
         "[workspace special:music silent] lollypop"
+        "bash ~/.files/modules/user/hyprland/raiseonhover.sh"
+        "bash ~/.files/modules/user/hyprland/fullscreen.sh"
+        "sleep 5; hyprctl --batch 'dispatch tagwindow +firefox class:firefox; dispatch tagwindow +vesktop class:vesktop"
       ];
     };
 

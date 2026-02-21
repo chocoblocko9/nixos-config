@@ -145,11 +145,9 @@ in {
         ### EXECUTE ON BOOT ###
 
         exec-once = [ 
-          "vesktop & soteria"
+          "soteria"
           "[workspace 2 silent] code"
           "hyprctl plugin load \"$HYPR_PLUGIN_DIR/lib/libhyprexpo.so\""
-          "bash ~/.files/modules/user/hyprland/raiseonhover.sh"
-          "bash ~/.files/modules/user/hyprland/fullscreen.sh"
         ];
 
         ### WINDOW RULES ###

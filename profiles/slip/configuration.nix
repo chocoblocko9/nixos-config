@@ -36,15 +36,15 @@
       identityPaths = [ "/home/conor/.ssh/id_ed25519" ];
     };
 
-		nix.settings = {
-			# Hyprland Cachix
-			substituters = [ "https://hyprland.cachix.org" ];
-			trusted-substituters = [ "https://hyprland.cachix.org" ];
-			trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+    nix.settings = {
+      # Hyprland Cachix
+      substituters = [ "https://hyprland.cachix.org" ];
+      trusted-substituters = [ "https://hyprland.cachix.org" ];
+      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
 
-			# Flakes 
-			experimental-features = [ "nix-command" "flakes" ];
-		};
+      # Flakes 
+      experimental-features = [ "nix-command" "flakes" ];
+    };
 
     # Bootloader & Kernel
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
@@ -65,21 +65,21 @@
         extraEntries = ''
           menuentry 'Windows Boot Manager (on /dev/nvme0n1p1)' --class windows --class os $menuentry_id_option 'osprober-efi-54A5-22B3' {
             insmod part_gpt
-	          insmod fat
-	          search --no-floppy --fs-uuid --set=root 54A5-22B3
-	          chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+            insmod fat
+            search --no-floppy --fs-uuid --set=root 54A5-22B3
+            chainloader /EFI/Microsoft/Boot/bootmgfw.efi
           }
           menuentry 'Arch Linux (on 2TB Hard Drive)' --class arch --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-simple-ec21-0eb4f241-ec21-4840-8321-4c66a2f2cd89' {
-	          ismod part_msdos
-	          ismod fat
-	          set root='hd0,msdos3'
-	          if [x $feature_platform_search_hint = xy ]; then
-	            search --no-floppy --fs-uuid --set=root --hint-ieee1275='ieee1275//disk@0,msdos3' --hint-bios=hd0,msdos3 --hint-efi=hd1,msdos3 --hint-baremetal=ahcil,msdos3 E31D-C6D1
-	          else
-	            search --no-floppy --fs-uuid --set=root E31D-C6D1
-	          fi
-	          linux /vmlinuz-linux root=UUID=0eb4f241-ec21-4840-8321-4c66a2f2cd89 rw loglevel=3 quiet
-	          initrd /initramfs-linux.img
+            ismod part_msdos
+            ismod fat
+            set root='hd0,msdos3'
+            if [x $feature_platform_search_hint = xy ]; then
+              search --no-floppy --fs-uuid --set=root --hint-ieee1275='ieee1275//disk@0,msdos3' --hint-bios=hd0,msdos3 --hint-efi=hd1,msdos3 --hint-baremetal=ahcil,msdos3 E31D-C6D1
+            else
+              search --no-floppy --fs-uuid --set=root E31D-C6D1
+            fi
+            linux /vmlinuz-linux root=UUID=0eb4f241-ec21-4840-8321-4c66a2f2cd89 rw loglevel=3 quiet
+            initrd /initramfs-linux.img
           }
           menuentry "Shutdown" {
             echo "System shutting down..."
