@@ -182,6 +182,11 @@
           key = "<C-l>";
           action = "<C-w>l";
         }
+        {
+          mode = "n";
+          key = "<leader>t";
+          action = ":term<CR>";
+        }
       ];
     };
   };

@@ -36,6 +36,8 @@
       identityPaths = [ "/home/conor/.ssh/id_ed25519" ];
     };
 
+    services.xserver.xkb.options = "ctrl:swapcaps";
+
     nix.settings = {
       # Hyprland Cachix
       substituters = [ "https://hyprland.cachix.org" ];

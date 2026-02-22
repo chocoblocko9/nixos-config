@@ -9,6 +9,7 @@ in {
       input = {
         "kb_layout" = "eu";
         "kb_variant" = "";
+        "kb_options" = "ctrl:swapcaps";
         "follow_mouse" = 1;
       };
 
