@@ -65,7 +65,7 @@ in {
         "[workspace special:music silent] lollypop"
         "bash ~/.files/modules/user/hyprland/raiseonhover.sh"
         "bash ~/.files/modules/user/hyprland/fullscreen.sh"
-        "sleep 5; hyprctl --batch 'dispatch tagwindow +firefox class:firefox; dispatch tagwindow +vesktop class:vesktop"  
+        "sleep 5; hyprctl --batch 'dispatch tagwindow +firefox class:firefox; dispatch tagwindow +vesktop class:vesktop'"  
       ];
     };
 
