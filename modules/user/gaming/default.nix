@@ -9,21 +9,21 @@
 
   config = lib.mkIf config.userSettings.gaming.enable {
     home.packages = 
-  	(with pkgs; [
-	    heroic # Good games launcher
+    (with pkgs; [
+      heroic # Good games launcher
       cemu # Wii U my beloved
       prismlauncher # Minecraft
       # parallel-launcher
       streamlink # thing for the ets2 radio stream
       sm64coopdx
-  	])
+    ])
 
-		++
+    ++
 
-  	(with nixpkgs-stable; [
-			parallel-launcher # N64 emulator
+    (with nixpkgs-stable; [
+      parallel-launcher # N64 emulator
       # newest version in unstable fails to build yippee!
-  	]);
+    ]);
 
 
     # Don't even THINK about questioning it
