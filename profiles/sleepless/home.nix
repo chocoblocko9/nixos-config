@@ -9,7 +9,7 @@
       dunst.enable = true;
       fuzzel.enable = true;
       git.enable = true;
-      haskell.enable = true;
+      haskell.enable = false;
       hyprland = {
         enable = true;
         profile = "sleepless";
@@ -19,10 +19,10 @@
       kitty.enable = true;
       music.enable = true;
       nixcord.enable = true;
-      #      rstudio.enable = true;
+      #rstudio.enable = true;
       stylix.enable = true;
       theming.enable = true;
-      vscode.enable = true;
+      vscode.enable = false;
       waybar.enable = true;
       wofi.enable = true;
     };

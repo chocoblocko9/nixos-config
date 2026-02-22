@@ -25,7 +25,7 @@
       rstudio.enable = true;
       stylix.enable = true;
       theming.enable = false;
-      vscode.enable = true;
+      vscode.enable = false;
       waybar.enable = true;
       wofi.enable = true;
     };
