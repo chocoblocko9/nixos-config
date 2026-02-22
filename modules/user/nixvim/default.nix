@@ -51,6 +51,8 @@
           # Haskell
           hls = {
             enable = true;
+            installGhc = true;
+          };
         };
 
         keymaps = {

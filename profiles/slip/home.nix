@@ -11,7 +11,7 @@
       fuzzel.enable = true;
       gaming.enable = true;
       git.enable = true;
-      haskell.enable = true;
+      haskell.enable = false;
       hyprland = { 
         enable = true;
         profile = "slip";

@@ -146,7 +146,7 @@ in {
 
         exec-once = [ 
           "soteria"
-          "[workspace 2 silent] code"
+          "[workspace 2 silent] kitty nvim"
           "hyprctl plugin load \"$HYPR_PLUGIN_DIR/lib/libhyprexpo.so\""
         ];
 
