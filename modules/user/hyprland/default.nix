@@ -48,7 +48,7 @@ in {
       portalPackage = null;
       systemd.enable = false; # Using UWSM
       plugins = with plugin-source; [
-        hyprexpo
+        # hyprexpo
       ];
       settings = {
         ### PROGRAMS ###
@@ -251,6 +251,7 @@ in {
 
         ### PLUGINS ###
         plugin = {
+        	/*
           hyprexpo = {
             columns = 3;
             gap_size = 5;
@@ -260,6 +261,7 @@ in {
 
             gesture_distance = 300; # how far is the "max" for the gesture
           };
+          */
         };
       };
       extraConfig = '' 
