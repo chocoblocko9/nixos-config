@@ -71,7 +71,7 @@ in {
           "$mod, D, exec, $menu"
           "$mod, P, pseudo,"
           "$mod, J, togglesplit,"
-          "$mod, G, hyprexpo:expo, toggle"
+          # "$mod, G, hyprexpo:expo, toggle"
           "$mod, R, exec, bash ~/.files/modules/user/hyprland/reset.sh"
           "$mod, B, exec, bash ~/.files/modules/user/hyprland/minimisetospecial.sh"
 
