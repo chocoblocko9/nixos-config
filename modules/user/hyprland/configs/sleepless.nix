@@ -7,7 +7,9 @@ in {
     settings = {
       ### INPUT ###
       input = {
-        "kb_layout" = "ie";
+        "kb_layout" = "eu";
+        "kb_variant" = "";
+        "kb_options" = "ctrl:swapcaps";
         "follow_mouse" = 1;
       };
 
@@ -30,6 +32,13 @@ in {
         "col.active_border" = "rgb(2A7B9B)";
         "col.inactive_border" = "rgba(000000E6)";
       };
+
+      decoration = {
+        blur.enabled = false;
+        shadow.enabled = false;
+      };
+
+      animations.enabled = false;
 
       monitor = "eDP-1, 1920x1080, 0x0, 1";
     };

@@ -12,18 +12,28 @@
   config = lib.mkIf config.userSettings.stylix.enable {
     stylix = {
 		  enable = true;
+      autoEnable = false;
       base16Scheme = ../../../themes/solarized/solarized.yaml;
       #image = ../hyprpaper/wallpapers/wallpaper.jpg;
       polarity = "dark";
       targets = { 
         nixcord.enable = false;
-        kitty.fonts.override.sizes.terminal = 14;
+        waybar.enable = true;
+        gtk.enable = true;
+        btop.enable = true;
+        cava.enable = true;
+        nixvim.enable = true;
+        fuzzel.enable = true;
         hyprland.enable = false;
         vscode.colors.override = {
           withHashtag = {
             base02 = "#85858558";
             base0E = "#7579bd";
           };
+        };
+        kitty = { 
+          enable = true;
+          fonts.override.sizes.terminal = 14;
         };
         dunst = {
           enable = false;

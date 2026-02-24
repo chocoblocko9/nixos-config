@@ -68,10 +68,11 @@
   };
 
   # Configure keymap in X11
-  console.keyMap = "ie";
+  console.useXkbConfig = true;
   services.xserver.xkb = {
-    layout = "ie";
+    layout = "eu";
     variant = "";
+    options = "ctrl:swapcaps";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -83,13 +84,11 @@
   };
 
   systemd.sleep.extraConfig = ''
-    HibernateDelaySec=3600
+    HibernateDelaySec=1800
   '';
   
   services = {
-    logind.settings.Login = { 
-      HandleLidSwitch = "suspend-then-hibernate"; 
-      };
+    logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate"; 
     libinput.enable = true;
   };
 
