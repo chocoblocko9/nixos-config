@@ -19,6 +19,7 @@ in {
       ];
 
       animation = {
+        enabled = false;
         bezier = "linear,0,0,1,1";
         animation = "borderangle, 1, 100, linear, loop";
       };

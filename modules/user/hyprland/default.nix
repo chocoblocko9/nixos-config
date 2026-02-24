@@ -221,7 +221,7 @@ in {
 
         ### ANIMATIONS ###
         animations = {
-          enabled = true;
+          # enabled = true;
           workspace_wraparound = true;
 
           bezier = [

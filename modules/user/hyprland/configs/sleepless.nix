@@ -33,6 +33,13 @@ in {
         "col.inactive_border" = "rgba(000000E6)";
       };
 
+      decoration = {
+        blur.enabled = false;
+        shadow.enabled = false;
+      };
+
+      animations.enabled = false;
+
       monitor = "eDP-1, 1920x1080, 0x0, 1";
     };
 
