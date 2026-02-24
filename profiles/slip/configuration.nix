@@ -36,8 +36,6 @@
       identityPaths = [ "/home/conor/.ssh/id_ed25519" ];
     };
 
-    services.xserver.xkb.options = "ctrl:swapcaps";
-
     nix.settings = {
       # Hyprland Cachix
       substituters = [ "https://hyprland.cachix.org" ];
@@ -136,6 +134,7 @@
     services.xserver.xkb = {
       layout = "eu";
       variant = "";
+      options = "ctrl:swapcaps";
     };
   
     # Define a user account. Don't forget to set a password with ‘passwd’.

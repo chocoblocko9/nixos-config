@@ -48,7 +48,7 @@ in {
       portalPackage = null;
       systemd.enable = false; # Using UWSM
       plugins = with plugin-source; [
-        # hyprexpo
+        hyprexpo
       ];
       settings = {
         ### PROGRAMS ###
@@ -71,7 +71,7 @@ in {
           "$mod, D, exec, $menu"
           "$mod, P, pseudo,"
           "$mod, J, togglesplit,"
-          # "$mod, G, hyprexpo:expo, toggle"
+          "$mod, G, hyprexpo:expo, toggle"
           "$mod, R, exec, bash ~/.files/modules/user/hyprland/reset.sh"
           "$mod, B, exec, bash ~/.files/modules/user/hyprland/minimisetospecial.sh"
 
@@ -251,7 +251,6 @@ in {
 
         ### PLUGINS ###
         plugin = {
-        	/*
           hyprexpo = {
             columns = 3;
             gap_size = 5;
@@ -261,7 +260,6 @@ in {
 
             gesture_distance = 300; # how far is the "max" for the gesture
           };
-          */
         };
       };
       extraConfig = '' 
