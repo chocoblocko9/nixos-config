@@ -185,7 +185,18 @@
         {
           mode = "n";
           key = "<leader>t";
-          action = ":term<CR>";
+          action = ":10split | term<CR>";  # 10 lines tall
+          options.silent = true;
+        }
+        {
+          mode = "i";
+          key = "<C-;>";
+          action = "->";
+        }
+        {
+          mode = "t";
+          key = "<C-Space>";
+          action = "<C-\><C-n>";
         }
       ];
     };

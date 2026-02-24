@@ -29,6 +29,7 @@ in {
       runapp
 
       # script stuff
+      xdotool
       socat
       jq 
     ];
