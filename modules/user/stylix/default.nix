@@ -20,7 +20,6 @@
         nixcord.enable = false;
         waybar.enable = true;
         gtk.enable = true;
-        btop.enable = true;
         cava.enable = true;
         nixvim.enable = true;
         fuzzel.enable = true;

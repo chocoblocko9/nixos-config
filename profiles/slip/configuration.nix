@@ -4,6 +4,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../modules/btop/default.nix
     ];
   
   config = {
@@ -30,6 +31,10 @@
       thunar.enable = true;
       vnstat.enable = true;
     };
+
+    hjemSettings.btop.enable = true;
+
+    hjem.users.conor.directory = "/home/conor";
 
     age = {
       secrets.secret1.file = ../../secrets/secret1.age;

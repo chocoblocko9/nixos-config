@@ -38,6 +38,7 @@
           inherit nixpkgs-stable;
         };
         modules = [ 
+          inputs.hjem.nixosModules.default
           agenix.nixosModules.default
           ./profiles/slip/configuration.nix 
           ./modules/system/modules.nix
