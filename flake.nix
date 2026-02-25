@@ -68,6 +68,7 @@
           inherit nixpkgs-stable;
 				};
         modules = [
+          inputs.hjem.nixosModules.default
           ./profiles/sleepless/configuration.nix
           ./modules/system/modules.nix
         ];
@@ -133,6 +134,11 @@
     
     home-manager = {
       url = "github:nix-community/home-manager/master"; 
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hjem = {
+      url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
