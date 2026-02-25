@@ -225,6 +225,7 @@ in {
           workspace_wraparound = true;
 
           bezier = [
+            "linear,0,0,1,1"
             "easeInOutBack, 0.68, -0.6, 0.32, 1.6"
             "easeInOutSine, 0.37, 0, 0.63, 1"
 
@@ -239,6 +240,8 @@ in {
           ];
 
           animation = [
+            "borderangle, 1, 100, linear, loop"
+
             "windowsIn, 1, 2.5, easeOutExpo, popin"
             "windowsOut, 1, 4, easeOutExpo, popin 10%"
 

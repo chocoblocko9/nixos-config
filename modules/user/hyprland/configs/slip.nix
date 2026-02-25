@@ -18,12 +18,6 @@ in {
         "$mod, F3, exec, ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 + 10 # brightness up"
       ];
 
-      animation = {
-        enabled = true;
-        bezier = "linear,0,0,1,1";
-        animation = "borderangle, 1, 100, linear, loop";
-      };
-
       general = {
         "col.active_border" = "rgb(072242) rgb(2A7B9B) 90deg";
         "col.inactive_border" = "rgba(595959E6) rgba(000000E6) 30deg";
