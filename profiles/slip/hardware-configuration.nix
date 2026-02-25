@@ -18,16 +18,19 @@
     };
   */
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/ca7a632a-4555-49ee-b7d4-461010879116";
+  fileSystems = { 
+    "/" = {
+      device = "/dev/disk/by-uuid/ca7a632a-4555-49ee-b7d4-461010879116";
       fsType = "btrfs";
+      options = [ "compress=zstd:6" "noatime" ];
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/54A5-22B3";
+    "/boot" = {
+      device = "/dev/disk/by-uuid/54A5-22B3";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
+  };
 
   swapDevices = [ ];
 

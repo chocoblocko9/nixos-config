@@ -34,7 +34,7 @@
         Comment=Play doors on Roblox
         Type=Application
         Terminal=false
-        Exec=firefox --new-window roblox://placeId=6516141723/
+        Exec=xdg-open roblox://placeId=6516141723/
         Categories=Game;
       '';     
     };
