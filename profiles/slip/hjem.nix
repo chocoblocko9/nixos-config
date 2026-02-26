@@ -6,7 +6,6 @@
     
   hjemSettings = {
     btop.enable = true;
-    kitty.enable = true;
   }; 
 }
 

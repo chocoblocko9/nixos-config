@@ -21,7 +21,6 @@
         waybar.enable = true;
         gtk.enable = true;
         cava.enable = true;
-        nixvim.enable = true;
         fuzzel.enable = true;
         hyprland.enable = false;
         vscode.colors.override = {
@@ -29,10 +28,6 @@
             base02 = "#85858558";
             base0E = "#7579bd";
           };
-        };
-        kitty = { 
-          enable = true;
-          fonts.override.sizes.terminal = 14;
         };
         dunst = {
           enable = false;

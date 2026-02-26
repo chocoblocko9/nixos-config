@@ -1,12 +1,19 @@
-{ inputs, config, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../modules/btop/default.nix
+      ./hjem.nix
     ];
   
+ options = {
+    userName = lib.mkOption { 
+      default = "conor";  
+      type = lib.types.str;
+    };
+  }; 
+
   config = {
     systemSettings = {
       audio.enable = true;
@@ -31,10 +38,8 @@
       thunar.enable = true;
       vnstat.enable = true;
     };
-
-    hjemSettings.btop.enable = true;
-
-    hjem.users.conor.directory = "/home/conor";
+    
+    userName = "conor"; # For my hjem abstraction layer
 
     age = {
       secrets.secret1.file = ../../secrets/secret1.age;

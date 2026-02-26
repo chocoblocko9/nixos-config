@@ -15,7 +15,6 @@
       };
       hyprpaper.enable = true;
       hyprsunset.enable = true;
-      kitty.enable = true;
       music.enable = true;
       nixcord.enable = true;
       nixvim.enable = true;
