@@ -1,9 +1,6 @@
-{ config, lib, pkgs, inputs, ... }:
-
 {
   config = {
     userSettings = {
-      apps.enable = true;
       bash.enable = true;
       dunst.enable = true;
       fuzzel.enable = true;
