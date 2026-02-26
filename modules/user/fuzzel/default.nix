@@ -1,22 +1,43 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   options = {
-    userSettings.fuzzel = {
+    hjemSettings.fuzzel = {
       enable = lib.mkEnableOption "Enable fuzzel with runapp integration";
     };
   };
 
-  config = lib.mkIf config.userSettings.fuzzel.enable {
-    programs.fuzzel = {
-      enable = true;
-      settings = {
-        border.width = 3;
-        main = {
-          launch-prefix = "runapp";
-          use-bold = true;
-        };
-      };
+  config = lib.mkIf config.hjemSettings.fuzzel.enable {
+    hjem.users.conor = {
+      packages = [
+        pkgs.fuzzel
+      ];
+      
+      files.".config/fuzzel/fuzzel.ini".text = ''
+        [border]
+        width=3
+
+        [colors]
+        background=011e2599
+        border=0d73ccff
+        counter=eee8d5ff
+        input=cac6b8ff
+        match=cecb00ff
+        placeholder=657b83ff
+        prompt=cac6b8ff
+        selection=586e75ff
+        selection-match=cecb00ff
+        selection-text=cac6b8ff
+        text=cac6b8ff
+
+        [main]
+        font=DejaVu Sans:size=16
+        icon-theme=Numix
+        launch-prefix=runapp
+        use-bold=true  
+        terminal=kitty
+        width=60
+      '';
     };
   };
 }
