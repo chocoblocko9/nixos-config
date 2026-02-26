@@ -8,7 +8,7 @@
   };
 
   config = lib.mkIf config.hjemSettings.btop.enable {
-    hjem.users.conor = {
+    hjem.users.${config.userName} = {
       packages = [
         pkgs.btop-rocm 
       ];
@@ -17,6 +17,7 @@
         color_theme = "solarized_dark"
         theme_background = false
         vim_keys = true
+        true_color = true
       '';
     };
   };

@@ -1,10 +1,19 @@
-{ inputs, config, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./hjem.nix 
     ];
+
+  options = {
+    userName = lib.mkOption { 
+      default = "conor";  
+      type = lib.types.str;
+    };
+  };
+
 
   config = {
     systemSettings = {
@@ -25,6 +34,8 @@
       thunar.enable = true;
       vnstat.enable = true;
     };
+
+  userName = "conor";
 
   # Hyprland Cachix
   nix.settings = {
@@ -80,7 +91,6 @@
     isNormalUser = true;
     description = "Conor";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
   };
 
   systemd.sleep.extraConfig = ''
