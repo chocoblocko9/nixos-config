@@ -125,9 +125,29 @@
         };
       };
 
-      plugins.fugitive.enable = true;  # Git commands (:Git add, :Git commit, etc)
-
       plugins.web-devicons.enable = true;
+
+      colorschemes.mini-base16 = {
+        enable = true;
+        settings.palette = {
+          base00 = "#001e26";
+          base01 = "#073642";
+          base02 = "#586e75";
+          base03 = "#657b83";
+          base04 = "#839496";
+          base05 = "#cac6b8";
+          base06 = "#eee8d5";
+          base07 = "#fdf6e3";
+          base08 = "#dc322f";
+          base09 = "#ff5c00";
+          base0A = "#cecb00";
+          base0B = "#19cb00";
+          base0C = "#0dcdcd";
+          base0D = "#0d73cc";
+          base0E = "#cb1ed1";
+          base0F = "#7579bd";
+        };
+      };
 
       # Status line
       plugins.lualine = {

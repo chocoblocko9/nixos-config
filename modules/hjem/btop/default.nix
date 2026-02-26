@@ -8,7 +8,7 @@
   };
 
   config = lib.mkIf config.hjemSettings.btop.enable {
-    hjem.users.conor = {
+    hjem.users.${config.userName} = {
       packages = [
         pkgs.btop-rocm 
       ];
@@ -25,7 +25,6 @@
         shown_boxes = "cpu mem net proc gpu0"
 
         proc_tree = true 
-
       '';
     };
   };
