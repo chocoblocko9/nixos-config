@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 let 
   cfg = config.systemSettings.ly.profile;
@@ -9,8 +9,8 @@ in {
       setup_cmd = "~/.files/modules/system/ly/lysetup.sh";
 
       # PATH no worky I guess
-      brightness_down_cmd = "/run/current-system/sw/bin/brightnessctl -q -n s 10%-";
-      brightness_up_cmd = "/run/current-system/sw/bin/brightnessctl -q -n s +10%";
+      brightness_down_cmd = "${pkgs.brightnessctl}/bin/brightnessctl -q -n s 10%-";
+      brightness_up_cmd = "${pkgs.brightnessctl}/bin/brightnessctl -q -n s +10%";
 
       # Styling
       battery_id = "BAT0";
