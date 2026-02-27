@@ -23,12 +23,6 @@
         cava.enable = true;
         fuzzel.enable = true;
         hyprland.enable = false;
-        vscode.colors.override = {
-          withHashtag = {
-            base02 = "#85858558";
-            base0E = "#7579bd";
-          };
-        };
         dunst = {
           enable = false;
           fonts.enable = true;

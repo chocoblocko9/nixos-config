@@ -10,7 +10,7 @@
         enable = true;
         profile = "slip";
       };
-      hyprpaper.enable = true;
+      # hyprpaper.enable = true;
       hyprsunset.enable = true;
       nixcord.enable = true;
       nixvim.enable = true;
