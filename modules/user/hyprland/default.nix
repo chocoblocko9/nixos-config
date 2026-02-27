@@ -1,10 +1,7 @@
-{ lib, config, pkgs, inputs, ...}:
+{ lib, config, pkgs, ...}:
 
-let 
-  plugin-source = inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system};
-in {
+{
   imports = [ 
-    inputs.hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
     ./configs/slip.nix
     ./configs/sleepless.nix
   ];
@@ -34,12 +31,8 @@ in {
       jq 
     ];
 
-    programs.hyprcursor-phinger.enable = true; # hyprcursor
-
     home.sessionVariables = { 
       NIXOS_OZONE_WL = "1"; # tells electron apps to use wayland or something
-      HYPRCURSOR_THEME = "phinger-cursors-dark";
-      HYPRCURSOR_SIZE = "28";
     };  
 
     wayland.windowManager.hyprland = {
@@ -48,9 +41,6 @@ in {
       package = null;
       portalPackage = null;
       systemd.enable = false; # Using UWSM
-      plugins = with plugin-source; [
-        hyprexpo
-      ];
       settings = {
         ### PROGRAMS ###
         "$terminal" = "kitty";
@@ -72,7 +62,6 @@ in {
           "$mod, D, exec, $menu"
           "$mod, P, pseudo,"
           "$mod, J, togglesplit,"
-          "$mod, G, hyprexpo:expo, toggle"
           "$mod, R, exec, bash ~/.files/modules/user/hyprland/reset.sh"
           "$mod, B, exec, bash ~/.files/modules/user/hyprland/minimisetospecial.sh"
 
@@ -148,7 +137,6 @@ in {
         exec-once = [ 
           "soteria"
           "[workspace 2 silent] kitty nvim"
-          "hyprctl plugin load \"$HYPR_PLUGIN_DIR/lib/libhyprexpo.so\""
         ];
 
         ### WINDOW RULES ###
@@ -249,20 +237,6 @@ in {
             "specialWorkspaceIn, 1, 2.8, easeOutExpoOvershoot, slide top"
             "specialWorkspaceOut, 1, 5, easeInOutBack, slide bottom"
           ];
-        };
-        
-
-        ### PLUGINS ###
-        plugin = {
-          hyprexpo = {
-            columns = 3;
-            gap_size = 5;
-            bg_col = "rgb(111111)";
-            workspace_method = "center current"; # [center/first] [workspace] e.g. first 1 or center m+1
-            skip_empty = true;
-
-            gesture_distance = 300; # how far is the "max" for the gesture
-          };
         };
       };
       extraConfig = '' 
