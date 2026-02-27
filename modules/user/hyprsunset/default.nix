@@ -9,7 +9,7 @@
 
   config = lib.mkIf config.userSettings.hyprsunset.enable {
     services.hyprsunset = {
-      enable = true;
+      enable = false;
       settings = {
         max-gamma = 150;
 

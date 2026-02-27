@@ -30,6 +30,7 @@
       nh.enable = true;
       obs.enable = true;
       polkit.enable = true;
+      shell.enable = true;
       theming.enable = true;
       thunar.enable = true;
       vnstat.enable = true;

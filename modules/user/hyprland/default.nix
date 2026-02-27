@@ -4,7 +4,6 @@ let
   plugin-source = inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system};
 in {
   imports = [ 
-    inputs.hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
     ./configs/slip.nix
     ./configs/sleepless.nix
   ];
@@ -34,12 +33,8 @@ in {
       jq 
     ];
 
-    programs.hyprcursor-phinger.enable = true; # hyprcursor
-
     home.sessionVariables = { 
       NIXOS_OZONE_WL = "1"; # tells electron apps to use wayland or something
-      HYPRCURSOR_THEME = "phinger-cursors-dark";
-      HYPRCURSOR_SIZE = "28";
     };  
 
     wayland.windowManager.hyprland = {
