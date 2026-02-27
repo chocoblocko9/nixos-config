@@ -134,7 +134,6 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
-    hyprcursor-phinger.url = "github:jappie3/hyprcursor-phinger";
     
     home-manager = {
       url = "github:nix-community/home-manager/master"; 
