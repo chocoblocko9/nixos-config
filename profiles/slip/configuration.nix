@@ -33,6 +33,7 @@
       obs.enable = true;
       plasma.enable = false;
       polkit.enable = true;
+      shell.enable = true;
       stylix.enable = true;
       theming.enable = true;
       thunar.enable = true;
@@ -70,7 +71,7 @@
       grub = {
         enable = true;
         device = "nodev";
-        # useOSProber = true;
+        useOSProber = true;
         splashImage = ../../themes/solarized/bootloader-solarized.png;
         extraEntries = ''
           menuentry 'Windows Boot Manager (on /dev/nvme0n1p1)' --class windows --class os $menuentry_id_option 'osprober-efi-54A5-22B3' {

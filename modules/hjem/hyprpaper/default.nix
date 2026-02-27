@@ -35,7 +35,7 @@
         wallpaper {                                                                                                                                                              
           monitor=                                                                                                                                                               
           fit_mode=cover                                                                                                                                                         
-          path=~/.files/modules/user/hyprpaper/wallpapers/wallpaper14.jpg                                                                                                        
+          path=~/.files/modules/hjem/hyprpaper/wallpapers/wallpaper14.jpg                                                                                                        
         }                                                                                                                                                                        
         ipc=true                                                                                                                                                                 
         splash=false

@@ -2,24 +2,17 @@
   config = {
     userSettings = {
       ashell.enable = false;
-      bash.enable = true;
-      dunst.enable = true;
-      git.enable = true;
-      haskell.enable = false;
       hyprland = { 
         enable = true;
         profile = "slip";
       };
-      # hyprpaper.enable = true;
       hyprsunset.enable = true;
       nixcord.enable = true;
       nixvim.enable = true;
       rstudio.enable = true;
       stylix.enable = true;
       theming.enable = false;
-      vscode.enable = false;
       waybar.enable = true;
-      wofi.enable = true;
     };
 
     home = {
