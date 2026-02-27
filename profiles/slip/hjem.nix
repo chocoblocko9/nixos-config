@@ -14,6 +14,7 @@
     kitty.enable = true;
     music.enable = true;
     hyprpaper.enable = true;
+    hyprsunset.enable = true;
   }; 
 }
 

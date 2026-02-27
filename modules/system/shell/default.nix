@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   options = {
@@ -8,6 +8,8 @@
   };
 
   config = lib.mkIf config.systemSettings.shell.enable {
+    users.defaultUserShell = pkgs.zsh;
+
     environment.shellAliases = {
       ll = "ls -la";                                                                  
       icat = "kitten icat";
