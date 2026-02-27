@@ -1,15 +1,9 @@
-{ config, lib, pkgs, inputs, ... }:
-
 {
   config = {
     userSettings = {
-      apps.enable = true;
       ashell.enable = false;
       bash.enable = true;
-      #      btop.enable = true;
       dunst.enable = true;
-      fuzzel.enable = true;
-      gaming.enable = true;
       git.enable = true;
       haskell.enable = false;
       hyprland = { 
@@ -18,8 +12,6 @@
       };
       hyprpaper.enable = true;
       hyprsunset.enable = true;
-      kitty.enable = true;
-      music.enable = true;
       nixcord.enable = true;
       nixvim.enable = true;
       rstudio.enable = true;
