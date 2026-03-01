@@ -13,7 +13,7 @@
     ];
 
     programs.waybar = {
-      enable = false;
+      enable = true;
       systemd.enable = true;
       settings = {
         mainBar = {

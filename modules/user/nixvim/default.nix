@@ -94,6 +94,17 @@
         };
       };
 
+      plugins.visual-whitespace = {
+        enabled = true;
+        match_types = {
+          lead = true;
+          nbsp = true;
+          space = true;
+          tab = true;
+          trail = true;
+        };
+      };
+
       # File tree
       plugins.nvim-tree = {
         enable = true;
