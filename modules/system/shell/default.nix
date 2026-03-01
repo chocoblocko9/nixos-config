@@ -21,8 +21,10 @@
     programs.zsh = {
       enable = true;
       syntaxHighlighting.enable = true;
-      oh-my-zsh = {
-        # enable = true;
+      ohMyZsh = {
+        enable = true;
+        theme = "gentoo";
+        # theme = "fino-time"; 
       };
     };
   };
