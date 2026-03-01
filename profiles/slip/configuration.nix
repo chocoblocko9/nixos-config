@@ -30,6 +30,7 @@
       networking.enable = true;
       nh.enable = true;
       niri.enable = false;
+      nixvim.enable = true;
       obs.enable = true;
       plasma.enable = false;
       polkit.enable = true;
@@ -39,7 +40,7 @@
       thunar.enable = true;
       vnstat.enable = true;
     };
-    
+   
     userName = "conor"; # For my hjem abstraction layer
 
     age = {

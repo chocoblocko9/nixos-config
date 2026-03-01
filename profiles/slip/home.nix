@@ -1,18 +1,8 @@
 {
   config = {
     userSettings = {
-      ashell.enable = false;
-      hyprland = { 
-        enable = true;
-        profile = "slip";
-      };
-      hyprsunset.enable = true;
-      nixcord.enable = true;
-      nixvim.enable = true;
-      rstudio.enable = true;
+      #      nixcord.enable = true;
       stylix.enable = true;
-      theming.enable = false;
-      waybar.enable = true;
     };
 
     home = {
@@ -27,6 +17,5 @@
     };
     
     nixpkgs.config.allowUnfree = true;
-    programs.home-manager.enable = true;
   };
 }

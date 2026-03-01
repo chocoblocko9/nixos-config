@@ -1,8 +1,14 @@
 {
   imports = [ ../../modules/hjem/modules.nix ];
 
-  hjem.users.conor.directory = "/home/conor";
-  # hjem.users.conor.systemd.enable = false;
+  hjem.users.conor = {
+    directory = "/home/conor";
+    systemd.enable = true;
+    environment.sessionVariables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
+  };
     
   hjemSettings = {
     apps.enable = true;
@@ -12,9 +18,16 @@
     gaming.enable = true;
     git.enable = true;
     kitty.enable = true;
-    music.enable = true;
+    hyprland = {
+      enable = true;
+      profile = "slip";
+    };
     hyprpaper.enable = true;
     hyprsunset.enable = true;
+    music.enable = true;
+    rstudio.enable = true;
+    theming.enable = true;
+    waybar.enable = true;
   }; 
 }
 

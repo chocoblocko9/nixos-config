@@ -77,18 +77,6 @@
     };
 
     homeConfigurations = {
-      "conor@slip" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = {
-					inherit nixpkgs-stable;
-          inherit inputs;
-        };
-        modules = [ 
-        	./profiles/slip/home.nix
-          ./modules/user/modules.nix
-        ];
-      };
-
       "conor@sleepless" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
