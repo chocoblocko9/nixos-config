@@ -1,15 +1,15 @@
-{ lib, config, pkgs, inputs, ... }:
+{ lib, config, inputs, ... }:
 
 {
-  imports = [ inputs.nixcord.homeModules.nixcord ];
+  imports = [ inputs.nixcord.nixosModules.nixcord ];
 
   options = {
-    userSettings.nixcord = {
+    systemSettings.nixcord = {
       enable = lib.mkEnableOption "Enable nixcord";
     };
   };
 
-  config = lib.mkIf config.userSettings.nixcord.enable {
+  config = lib.mkIf config.systemSettings.nixcord.enable {
     programs.nixcord = {
       enable = true;
       vesktop.enable = true;

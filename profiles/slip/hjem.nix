@@ -25,9 +25,11 @@
     hyprpaper.enable = true;
     hyprsunset.enable = true;
     music.enable = true;
+    quickshell.enable = true;
     rstudio.enable = true;
     theming.enable = true;
-    waybar.enable = true;
+    vesktop.enable = true;
+    waybar.enable = false;
   }; 
 }
 

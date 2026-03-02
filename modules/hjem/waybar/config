@@ -1,0 +1,159 @@
+[
+  {
+    "backlight/slider": {
+      "max": 100,
+      "min": 0,
+      "orientation": "horizontal"
+    },
+    "battery": {
+      "format": "{capacity}% {icon}",
+      "format-icons": {
+        "charging": [
+          "󰢟 ",
+          "󰢜 ",
+          "󰂆 ",
+          "󰂇 ",
+          "󰂈 ",
+          "󰢝 ",
+          "󰂉 ",
+          "󰢞 ",
+          "󰂊 ",
+          "󰂋 ",
+          "󰂅 "
+        ],
+        "default": [
+          "󰂎 ",
+          "󰁺 ",
+          "󰁻 ",
+          "󰁼 ",
+          "󰁽 ",
+          "󰁾 ",
+          "󰁿 ",
+          "󰂀 ",
+          "󰂁 ",
+          "󰂂 ",
+          "󰁹 "
+        ],
+        "full": [
+          "󱟢 "
+        ]
+      },
+      "states": {
+        "critical": 10,
+        "warning": 25
+      }
+    },
+    "custom/dunst": {
+      "exec": "/nix/store/is5vi9js6zbfav0inysv67v55xpr7daa-dunst.sh",
+      "exec-on-event": true,
+      "format": "{}",
+      "interval": 60,
+      "on-click": "dunstctl set-paused toggle"
+    },
+    "custom/lock": {
+      "format": "󰍁 ",
+      "on-click": "hyprlock",
+      "tooltip": false
+    },
+    "custom/power": {
+      "format": " ",
+      "on-click": "shutdown now",
+      "tooltip": false
+    },
+    "custom/reboot": {
+      "format": "󰜉 ",
+      "on-click": "reboot",
+      "tooltip": false
+    },
+    "custom/sleep": {
+      "format": "󰤄 ",
+      "on-click": "systemctl sleep",
+      "tooltip": false
+    },
+    "custom/waybar-mpris": {
+      "escape": true,
+      "exec": "waybar-mpris --position --pause \"▶\" --play \"⏸\" --order \"ARTIST:TITLE:POSITION\"",
+      "on-click": "waybar-mpris --send toggle",
+      "on-click-forward": "waybar-mpris --send prev",
+      "on-click-right": "waybar-mpris --send player-next",
+      "on-scroll-down": "waybar-mpris --send prev",
+      "on-scroll-up": "waybar-mpris --send next",
+      "return-type": "json"
+    },
+    "group/group-audio": {
+      "modules": [
+        "wireplumber",
+        "custom/waybar-mpris"
+      ],
+      "orientation": "inherit"
+    },
+    "group/group-power": {
+      "drawer": {
+        "children-class": "not-power",
+        "transition-duration": 500,
+        "transition-left-to-right": false
+      },
+      "modules": [
+        "custom/power",
+        "custom/sleep",
+        "custom/lock",
+        "custom/reboot"
+      ],
+      "orientation": "inherit"
+    },
+    "height": 36,
+    "hyprland/workspaces": {
+      "format": "{icon}",
+      "format-icons": {
+        "1": " 󰈹 ",
+        "2": " ",
+        "3": "",
+        "4": " ",
+        "5": " "
+      },
+      "show-special": "true"
+    },
+    "layer": "top",
+    "memory": {
+      "format": "{used} / {total} ({percentage}%)"
+    },
+    "modules-center": [
+      "group/group-audio"
+    ],
+    "modules-left": [
+      "hyprland/workspaces"
+    ],
+    "modules-right": [
+      "battery",
+      "tray",
+      "custom/dunst",
+      "clock",
+      "group/group-power"
+    ],
+    "mpris": {
+      "dynamic-len": 50,
+      "format": "{title} by {artist} on {album} <small>[{position}/{length}]</small> / ({status} {status_icon})",
+      "ignored-players": [
+        "firefox"
+      ],
+      "interval": 1,
+      "player": "playerctld",
+      "status-icons": {
+        "paused": "⏸",
+        "playing": "▶",
+        "stopped": "⏹"
+      }
+    },
+    "position": "top",
+    "wireplumber": {
+      "format": "{volume}% {icon} |",
+      "format-icons": [
+        " ",
+        " ",
+        " "
+      ],
+      "format-muted": " ",
+      "on-click": "pavucontrol --tab=3"
+    }
+  }
+]
