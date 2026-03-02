@@ -1,17 +1,33 @@
 {
   imports = [ ../../modules/hjem/modules.nix ];
 
-  hjem.users.conor.directory = "/home/conor";
+  hjem.users.conor = {
+    directory = "/home/conor";
+    systemd.enable = true;
+    environment.sessionVariables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
+  };
     
   hjemSettings = {
     apps.enable = true;
     btop.enable = true;
+    dunst.enable = true;
     fuzzel.enable = true;
     gaming.enable = false;
     git.enable = true;
-    hyprpaper.enable = true;
     kitty.enable = true;
-    music.enable = false; 
+    hyprland = {
+      enable = true;
+      profile = "sleepless";
+    }; 
+    hyprpaper.enable = true;
+    hyprsunset.enable = true;
+    music.enable = true;
+    rstudio.enable = false;
+    theming.enable = true;
+    waybar.enable = false;
   }; 
 }
 

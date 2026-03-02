@@ -1,7 +1,7 @@
 { lib, config, pkgs, inputs, ... }:
 
 let
-  source = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
+  source = inputs.hyprland-fullscreen-fix.packages.${pkgs.stdenv.hostPlatform.system};
   cfg = config.systemSettings.hyprland;
 in {
   options = {

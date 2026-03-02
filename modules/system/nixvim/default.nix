@@ -12,7 +12,6 @@
   config = lib.mkIf config.systemSettings.nixvim.enable {
     programs.nixvim = {
       enable = true;
-      user = "conor";
       defaultEditor = true;
 
       globals.mapleader = " ";
