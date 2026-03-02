@@ -9,7 +9,10 @@
 
   config = lib.mkIf config.hjemSettings.waybar.enable {
     hjem.users.${config.userName} = {
-      packages = [ pkgs.waybar ];
+      packages = with pkgs; [ 
+        waybar 
+        waybar-mpris
+      ];
 
       systemd.services.waybar = {
         enable = true;
@@ -31,15 +34,10 @@
         };
      };
       
-      files.".config/hypr/waybar.conf".text = ''
-        wallpaper {                                                                                                                                                              
-          monitor=                                                                                                                                                               
-          fit_mode=cover                                                                                                                                                         
-          path=~/.files/modules/hjem/waybar/wallpapers/wallpaper14.jpg                                                                                                        
-        }                                                                                                                                                                        
-        ipc=true                                                                                                                                                                 
-        splash=false
-      '';
+      files = {
+        ".config/waybar/config".source = ./config;
+        ".config/waybar/style.css".source = ./style.css;
+      };
     };
   };
 }

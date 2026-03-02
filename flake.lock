@@ -189,6 +189,7 @@
         "type": "github"
       }
     },
+<<<<<<< HEAD
     "flake-compat_2": {
       "flake": false,
       "locked": {
@@ -205,6 +206,8 @@
         "type": "github"
       }
     },
+=======
+>>>>>>> 4a8bcbe3ced7bea928b574845ab8d408e995e7ce
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [

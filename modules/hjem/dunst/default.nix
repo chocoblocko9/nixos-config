@@ -29,7 +29,7 @@
         };
      };
       
-      files.".config/dunst/dunst.conf".text = ''
+      files.".config/dunst/dunstrc".text = ''
         [global]
         background="#000000C0"
         font="Monospace 12"
