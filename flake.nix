@@ -9,7 +9,6 @@
   		home-manager, 
   		nix-flatpak, 
   		hyprland,  
-			stylix,
       agenix,
       nixvim,
   		... 
@@ -106,11 +105,6 @@
     nixpkgs-2511.url = "nixpkgs/nixos-25.11";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
-
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     hyprland.url = "github:hyprwm/Hyprland";
     
