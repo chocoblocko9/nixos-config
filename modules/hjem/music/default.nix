@@ -16,6 +16,7 @@
         nicotine-plus # Soulseek
         puddletag # song file tagger
         cava # visualiser
+        playerctl # useful for mpris stuff
       ]; 
     };
   };

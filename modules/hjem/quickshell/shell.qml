@@ -1,74 +1,93 @@
 import Quickshell
-import Quickshell.Io
+import Quickshell.Wayland
+import Quickshell.Hyprland
 import Quickshell.Services.Mpris
 import QtQuick
+import QtQuick.Layouts
+import QtQuick.Shapes
 
 PanelWindow {
-  // color: "#002b36"
-  color: "transparent"
+    anchors.top: true
+    anchors.left: true
+    anchors.right: true
+    implicitHeight: 30
+    color: "#cc002b36"
+    // color: "transparent"
 
-  Rectangle {
-    // match the size of the window
-    anchors.fill: parent
-
-    radius: 8 
-    color: "#002b36"  
-  }
-
-  anchors {
-    top: true
-    left: true
-    right: true
-  }
-
-  margins {
-    top: 4
-    left: 4
-    right: 4
-  }
-
-  implicitHeight: 30
-
-  Text {
-    property string title: MprisPlayer.isPlaying
-    text: title
-
-    color: "#DDDDDD"
- }
-
-  Text {
-    id: clock
-    anchors.centerIn: parent
-   
-    color: "#DDDDDD"
-
-    Process {
-      // give the process object an id so we can talk
-      // about it from the timer
-      id: dateProc
-
-      command: ["date"]
-      running: true
-
-      stdout: StdioCollector {
-        onStreamFinished: clock.text = this.text
-      }
+    margins {
+        top: 4
+        left: 4
+        right: 4
     }
 
-    // use a timer to rerun the process at an interval
-    Timer {
-      // 1000 milliseconds is 1 second
-      interval: 1000
+    RowLayout {
+        anchors.margins: 8
+        anchors.fill: parent
 
-      // start the timer immediately
-      running: true
+        // Tony my goat
+        Repeater {
+            model: 9
 
-      // run the timer again when it ends
-      repeat: true
+            Text {
+                property var ws: Hyprland.workspaces.values.find(w => w.id === index + 1)
+                property bool isActive: Hyprland.focusedWorkspace?.id === (index + 1)
+                text: index + 1
+                color: isActive ? "#0db9d7" : (ws ? "#7aa2f7" : "#444b6a")
+                font { pixelSize: 14; bold: true }
 
-      // when the timer is triggered, set the running property of the
-      // process to true, which reruns it if stopped.
-      onTriggered: dateProc.running = true
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: Hyprland.dispatch("workspace " + (index + 1))
+                }
+            }
+        }
+
+        Item { Layout.fillWidth: true }
+
+        Text {
+            property var currentPlayer: Mpris.players.values[0]
+
+            function formatPosition(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds) % 60;
+                return mins + ":" + (secs < 10 ? "0" + secs : secs);
+            }
+
+            id: music
+            text: (currentPlayer.playbackState == MprisPlaybackState.Stopped) ? ("Nothing playing...") : (currentPlayer.trackArtist + " - " + currentPlayer.trackTitle + " - " + formatPosition(currentPlayer.position))
+            color: "#7aa2f7"
+            font { pixelSize: 14; bold: true }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: Mpris.players.values[0].togglePlaying() 
+            }
+
+            Timer {
+                property var currentPlayer: Mpris.players.values[0]
+
+                // Only emit the signal when the position is actually changing.
+                running: currentPlayer.playbackState == MprisPlaybackState.Playing
+
+                interval: 1000
+                repeat: true
+                // Honestly man don't even worry about it 
+                onTriggered: music.text = currentPlayer.trackArtist + " - " + currentPlayer.trackTitle + " - " + (Math.floor(currentPlayer.position / 60)) + ":" + (((Math.floor(currentPlayer.position) % 60) < 10) ? ("0" + (Math.floor(currentPlayer.position) % 60)) : (Math.floor(currentPlayer.position) % 60))
+            }
+        }
+
+        Item { Layout.fillWidth: true }
+
+        SystemClock {
+            id:clock
+            precision: SystemClock.Minutes
+        }
+
+        Text {
+            text: Qt.formatDateTime(clock.date, "ddd, dd/MM/yy - hh:mm")
+            color: "#7aa2f7"
+            font { pixelSize: 12; bold: true }
+        }
     }
-  }
 }
+
