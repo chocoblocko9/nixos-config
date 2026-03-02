@@ -35,7 +35,6 @@
       plasma.enable = false;
       polkit.enable = true;
       shell.enable = true;
-      stylix.enable = true;
       theming.enable = true;
       thunar.enable = true;
       vnstat.enable = true;
