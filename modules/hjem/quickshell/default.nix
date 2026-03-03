@@ -15,6 +15,25 @@
       files = {  
       # ".config/quickshell/shell.qml".source = ./shell.qml;
       };
+
+      systemd.services.quickshell = {
+        enable = true;
+        wantedBy = [ "graphical-session.target" ];
+
+        unitConfig = {
+          Description = "Flexible toolkit for making desktop shells with QtQuick, for Wayland and X11";
+          Documentation = "https://quickshell.org/docs/v0.2.1/guide/install-setup/";
+          PartOf = [ "graphical-session.target" ];
+          Requires = [ "graphical-session.target" ];
+          After = [ "graphical-session.target" ];
+        };
+
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = "${pkgs.quickshell}/bin/quickshell";
+          Restart = "on-failure";
+        };
+      };
     };
   };
 }
