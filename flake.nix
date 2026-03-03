@@ -76,17 +76,6 @@
     };
 
     homeConfigurations = {
-      "conor@sleepless" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = {
-          inherit inputs;
-        };
-        modules = [ 
-        	./profiles/sleepless/home.nix
-          ./modules/user/modules.nix
-        ];
-      };
-
       "ezra@superliminal" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {

@@ -24,7 +24,6 @@
           Description = "Flexible toolkit for making desktop shells with QtQuick, for Wayland and X11";
           Documentation = "https://quickshell.org/docs/v0.2.1/guide/install-setup/";
           PartOf = [ "graphical-session.target" ];
-          Requires = [ "graphical-session.target" ];
           After = [ "graphical-session.target" ];
         };
 
