@@ -22,6 +22,7 @@
         background #001e26
         background_blur 32
         background_opacity 0.700000
+        confirm_os_window_close 0
       '';
     };
   };
