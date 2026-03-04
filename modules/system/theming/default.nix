@@ -15,6 +15,7 @@
         nerd-fonts.hack
         nerd-fonts.symbols-only 
         noto-fonts
+        font-awesome
       ];
       fontconfig = {
         defaultFonts.monospace = [

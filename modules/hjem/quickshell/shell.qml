@@ -1,37 +1,33 @@
 import Quickshell
-import Quickshell.Wayland
+import Quickshell.Widgets
 import Quickshell.Hyprland
 import Quickshell.Services.Mpris
+import Quickshell.Services.Pipewire                   
 import QtQuick
 import QtQuick.Layouts
-import Quickshell.Widgets
 
 PanelWindow {
     id: bar
 
     // Colours
     property color colBg: "#ee002b36"
+    property color colBgInvert: "#eedddddd"
+    property color colText: "#7aa2f7"
 
     anchors.top: true
     anchors.left: true
     anchors.right: true
-    implicitHeight: 28
-    // color: "#ee002b36"
-    color: "transparent"
-    
-    margins {
-        top: 2
-        left: 4
-        right: 4
-    }
+    implicitHeight: 36 
+    color: 'transparent'
+
     
     PopupWindow {
         id: timePopup
         anchor.window: bar 
         anchor.rect.x: parentWindow.width - 164  
         anchor.rect.y: parentWindow.height + 5 
-        width: 164
-        height: 180
+        implicitWidth: 200 
+        implicitHeight: 180
         visible: false
         // color: "#7dffffff"
         color: "transparent"
@@ -78,15 +74,53 @@ PanelWindow {
 
         Item { Layout.fillWidth: true }
 
+        WrapperMouseArea {
+
+            onClicked: Quickshell.execDetached([ "runapp", "pavucontrol" ])
+
+            WrapperRectangle {
+                id:pwRect
+                margin: 6
+                rightMargin: 9 
+                leftMargin: 9
+                color: bar.colBg 
+                radius: 5
+
+                PwObjectTracker {
+                    property PwNode defSink: Pipewire.defaultAudioSink
+                    objects: [defSink]
+                }
+                // Just show volume, click to open pavucontrol
+                Text {
+                    property PwNode defSink: Pipewire.defaultAudioSink
+                    property var defVolume: Math.round(defSink.audio.volume * 100)
+                    function pickIcon(volume) {
+                        if (volume > 50) {
+                            return "   ";
+                        } else if (volume > 15) {
+                            return "  ";
+                        } else {
+                            return "  ";
+                        }
+                    }
+                
+                    text: pickIcon(defVolume) + defVolume + "%"
+                    // text: defVolume
+                    color: bar.colText
+                    font { pixelSize: 14; bold: true }
+                }
+            }
+        }
+
         WrapperRectangle {
-            margin: 5
-            topMargin: 3
+            margin: 6
+            rightMargin: 9 
+            leftMargin: 9
             color: bar.colBg 
             radius: 5
             
             Text {
                 property var currentPlayer: Mpris.players.values[0]
-
                 
 
                 id: music
@@ -126,33 +160,32 @@ PanelWindow {
                 precision: SystemClock.Minutes
         }
 
-        WrapperRectangle { 
-            id:dateRect
-            margin: 5
-            color: "#ee002b36"
-            radius: 5
+        WrapperMouseArea {
+            function showClockPopup(color) {
+                if (color != bar.colBg) {
+                    dateRect.color = bar.colBg;
+                    timePopup.visible = false
+                } else {
+                    dateRect.color = bar.colBgInvert;
+                    timePopup.visible = true
+                }
+            }
+            // onClicked: (dateRect.color == "#ee002b36") ? (dateRect.color = "#eedddddd") : (dateRect.color = "#ee002b36") 
+            onClicked: showClockPopup(dateRect.color)
 
-            Text {
-                property bool isClicked: dateRect.color != bar.colBg
+            WrapperRectangle { 
+                id:dateRect
+                margin: 5
+                color: bar.colBg
+                radius: 5
 
-                text: Qt.formatDateTime(clock.date, "ddd, dd/MM/yy")
-                color: "#7aa2f7"
-                font { pixelSize: 13; bold: true }
+                Text {
+                    property bool isClicked: dateRect.color != bar.colBg
 
-                MouseArea {
-                    function showClockPopup(color) {
-                        if (color != "#ee002b36") {
-                            dateRect.color = "#ee002b36";
-                            timePopup.visible = false
-                        } else {
-                            dateRect.color = "#eedddddd";
-                            timePopup.visible = true
-                        }
-                    }
-                    anchors.fill: parent
-                    // onClicked: (dateRect.color == "#ee002b36") ? (dateRect.color = "#eedddddd") : (dateRect.color = "#ee002b36") 
-                    onClicked: showClockPopup(dateRect.color)
-                } 
+                    text: Qt.formatDateTime(clock.date, "ddd, dd/MM/yy")
+                    color: "#7aa2f7"
+                    font { pixelSize: 13; bold: true }
+                }
             }
         }
 
@@ -169,7 +202,7 @@ PanelWindow {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: (timeRect.color == "#ee002b36") ? (timeRect.color = "#eedddddd") : (timeRect.color = "#ee002b36") 
+                    onClicked: (timeRect.color == bar.colBg) ? (timeRect.color = bar.colBgInvert) : (timeRect.color = bar.colBg) 
                 } 
             }
         } 
