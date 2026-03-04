@@ -17,7 +17,7 @@
       };
 
       systemd.services.quickshell = {
-        enable = true;
+        enable = false;
         wantedBy = [ "graphical-session.target" ];
 
         unitConfig = {
