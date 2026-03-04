@@ -37,6 +37,7 @@
       shell.enable = true;
       theming.enable = true;
       thunar.enable = true;
+      virtualisation.enable = true;
       vnstat.enable = true;
     };
    
@@ -148,6 +149,7 @@
       options = "ctrl:swapcaps";
     };
   
+    environment.systemPackages = [ pkgs.os-prober ];
     # Define a user account. Don't forget to set a password with ‘passwd’.
     users.users.conor = {
       isNormalUser = true;
