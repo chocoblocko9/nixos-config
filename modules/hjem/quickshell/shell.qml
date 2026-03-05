@@ -12,13 +12,14 @@ PanelWindow {
     // Colours
     property color colBg: "#ee002b36"
     property color colBgInvert: "#eedddddd"
-    property color colText: "#7aa2f7"
+    property color colBarShadow: "#ff023845"
+    property color colText: "#78d1d6"
 
     anchors.top: true
     anchors.left: true
     anchors.right: true
-    implicitHeight: 36 
-    color: 'transparent'
+    implicitHeight: 38 
+    color: "transparent"
 
     
     PopupWindow {
@@ -34,7 +35,7 @@ PanelWindow {
 
         Rectangle {
             anchors.fill: parent
-            radius: 5
+            radius: 10
 
             color: bar.colBg 
         }
@@ -42,6 +43,8 @@ PanelWindow {
 
     RowLayout {
         anchors.fill: parent
+
+        Item { }
 
         WrapperRectangle { 
             margin: 5
@@ -60,7 +63,7 @@ PanelWindow {
                         property var ws: Hyprland.workspaces.values.find(w => w.id === index + 1)
                         property bool isActive: Hyprland.focusedWorkspace?.id === (index + 1)
                         text: index + 1
-                        color: isActive ? "#0db9d7" : (ws ? "#7aa2f7" : "#444b6a")
+                        color: isActive ? "#0db9d7" : (ws ? bar.colText : "#444b6a")
                         font { pixelSize: 14; bold: true }
 
                         MouseArea {
@@ -96,7 +99,7 @@ PanelWindow {
                     property var defVolume: Math.round(defSink.audio.volume * 100)
                     function pickIcon(volume) {
                         if (volume > 50) {
-                            return "   ";
+                            return "  ";
                         } else if (volume > 15) {
                             return "  ";
                         } else {
@@ -126,7 +129,7 @@ PanelWindow {
                 id: music
                 // text: (currentPlayer.playbackState != (MprisPlaybackState.Playing || MprisPlaybackState.Paused)) ? ("Nothing playing...") : (currentPlayer.trackArtist + " - " + currentPlayer.trackTitle + " - " + formatPosition(currentPlayer.position))
                 text: "Nothing Playing..."
-                color: "#7aa2f7"
+                color: bar.colText
                 font { pixelSize: 14; bold: true }
 
                 MouseArea {
@@ -183,7 +186,7 @@ PanelWindow {
                     property bool isClicked: dateRect.color != bar.colBg
 
                     text: Qt.formatDateTime(clock.date, "ddd, dd/MM/yy")
-                    color: "#7aa2f7"
+                    color: bar.colText
                     font { pixelSize: 13; bold: true }
                 }
             }
@@ -197,7 +200,7 @@ PanelWindow {
 
             Text {
                 text: Qt.formatDateTime(clock.date, "hh:mm")
-                color: "#7aa2f7"
+                color: bar.colText 
                 font { pixelSize: 13; bold: true }
 
                 MouseArea {
@@ -206,6 +209,8 @@ PanelWindow {
                 } 
             }
         } 
+
+        Item { }
     }
 }
 
