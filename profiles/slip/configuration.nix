@@ -59,7 +59,7 @@
     };
 
     # Bootloader & Kernel
-    boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+    boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_19;
     boot.supportedFilesystems = ["ntfs"];
     boot.loader = {
       systemd-boot.enable = false;
