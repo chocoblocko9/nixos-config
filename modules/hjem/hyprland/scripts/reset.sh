@@ -18,4 +18,6 @@ dispatch movewindowpixel exact 444 44,tag:firefox"
 
 else 
     hyprctl --batch "dispatch movewindowpixel -1463 0,tag:vesktop;dispatch movewindowpixel 1463 0,tag:firefox"
+    # cool extra functionality that slides both windows to the side if they're 
+    # in the right place and the right size already 
 fi
