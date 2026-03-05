@@ -11,6 +11,7 @@
   		hyprland,  
       agenix,
       nixvim,
+      nix-on-droid,
   		... 
   	} @ inputs:
   	
@@ -38,14 +39,8 @@
         };
         modules = [ 
           inputs.hjem.nixosModules.default
-          agenix.nixosModules.default
           ./profiles/slip/configuration.nix 
           ./modules/system/modules.nix
-          {
-            environment.systemPackages = [ 
-              agenix.packages.${system}.default 
-            ];
-          }
         ];
       };
 
@@ -71,6 +66,15 @@
           inputs.hjem.nixosModules.default
           ./profiles/sleepless/configuration.nix
           ./modules/system/modules.nix
+        ];
+      };
+    };
+
+    nixOnDroidConfigurations = {
+      default = nix-on-droid.lib.nixOnDroidConfiguration {
+        pkgs = import nixpkgs-2511 { system = "aarch64-linux"; };
+        modules = [ 
+          .profiles/squid/nix-on-droid.nix
         ];
       };
     };
@@ -107,10 +111,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    /*
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.darwin.follows = "";
+    };
+    */
+
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs-2511";
     };
 
     nixvim = {
