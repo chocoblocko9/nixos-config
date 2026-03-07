@@ -9,7 +9,6 @@
   		home-manager, 
   		nix-flatpak, 
   		hyprland,  
-      agenix,
       nixvim,
       nix-on-droid,
   		... 
