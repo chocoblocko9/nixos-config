@@ -95,9 +95,9 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-  systemd.sleep.extraConfig = ''
-    HibernateDelaySec=1800
-  '';
+  systemd.sleep.settings.Sleep = {
+    HibernateDelaySec = "1800"; # Corresponds to half an hour
+  };
   
   services = {
     logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate"; 
