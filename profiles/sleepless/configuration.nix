@@ -28,7 +28,7 @@
       nano.enable = true;
       networking.enable = true;
       nh.enable = true;
-      nixvim.enable = true;
+      #      nixvim.enable = true;
       obs.enable = true;
       polkit.enable = true;
       shell.enable = true;

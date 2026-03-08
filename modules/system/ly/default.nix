@@ -1,4 +1,4 @@
-{ lib, config, pkgs, nixpkgs-stable, ... }:
+{ lib, config, pkgs, ... }:
 
 {
 
@@ -47,9 +47,9 @@
 
     # Make brightness changing work
     hardware.i2c.enable = true;
-    environment.systemPackages = with pkgs; [ 
-      ddcutil 
-      brightnessctl
+    environment.systemPackages = [ 
+      pkgs.ddcutil 
+      pkgs.brightnessctl
     ];
   };
 }

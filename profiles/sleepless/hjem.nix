@@ -25,6 +25,7 @@
     hyprpaper.enable = true;
     hyprsunset.enable = true;
     music.enable = true;
+    neovim.enable = true;
     quickshell.enable = true;
     rstudio.enable = false;
     theming.enable = true;

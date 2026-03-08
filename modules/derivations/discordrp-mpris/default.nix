@@ -1,7 +1,7 @@
 { lib
 , buildPythonPackage
 , fetchFromGitHub
-, dbus  # The actual D-Bus library
+, dbus
 , pkg-config
 , setuptools
 , callPackage
@@ -19,27 +19,24 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "FichteFoll";
     repo = "discordrp-mpris";
-    rev = "v${version}";  # or just version, check tags         =
+    rev = "v${version}";
     sha256 = "sha256-o4utv6yhDoE1iVFkwRKWZZLGQUCAPL/2Pz58SBVZZhM=";
   };
     
-  # buildSystem = [ setuptools ]; 
-  
   nativeBuildInputs = [ 
-    pkg-config  # Needed to find dbus
+    pkg-config
     setuptools
     pytoml
     dbussy
   ];
   
   buildInputs = [ 
-    dbus  # The C library it binds to
+    dbus
   ];
 
   propagatedBuildInputs = [ 
     dbussy
     pytoml
-    # any other deps from requirements.txt
   ];
   
   meta = with lib; {

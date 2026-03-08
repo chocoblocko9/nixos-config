@@ -10,9 +10,9 @@
   config = lib.mkIf config.systemSettings.niri.enable {
     programs.niri.enable = true;
 
-    environment.systemPackages = with pkgs; [
-      fuzzel
-      alacritty
+    environment.systemPackages = [
+      pkgs.fuzzel
+      pkgs.alacritty
     ];
   };
 }

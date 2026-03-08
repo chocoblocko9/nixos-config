@@ -1,4 +1,4 @@
-{ lib, config, nixpkgs-stable, ... }:
+{ lib, config, inputs, system, ... }:
 
 {
   options = {
@@ -9,8 +9,9 @@
 
   config = lib.mkIf config.hjemSettings.rstudio.enable {
     hjem.users.${config.userName} = {
-      packages = with nixpkgs-stable; [ # stable because rstudio takes SO long to build
-        (rstudioWrapper.override{ packages = with rPackages; [ tidyverse titanic ]; })
+      packages = [ # stable because rstudio takes SO long to build
+        # (pkgs-stable.rstudioWrapper.override{ packages = with pkgs-stable.rPackages; [ tidyverse titanic ]; })
+        (inputs.nixpkgs-2511.legacyPackages.${system}.rstudioWrapper.override{ packages = with inputs.nixpkgs-2511.legacyPackages.${system}.rPackages; [ tidyverse titanic ]; })
       ];
     };
   };

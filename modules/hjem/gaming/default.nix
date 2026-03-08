@@ -1,4 +1,6 @@
-{ lib, config, pkgs, nixpkgs-stable, ... }:
+{ lib, config, pkgs, 
+# nixpkgs-stable, 
+... }:
 
 {
   options = {
@@ -14,18 +16,17 @@
         heroic # Good games launcher
         cemu # Wii U my beloved
         prismlauncher # Minecraft
-        # parallel-launcher
         streamlink # thing for the ets2 radio stream
         sm64coopdx
-      ])
-
+      ]);
+/*
       ++
 
       (with nixpkgs-stable; [
         parallel-launcher # N64 emulator
         # newest version in unstable fails to build yippee!
       ]);       
-      
+*/      
       # Let me run Doors from wofi
       files.".local/share/applications/Doors.desktop".text = '' 
         [Desktop Entry]

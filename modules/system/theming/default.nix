@@ -9,9 +9,9 @@
 
   config = lib.mkIf config.systemSettings.theming.enable {
     fonts = {
-      packages = with pkgs; [
-        nerd-fonts.jetbrains-mono
-        nerd-fonts.symbols-only 
+      packages = [
+        pkgs.nerd-fonts.jetbrains-mono
+        pkgs.nerd-fonts.symbols-only 
       ];
       fontconfig = {
         defaultFonts.monospace = [

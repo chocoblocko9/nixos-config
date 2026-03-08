@@ -4,7 +4,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./hjem.nix
+      ../../modules/system/modules.nix
     ];
   
  options = {
@@ -20,7 +20,7 @@
       bluetooth.enable = true;
       firefox.enable = true;
       flatpak.enable = true;
-      gaming.enable = true;
+      gaming.enable = false;
       hyprland.enable = true;
       ly = {
         enable = true;
@@ -30,14 +30,13 @@
       networking.enable = true;
       nh.enable = true;
       niri.enable = false;
-      nixvim.enable = true;
       obs.enable = true;
       plasma.enable = false;
       polkit.enable = true;
       shell.enable = true;
       theming.enable = true;
       thunar.enable = true;
-      virtualisation.enable = true;
+      virtualisation.enable = false;
       vnstat.enable = true;
     };
    

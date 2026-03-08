@@ -8,25 +8,23 @@
 
 buildPythonPackage rec {
   pname = "dbussy";
-  version = "1.3";  # Check actual version
+  version = "1.3";
   pyproject = true;
 
   src = fetchFromGitLab {
     owner = "ldo";
     repo = "dbussy";
-    rev = "v${version}";  # or just version, check tags
+    rev = "v${version}";
     sha256 = "sha256-FSJpbsOGHfpafy9hfOENDyPDmolmjFDDpJEKnI4pkFc=";
   };
     
-  # buildSystem = [ setuptools ]; 
-  
   nativeBuildInputs = [ 
-    pkg-config  # Needed to find dbus
+    pkg-config
     setuptools
   ];
   
   buildInputs = [ 
-    dbus.lib  # The C library it binds to
+    dbus.lib
   ];
 
   postPatch = ''

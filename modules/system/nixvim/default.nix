@@ -1,6 +1,7 @@
 { lib, config, inputs, ... }:
 
 {
+  /*
   imports = [ inputs.nixvim.nixosModules.nixvim ];
 
   options = {
@@ -232,4 +233,5 @@
       ];
     };
   };
+  */
 }

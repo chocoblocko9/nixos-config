@@ -12,8 +12,6 @@
       enable = true;
       powerOnBoot = true;
     };
-    environment.systemPackages = with pkgs; [
-      bluetuith
-    ];
+    environment.systemPackages = [ pkgs.bluetuith ];
   };
 }

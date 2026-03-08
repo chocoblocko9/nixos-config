@@ -11,12 +11,12 @@
     programs.obs-studio = {
 			enable = true;
 	  	enableVirtualCamera = true;
-      plugins = with pkgs.obs-studio-plugins; [
-        wlrobs
-        obs-livesplit-one
-        obs-gradient-source
-        obs-plugin-countdown
-        obs-pipewire-audio-capture
+      plugins = [
+        pkgs.obs-studio-plugins.wlrobs
+        pkgs.obs-studio-plugins.obs-livesplit-one
+        pkgs.obs-studio-plugins.obs-gradient-source
+        pkgs.obs-studio-plugins.obs-plugin-countdown
+        pkgs.obs-studio-plugins.obs-pipewire-audio-capture
       ];
   	};
   };

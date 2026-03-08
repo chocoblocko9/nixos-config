@@ -23,8 +23,6 @@
       };
     };
 
-    environment.systemPackages = with pkgs; [
-      pavucontrol
-    ];
+    environment.systemPackages = [ pkgs.pavucontrol ];
   };
 }
