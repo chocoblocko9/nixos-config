@@ -10,35 +10,14 @@
   };
 
   config = lib.mkIf config.hjemSettings.neovim.enable {
-    environment.systemPackages = [
-      pkgs.haskell-language-server
-      pkgs.nixd
-    ];
+    hjem.users.conor = {
+      packages = [ 
+        pkgs.neovim
+        pkgs.nixd
+        pkgs.haskell-language-server
+      ];
 
-    programs.mnw = {
-      enable = true;
-      initLua = (builtins.readFile (./init.lua));
-
-      plugins = {
-        start = with pkgs.vimPlugins; [
-          mini-nvim
-          nvim-web-devicons
-          nvim-cmp
-          cmp-nvim-lsp
-          cmp-path
-          cmp-buffer
-          nvim-treesitter
-          telescope-nvim
-          nvim-tree-lua
-          lualine-nvim
-          gitsigns-nvim
-          plenary-nvim
-        ];
-
-        dev.myconfig = {
-          pure = ./init.lua;
-        };
-      };
+      files.".config/nvim/init.lua".source = ./init.lua;
     };
   };
 } 

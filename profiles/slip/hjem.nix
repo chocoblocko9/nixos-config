@@ -15,7 +15,7 @@
     btop.enable = true;
     dunst.enable = true;
     fuzzel.enable = true;
-    gaming.enable = false;
+    gaming.enable = true;
     git.enable = true;
     kitty.enable = true;
     hyprland = {
@@ -25,7 +25,7 @@
     hyprpaper.enable = true;
     hyprsunset.enable = true;
     music.enable = true;
-    neovim.enable = false;
+    neovim.enable = true;
     quickshell.enable = true;
     rstudio.enable = false;
     theming.enable = true;

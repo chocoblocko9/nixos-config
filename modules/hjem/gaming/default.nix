@@ -13,11 +13,11 @@
     hjem.users.${config.userName} = {
       packages =
       (with pkgs; [
-        heroic # Good games launcher
-        cemu # Wii U my beloved
-        prismlauncher # Minecraft
-        streamlink # thing for the ets2 radio stream
-        sm64coopdx
+        #heroic # Good games launcher
+        #cemu # Wii U my beloved
+        #prismlauncher # Minecraft
+        #streamlink # thing for the ets2 radio stream
+        #sm64coopdx
       ]);
 /*
       ++
