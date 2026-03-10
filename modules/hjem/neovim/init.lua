@@ -73,9 +73,6 @@ require("lazy").setup({
       filetypes = { "nix" },
       root_markers = { ".git" },
       capabilities = capabilities,
-      on_attach = function(client)
-        client.server_capabilities.semanticTokensProvider = nil  -- Disable!
-      end,
     }
 
     vim.lsp.config.hls = {
@@ -140,10 +137,24 @@ require("lazy").setup({
   {
   "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
+  event = { "BufReadPost", "BufNewFile" },
+  dependencies = {},
   config = function()
     require("nvim-treesitter").setup({
+      install_dir = vim.fn.stdpath('data') .. '/site',
       highlight = { enable = true },
-      indent = { enable = true },
+      indent = { enable = true }, 
+      ensure_installed = { -- This lowkey does nothing but like it's a reference of what to :TSInstall
+        "nix",
+        "lua", 
+        "haskell",
+        "markdown",
+        "bash",
+        "rust",
+        "python",
+      },
+      auto_install = true,
+      sync_install = false,
     })
   end,
 },
@@ -198,9 +209,17 @@ vim.keymap.set("n", "<C-h>", "<C-w>h")
 vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-k>", "<C-w>k")
 vim.keymap.set("n", "<C-l>", "<C-w>l")
-vim.keymap.set("n", "<leader>t", ":14split | term<CR>", { silent = true })
+vim.keymap.set("n", "<leader>t", ":12split | term<CR>", { silent = true })
 vim.keymap.set("i", "<C-;>", "->")
 vim.keymap.set("t", "<C-Space>", "<C-\\><C-n>")
+
+-- Treesitter won't auto highlight grrrr
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    pcall(vim.treesitter.start)
+  end,
+})
 
 -- NvimTree setup
 require("nvim-tree").setup()
