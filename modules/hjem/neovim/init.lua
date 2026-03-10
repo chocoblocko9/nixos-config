@@ -36,7 +36,6 @@ require("lazy").setup({
     "nvim-mini/mini.nvim",
     config = function()
       require("mini.base16").setup({
-        use_cterm = true,
         palette = {
           base00 = "#001e26",
           base01 = "#073642",
@@ -74,6 +73,9 @@ require("lazy").setup({
       filetypes = { "nix" },
       root_markers = { ".git" },
       capabilities = capabilities,
+      on_attach = function(client)
+        client.server_capabilities.semanticTokensProvider = nil  -- Disable!
+      end,
     }
 
     vim.lsp.config.hls = {
