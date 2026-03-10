@@ -92,7 +92,5 @@
       url = "github:nix-community/nix-on-droid/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    mnw.url = "github:Gerg-L/mnw";
   };
 }
