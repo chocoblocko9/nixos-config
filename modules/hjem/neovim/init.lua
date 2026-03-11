@@ -69,14 +69,14 @@ require("lazy").setup({
 
     -- Configure servers
     vim.lsp.config.nixd = {
-      cmd = { "nixd" },
+      cmd = { "nixd", "--semantic-tokens=true" },
       filetypes = { "nix" },
       root_markers = { ".git" },
       capabilities = capabilities,
     }
 
     vim.lsp.config.hls = {
-      cmd = { "haskell-language-server", "--lsp" },
+      cmd = { "haskell-language-server-wrapper", "--lsp" },
       filetypes = { "haskell", "lhaskell" },
       root_markers = { ".git", "cabal.project", "stack.yaml" },
       capabilities = capabilities,
@@ -154,7 +154,7 @@ require("lazy").setup({
         "python",
       },
       auto_install = true,
-      sync_install = false,
+      sync_install = true,
     })
   end,
 },

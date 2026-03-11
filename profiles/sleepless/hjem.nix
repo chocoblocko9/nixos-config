@@ -27,7 +27,7 @@
     music.enable = true;
     neovim.enable = true;
     quickshell.enable = true;
-    rstudio.enable = false;
+    rstudio.enable = true;
     theming.enable = true;
     waybar.enable = false;
   }; 

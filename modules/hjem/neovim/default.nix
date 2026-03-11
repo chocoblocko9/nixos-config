@@ -8,10 +8,6 @@
   };
 
   config = lib.mkIf config.hjemSettings.neovim.enable {
-    environment.sessionVariables = {
-      NIXD_FLAGS="--inlay-hints=false";
-    };
-
     hjem.users.conor = {
       packages = [ 
         pkgs.neovim
@@ -19,8 +15,7 @@
         pkgs.haskell-language-server
         pkgs.tree-sitter
         pkgs.gcc
-        pkgs.vimPlugins.nvim-treesitter-parsers.nix
-        pkgs.vimPlugins.nvim-treesitter-parsers.haskell
+        pkgs.ghc
       ];
 
       files.".config/nvim/init.lua".source = ./init.lua;
