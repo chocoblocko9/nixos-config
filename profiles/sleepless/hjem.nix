@@ -13,6 +13,7 @@
   hjemSettings = {
     apps.enable = true;
     btop.enable = true;
+    dev.enable = true;
     dunst.enable = true;
     fuzzel.enable = true;
     gaming.enable = false;
