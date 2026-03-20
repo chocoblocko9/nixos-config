@@ -16,6 +16,7 @@
     dunst.enable = true;
     fuzzel.enable = true;
     gaming.enable = true;
+    dev.enable = true;
     git.enable = true;
     kitty.enable = true;
     hyprland = {

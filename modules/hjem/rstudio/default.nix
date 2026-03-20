@@ -1,4 +1,4 @@
-{ lib, config, inputs, system, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   options = {
@@ -11,7 +11,8 @@
     hjem.users.${config.userName} = {
       packages = [ # stable because rstudio takes SO long to build
         # (pkgs-stable.rstudioWrapper.override{ packages = with pkgs-stable.rPackages; [ tidyverse titanic ]; })
-        (inputs.nixpkgs-2511.legacyPackages.${system}.rstudioWrapper.override{ packages = with inputs.nixpkgs-2511.legacyPackages.${system}.rPackages; [ tidyverse titanic ]; })
+        # (inputs.nixpkgs-2511.legacyPackages.${system}.rstudioWrapper.override{ packages = with inputs.nixpkgs-2511.legacyPackages.${system}.rPackages; [ tidyverse titanic ]; })
+        pkgs.rstudio
       ];
     };
   };

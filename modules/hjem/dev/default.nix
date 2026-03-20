@@ -11,6 +11,7 @@
     hjem.users.${config.userName} = {
       packages = [ 
         pkgs.godot
+        pkgs.libresprite
       ];
     };
   };

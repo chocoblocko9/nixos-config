@@ -52,6 +52,16 @@
       experimental-features = [ "nix-command" "flakes" ];
     };
 
+    # turn off bloat
+    documentation = {
+      enable = false;
+      man.enable = false;
+      info.enable = false;
+      doc.enable = false;
+      dev.enable = false;
+      nixos.enable = false;
+    };
+
     # Bootloader & Kernel
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_19;
     boot.supportedFilesystems = ["ntfs"];
