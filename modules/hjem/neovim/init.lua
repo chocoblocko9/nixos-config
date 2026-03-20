@@ -30,11 +30,7 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 vim.filetype.add({
   pattern = {
-    [".*/%.config/hypr/.*%.conf"] = "hyprlang",
     [".*/hjem/hypr.*/.*%.conf"] = "hyprlang",
-    [".*/hypr/.*%.conf"] = "hyprlang",
-    ["windowrules.conf"] = "hyprlang",
-    ["binds.conf"] = "hyprlang",
   },
 })
 
