@@ -1,18 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  imports = [ 
-    # ./configs/slip.nix
-    # ./configs/sleepless.nix
-  ];
-
   options = {
     hjemSettings.hyprland = {
       enable = lib.mkEnableOption "Enable hyprland";
-      profile = lib.mkOption { 
-        default = "slip";  
-        type = lib.types.str;
-      };
     };
   };
 

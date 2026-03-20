@@ -21,7 +21,6 @@
     kitty.enable = true;
     hyprland = {
       enable = true;
-      profile = "slip";
     };
     hyprpaper.enable = true;
     hyprsunset.enable = true;
