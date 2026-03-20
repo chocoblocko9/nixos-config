@@ -29,17 +29,9 @@
           ExecStart = "${pkgs.hyprpaper}/bin/hyprpaper";
           Restart = "on-failure";
         };
-     };
+      };
       
-      files.".config/hypr/hyprpaper.conf".text = ''
-        wallpaper {                                                                                                                                                              
-          monitor=                                                                                                                                                               
-          fit_mode=cover                                                                                                                                                         
-          path=~/.files/modules/hjem/hyprpaper/wallpapers/wallpaper14.jpg                                                                                                        
-        }                                                                                                                                                                        
-        ipc=true                                                                                                                                                                 
-        splash=false
-      '';
+      files.".config/hypr/hyprpaper.conf".source = ./hyprpaper.conf;
     };
   };
 }

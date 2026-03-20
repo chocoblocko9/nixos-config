@@ -33,9 +33,10 @@
       ];
 
       files = {
+        ".config/hypr/hyprland".source = ./hyprland;
         ".config/hypr/hyprland.conf".text = ((builtins.readFile ./hyprland.conf) 
-        + (lib.optionalString (config.hjemSettings.hyprland.profile == "slip") (builtins.readFile ./slip/hyprland.conf)
-        + (lib.optionalString (config.hjemSettings.hyprland.profile == "sleepless") (builtins.readFile ./sleepless/hyprland.conf))));
+        + (lib.optionalString (config.hjemSettings.hyprland.profile == "slip") (builtins.readFile ./slip.conf)
+        + (lib.optionalString (config.hjemSettings.hyprland.profile == "sleepless") (builtins.readFile ./sleepless.conf))));
 
         ".config/hypr/xdph.conf".text = ''
           screencopy {

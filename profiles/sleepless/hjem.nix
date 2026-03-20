@@ -31,6 +31,7 @@
     rstudio.enable = true;
     theming.enable = true;
     waybar.enable = false;
+    vesktop.enable = true;
   }; 
 }
 

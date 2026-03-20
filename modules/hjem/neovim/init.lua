@@ -28,6 +28,15 @@ vim.opt.termguicolors = true
 vim.opt.wrap = false
 vim.opt.swapfile = false
 vim.opt.backup = false
+vim.filetype.add({
+  pattern = {
+    [".*/%.config/hypr/.*%.conf"] = "hyprlang",
+    [".*/hjem/hypr.*/.*%.conf"] = "hyprlang",
+    [".*/hypr/.*%.conf"] = "hyprlang",
+    ["windowrules.conf"] = "hyprlang",
+    ["binds.conf"] = "hyprlang",
+  },
+})
 
 -- Setup plugins
 require("lazy").setup({
@@ -220,6 +229,7 @@ vim.api.nvim_create_autocmd("FileType", {
     pcall(vim.treesitter.start)
   end,
 })
+
 
 -- NvimTree setup
 require("nvim-tree").setup()
