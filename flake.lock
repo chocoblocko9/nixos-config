@@ -36,19 +36,19 @@
     "aquamarine_2": {
       "inputs": {
         "hyprutils": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprutils"
         ],
         "hyprwayland-scanner": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprwayland-scanner"
         ],
         "nixpkgs": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "nixpkgs"
         ],
         "systems": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "systems"
         ]
       },
@@ -123,7 +123,7 @@
     "gitignore_2": {
       "inputs": {
         "nixpkgs": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "pre-commit-hooks",
           "nixpkgs"
         ]
@@ -217,15 +217,15 @@
     "hyprcursor_2": {
       "inputs": {
         "hyprlang": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprlang"
         ],
         "nixpkgs": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "nixpkgs"
         ],
         "systems": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "systems"
         ]
       },
@@ -275,15 +275,15 @@
     "hyprgraphics_2": {
       "inputs": {
         "hyprutils": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprutils"
         ],
         "nixpkgs": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "nixpkgs"
         ],
         "systems": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "systems"
         ]
       },
@@ -329,39 +329,6 @@
         "owner": "hyprwm",
         "repo": "Hyprland",
         "rev": "8685fd7b0c2afe06c798554dea80c53f98d73894",
-        "type": "github"
-      }
-    },
-    "hyprland-cfg-rework": {
-      "inputs": {
-        "aquamarine": "aquamarine_2",
-        "hyprcursor": "hyprcursor_2",
-        "hyprgraphics": "hyprgraphics_2",
-        "hyprland-guiutils": "hyprland-guiutils_2",
-        "hyprland-protocols": "hyprland-protocols_2",
-        "hyprlang": "hyprlang_2",
-        "hyprutils": "hyprutils_2",
-        "hyprwayland-scanner": "hyprwayland-scanner_2",
-        "hyprwire": "hyprwire_2",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "pre-commit-hooks": "pre-commit-hooks_2",
-        "systems": "systems_3",
-        "xdph": "xdph_2"
-      },
-      "locked": {
-        "lastModified": 1774021768,
-        "narHash": "sha256-Fh1MOouqRWTtsuKiE6W/lxjznTe5vFNzyU0OtfN8QY8=",
-        "owner": "vaxerski",
-        "repo": "Hyprland",
-        "rev": "f5a71e222dc539da05cc37c5c1707a393184c3fb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "vaxerski",
-        "ref": "cleanup-config-fuckers",
-        "repo": "Hyprland",
         "type": "github"
       }
     },
@@ -414,32 +381,32 @@
     "hyprland-guiutils_2": {
       "inputs": {
         "aquamarine": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "aquamarine"
         ],
         "hyprgraphics": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprgraphics"
         ],
         "hyprlang": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprlang"
         ],
         "hyprtoolkit": "hyprtoolkit_2",
         "hyprutils": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprutils"
         ],
         "hyprwayland-scanner": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprwayland-scanner"
         ],
         "nixpkgs": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "nixpkgs"
         ],
         "systems": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "systems"
         ]
       },
@@ -485,11 +452,11 @@
     "hyprland-protocols_2": {
       "inputs": {
         "nixpkgs": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "nixpkgs"
         ],
         "systems": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "systems"
         ]
       },
@@ -539,15 +506,15 @@
     "hyprlang_2": {
       "inputs": {
         "hyprutils": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprutils"
         ],
         "nixpkgs": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "nixpkgs"
         ],
         "systems": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "systems"
         ]
       },
@@ -562,6 +529,39 @@
       "original": {
         "owner": "hyprwm",
         "repo": "hyprlang",
+        "type": "github"
+      }
+    },
+    "hyprlua": {
+      "inputs": {
+        "aquamarine": "aquamarine_2",
+        "hyprcursor": "hyprcursor_2",
+        "hyprgraphics": "hyprgraphics_2",
+        "hyprland-guiutils": "hyprland-guiutils_2",
+        "hyprland-protocols": "hyprland-protocols_2",
+        "hyprlang": "hyprlang_2",
+        "hyprutils": "hyprutils_2",
+        "hyprwayland-scanner": "hyprwayland-scanner_2",
+        "hyprwire": "hyprwire_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "pre-commit-hooks": "pre-commit-hooks_2",
+        "systems": "systems_3",
+        "xdph": "xdph_2"
+      },
+      "locked": {
+        "lastModified": 1774215852,
+        "narHash": "sha256-g3krgC/u2y87DzKf81/ByTxSNDj4eBTL4SUm1HRNiYY=",
+        "owner": "vaxerski",
+        "repo": "Hyprland",
+        "rev": "d48b8c30006e200ad84ee723ff552906844c4e46",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vaxerski",
+        "ref": "lua-lua-lua-lua-lua-lua-lua",
+        "repo": "Hyprland",
         "type": "github"
       }
     },
@@ -620,37 +620,37 @@
     "hyprtoolkit_2": {
       "inputs": {
         "aquamarine": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprland-guiutils",
           "aquamarine"
         ],
         "hyprgraphics": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprland-guiutils",
           "hyprgraphics"
         ],
         "hyprlang": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprland-guiutils",
           "hyprlang"
         ],
         "hyprutils": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprland-guiutils",
           "hyprutils"
         ],
         "hyprwayland-scanner": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprland-guiutils",
           "hyprwayland-scanner"
         ],
         "nixpkgs": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprland-guiutils",
           "nixpkgs"
         ],
         "systems": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprland-guiutils",
           "systems"
         ]
@@ -697,11 +697,11 @@
     "hyprutils_2": {
       "inputs": {
         "nixpkgs": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "nixpkgs"
         ],
         "systems": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "systems"
         ]
       },
@@ -747,11 +747,11 @@
     "hyprwayland-scanner_2": {
       "inputs": {
         "nixpkgs": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "nixpkgs"
         ],
         "systems": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "systems"
         ]
       },
@@ -801,15 +801,15 @@
     "hyprwire_2": {
       "inputs": {
         "hyprutils": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprutils"
         ],
         "nixpkgs": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "nixpkgs"
         ],
         "systems": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "systems"
         ]
       },
@@ -1072,7 +1072,7 @@
         "flake-compat": "flake-compat_2",
         "gitignore": "gitignore_2",
         "nixpkgs": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "nixpkgs"
         ]
       },
@@ -1094,7 +1094,7 @@
       "inputs": {
         "hjem": "hjem",
         "hyprland": "hyprland",
-        "hyprland-cfg-rework": "hyprland-cfg-rework",
+        "hyprlua": "hyprlua",
         "nix-flatpak": "nix-flatpak",
         "nix-on-droid": "nix-on-droid",
         "nixpkgs": "nixpkgs_2",
@@ -1251,27 +1251,27 @@
     "xdph_2": {
       "inputs": {
         "hyprland-protocols": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprland-protocols"
         ],
         "hyprlang": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprlang"
         ],
         "hyprutils": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprutils"
         ],
         "hyprwayland-scanner": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "hyprwayland-scanner"
         ],
         "nixpkgs": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "nixpkgs"
         ],
         "systems": [
-          "hyprland-cfg-rework",
+          "hyprlua",
           "systems"
         ]
       },

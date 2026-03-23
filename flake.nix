@@ -81,9 +81,8 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     hyprland.url = "github:hyprwm/Hyprland?rev=8685fd7b0c2afe06c798554dea80c53f98d73894";
-    hyprland-cfg-rework = {
-      url = "github:vaxerski/Hyprland/cleanup-config-fuckers";
-      inputs.nixpkgs.follows = "nixpkgs";
+    hyprlua = {
+      url = "git+file:///home/conor/Hyprland";
     };
 
     hjem = {
