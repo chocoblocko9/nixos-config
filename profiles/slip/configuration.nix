@@ -20,7 +20,7 @@
       bluetooth.enable = true;
       firefox.enable = true;
       flatpak.enable = true;
-      gaming.enable = false;
+      gaming.enable = true;
       hyprland.enable = true;
       ly = {
         enable = true;
