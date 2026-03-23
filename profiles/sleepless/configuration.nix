@@ -28,7 +28,6 @@
       nano.enable = true;
       networking.enable = true;
       nh.enable = true;
-      #      nixvim.enable = true;
       obs.enable = true;
       polkit.enable = true;
       shell.enable = true;
@@ -38,6 +37,10 @@
     };
 
   userName = "conor";
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-38.8.4" # no idea what's even using this tbh LMAO
+  ];
 
   # Hyprland Cachix
   nix.settings = {

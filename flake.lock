@@ -551,18 +551,17 @@
         "xdph": "xdph_2"
       },
       "locked": {
-        "lastModified": 1774215852,
-        "narHash": "sha256-g3krgC/u2y87DzKf81/ByTxSNDj4eBTL4SUm1HRNiYY=",
-        "owner": "vaxerski",
-        "repo": "Hyprland",
-        "rev": "d48b8c30006e200ad84ee723ff552906844c4e46",
-        "type": "github"
+        "lastModified": 1774280719,
+        "narHash": "sha256-D289q2Kj3ixpYDUu9APC1efNwgC2O6l6vVwdHObu/dk=",
+        "ref": "refs/heads/lua-lua-lua-lua-lua-lua-lua",
+        "rev": "bc3b00ff017dbd292b673ed5b1a719e6cb6911ee",
+        "revCount": 7045,
+        "type": "git",
+        "url": "file:///home/conor/Hyprland"
       },
       "original": {
-        "owner": "vaxerski",
-        "ref": "lua-lua-lua-lua-lua-lua-lua",
-        "repo": "Hyprland",
-        "type": "github"
+        "type": "git",
+        "url": "file:///home/conor/Hyprland"
       }
     },
     "hyprtoolkit": {
@@ -930,11 +929,11 @@
     },
     "nixpkgs-2511": {
       "locked": {
-        "lastModified": 1773814637,
-        "narHash": "sha256-GNU+ooRmrHLfjlMsKdn0prEKVa0faVanm0jrgu1J/gY=",
+        "lastModified": 1774244481,
+        "narHash": "sha256-4XfMXU0DjN83o6HWZoKG9PegCvKvIhNUnRUI19vzTcQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "fea3b367d61c1a6592bc47c72f40a9f3e6a53e96",
+        "rev": "4590696c8693fea477850fe379a01544293ca4e2",
         "type": "github"
       },
       "original": {
@@ -977,11 +976,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1773821835,
-        "narHash": "sha256-TJ3lSQtW0E2JrznGVm8hOQGVpXjJyXY2guAxku2O9A4=",
+        "lastModified": 1774106199,
+        "narHash": "sha256-US5Tda2sKmjrg2lNHQL3jRQ6p96cgfWh3J1QBliQ8Ws=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b40629efe5d6ec48dd1efba650c797ddbd39ace0",
+        "rev": "6c9a78c09ff4d6c21d0319114873508a6ec01655",
         "type": "github"
       },
       "original": {
