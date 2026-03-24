@@ -1,7 +1,8 @@
 { lib, config, pkgs, inputs, ... }:
 
 let
-  source = inputs.hyprlua.packages.${pkgs.stdenv.hostPlatform.system};
+  #source = inputs.hyprlua.packages.${pkgs.stdenv.hostPlatform.system};
+  source = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
   cfg = config.systemSettings.hyprland;
 in {
   options = {

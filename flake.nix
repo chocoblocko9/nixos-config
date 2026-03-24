@@ -80,7 +80,7 @@
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
-    hyprland.url = "github:hyprwm/Hyprland?rev=8685fd7b0c2afe06c798554dea80c53f98d73894";
+    hyprland.url = "github:hyprwm/Hyprland";
     hyprlua = {
       url = "git+file:///home/conor/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
