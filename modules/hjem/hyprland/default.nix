@@ -24,19 +24,18 @@
       ];
 
       files = {
-        ".config/hypr/hyprland".source = ./hyprland;
+        #".config/hypr/hyprland".source = ./hyprland;
 
         /*  
-        Exports an environment variable to hyprland that conditionals can use to choose
-        what config options to pick. This puts all branching into my config files which
-        is nice and also means I don't have to do the silly builtins.readFile stuff.
-        */
-        ".config/hypr/hyprland.conf".text = ''
-          ${lib.optionalString (config.networking.hostName == "slip") "env = SLIP,1"}
-          ${lib.optionalString (config.networking.hostName == "sleepless") "env = SLEEPLESS,1"}
+        It would be nice to do this in lua and in fact I can but this is cleaner cus 
+        os.getenv("HOST") doesn't work for unknown reasons, subject to change
+        ".config/hypr/hyprland.lua".text = ''
+          ${lib.optionalString (config.networking.hostName == "slip") "global host = \"slip\""}
+          ${lib.optionalString (config.networking.hostName == "sleepless") "global host = \"sleepless\""}
 
-          source = ~/.config/hypr/hyprland/*
+          require(binds)
         '';
+        */
 
         ".config/hypr/xdph.conf".text = ''
           screencopy {

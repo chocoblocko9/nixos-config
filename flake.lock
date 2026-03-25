@@ -318,11 +318,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1774270522,
-        "narHash": "sha256-v3+29zRU210u9LB4eDc4iLE9+jN4xsRgmZKyOjufoaw=",
+        "lastModified": 1774445873,
+        "narHash": "sha256-GroDkLSY4r7356gneOoIytG3yhlsIJwjTsKNCStmJvQ=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "64a2e4e26388f017fd9198a6d70424f1f251a5a0",
+        "rev": "8196711aaa78c8f62e6f720636ef707783685036",
         "type": "github"
       },
       "original": {
@@ -550,17 +550,18 @@
         "xdph": "xdph_2"
       },
       "locked": {
-        "lastModified": 1774285198,
-        "narHash": "sha256-STzF3XLd0q6IcHJl63YHfdA/JUf7D7Fo/JnZHa36EWY=",
-        "ref": "refs/heads/lua-lua-lua-lua-lua-lua-lua",
-        "rev": "2290f15ee551d84c386227fdd1871cf73205468e",
-        "revCount": 7045,
-        "type": "git",
-        "url": "file:///home/conor/Hyprland"
+        "lastModified": 1774464379,
+        "narHash": "sha256-qKLXujD1Qm6Y0eAfRKqMa4zMiG3Cx/pCqa5cst4aRoE=",
+        "owner": "vaxerski",
+        "repo": "Hyprland",
+        "rev": "ac927235a5f52461d0f1f5d069e78de640d634cb",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/conor/Hyprland"
+        "owner": "vaxerski",
+        "ref": "lua-lua-lua-lua-lua-lua-lua",
+        "repo": "Hyprland",
+        "type": "github"
       }
     },
     "hyprtoolkit": {

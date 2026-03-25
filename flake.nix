@@ -82,7 +82,7 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
     hyprlua = {
-      url = "git+file:///home/conor/Hyprland";
+      url = "github:vaxerski/Hyprland/lua-lua-lua-lua-lua-lua-lua";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
