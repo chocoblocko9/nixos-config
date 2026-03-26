@@ -54,7 +54,7 @@ hl.bind(MOD, "mouse:272", hl.window.drag(),  { mouse = true })
 hl.bind(MOD, "mouse:273", hl.window.resize(), { mouse = true })
 
 -- Screenshots
-hl.bind("", "Print", hl.exec_cmd("grim -d \"$(slurp -d)\" - | wl-copy"))
+hl.bind("", "Print", hl.exec_cmd('grim -g "$(slurp -d)" - | wl-copy'))
 
 -- Music special workspace
 hl.bind(MOD, "S", hl.workspace.special("music"))
@@ -78,8 +78,8 @@ hl.bind("", "XF86AudioStop", hl.exec_cmd("playerctl --player=Lollypop stop", { l
 hl.bind("", "XF86AudioMute", hl.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle", { locked = true }))
 
 -- TODO: port to hyprctl eval
-hl.bind(MOD, "Z", hl.exec_cmd("hyprctl keyword cursor:zoom_factor 2.5", { locked = true }))
-hl.bind(MOD, "Z", hl.exec_cmd("hyprctl keyword cursor:zoom_factor 2.5", { release = true }))
+hl.bind(MOD, "Z", hl.exec_cmd("hyprctl eval 'hl.config({ cursor = { zoom_factor = 2.5 }})' && hyprctl reload"))
+hl.bind(MOD, "X", hl.exec_cmd("hyprctl eval 'hl.config({ cursor = { zoom_factor = 1 }})' && hyprctl reload", { release = true }))
 --[[
 # F1-F12 binds
 # Zoom thing

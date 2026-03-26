@@ -11,6 +11,7 @@
     hjem.users.${config.userName} = {
       packages = with pkgs; [ 
         hyprpicker
+        hyprshutdown
         grim
         slurp
         wl-clipboard

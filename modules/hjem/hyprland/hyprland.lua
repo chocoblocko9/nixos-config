@@ -1,11 +1,24 @@
-host = "sleepless" -- TODO: move to nix
+host = "slip" -- TODO: move to nix
 
+require("hyprland/autostart")
 require("hyprland/binds")
+require("hyprland/general")
+
+hl.window_rule({
+  match = { class = ".*" }, 
+  rounding_power = 1.2,
+  rounding = 15,
+})
 
 hl.config({
   general = {
     gaps_in = 5,
-    gaps_out = 5,10,10,10,
+    gaps_out = {
+      top = 5,
+      bottom = 10,
+      right = 10,
+      left = 10,
+    },
 
     border_size = 3,
     col = {
@@ -24,7 +37,6 @@ hl.config({
     dim_special = 0.6,
 
     rounding = 8,
-    rounding_power = 2
   },
   input = {
     kb_layout = "eu",
@@ -45,12 +57,3 @@ hl.config({
     enable_stdout_logs = true,
   },
 })
-
-hl.monitor({
-  output = "",
-  mode = "preferred",
-  position = "auto",
-  scale = 1.2,
-})
-
-require("hyprland/autostart")
