@@ -1,14 +1,17 @@
-host = "slip" -- TODO: move to nix
+host = "sleepless" -- TODO: move to nix
 
+require("hyprland/animations")
 require("hyprland/autostart")
 require("hyprland/binds")
+require("hyprland/functions")
 require("hyprland/general")
+require("hyprland/input")
+require("hyprland/rules")
+require("hyprland/workspaces")
 
-hl.window_rule({
-  match = { class = ".*" }, 
-  rounding_power = 1.2,
-  rounding = 15,
-})
+hl.on("window.active", function(w)
+  hl.dispatch(hl.exec_cmd("dunstify " .. w.class))
+end)
 
 hl.config({
   general = {
@@ -36,14 +39,8 @@ hl.config({
     dim_strength = 0.35,
     dim_special = 0.6,
 
-    rounding = 8,
-  },
-  input = {
-    kb_layout = "eu",
-    kb_options = "ctrl:swapcaps",
-    follow_mouse = 1,
-    repeat_delay = 300,
-    repeat_rate = 40,
+    rounding = 14,
+    rounding_power = 1.3 
   },
 
   dwindle = {
