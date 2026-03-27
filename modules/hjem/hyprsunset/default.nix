@@ -11,26 +11,6 @@
     hjem.users.${config.userName} = {
       packages = [ pkgs.hyprsunset ];
 
-      systemd.services.hyprsunset = {
-        enable = true;
-        wantedBy = [ "graphical-session.target" ];
-
-        unitConfig = {
-          Description = "An application to enable a blue-light filter on Hyprland.";
-          Documentation = "https://wiki.hyprland.org/Hypr-Ecosystem/hyprsunset/";
-          PartOf = [ "graphical-session.target" ];
-          Requires = [ "graphical-session.target" ];
-          After = [ "graphical-session.target" ];
-          ConditionEnvironment = "WAYLAND_DISPLAY"; 
-        };
-
-        serviceConfig = {
-          Type = "simple";
-          ExecStart = "${pkgs.hyprsunset}/bin/hyprsunset";
-          Restart = "on-failure";
-        };
-     };
-      
       files.".config/hypr/hyprsunset.conf".text = ''
         max-gamma = 150
 
@@ -75,62 +55,73 @@
         profile {
           time = 21:00
           temperature = 6300
+        }
         
         profile {
           time = 21:30
           temperature = 6150
+        }
         
         profile {
           time = 22:00
           temperature = 6000
           gamma = 0.96
         }
+
         profile {
           time = 22:30
           temperature = 5850
           gamma = 0.94
         }
+        
         profile {
           time = 23:00
           temperature = 5700
           gamma = 0.92
         }
+        
         profile {
           time = 23:30
           temperature = 5550
           gamma = 0.9
         }
+        
         profile {
           time = 00:00
           temperature = 5400
+        }
         
         profile {
           time = 00:30
           temperature = 5250
           gamma = 0.88
         }
+
         profile {
           time = 01:00
           temperature = 5100
+        }
         
         profile {
           time = 01:30
           temperature = 5000
           gamma = 0.86
         }
+
         profile {
           time = 02:00
           temperature = 4800
+        }
         
         profile {
           time = 02:30
           temperature = 4600
           gamma = 0.85
         }
+
         profile {
           time = 03:00
           temperature = 4500
-
         } 
       '';
     };
