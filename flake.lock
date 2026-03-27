@@ -550,10 +550,10 @@
         "xdph": "xdph_2"
       },
       "locked": {
-        "lastModified": 1774540598,
+        "lastModified": 1774552456,
         "narHash": "sha256-cHOM6EVkuMa/ldGjJYaz/uaxuqqrgH55KRO2VW28SpY=",
         "ref": "refs/heads/lua-lua-lua-lua-lua-lua-lua",
-        "rev": "830eecba8c2198ce3534a8c389789b716bff6cb0",
+        "rev": "d9db57574fbdd033b77ba755edf77f94ad06a4e3",
         "revCount": 7046,
         "type": "git",
         "url": "file:///home/conor/Hyprland"
