@@ -20,6 +20,11 @@
     programs.zsh = {
       enable = true;
       syntaxHighlighting.enable = true;
+      shellInit = '' 
+        source ${config.hjem.users.conor.environment.loadEnv}
+      '';
+      # Use hjem sessionVariables in bash  
+
       ohMyZsh = {
         enable = true;
         theme = "gentoo";

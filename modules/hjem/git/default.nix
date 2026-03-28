@@ -11,9 +11,7 @@
     hjem.users = {
       conor = {
         packages = [ pkgs.git ];
-             
         
-        # Let me run Doors from wofi
         files.".config/git/config".text = '' 
           [init]
             defaultBranch = "main"

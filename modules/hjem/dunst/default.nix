@@ -10,24 +10,6 @@
   config = lib.mkIf config.hjemSettings.dunst.enable {
     hjem.users.${config.userName} = {
       packages = [ pkgs.dunst ];
-
-      systemd.services.dunst = {
-        enable = true;
-
-        unitConfig = {
-          Description = "Dunst notification daemon";
-          Documentation = "man:dunst(1)";
-          PartOf = [ "graphical-session.target" ];
-          After = [ "graphical-session.target" ];
-        };
-
-        serviceConfig = {
-          Type = "dbus";
-          BusName = "org.freedesktop.Notifications";
-          ExecStart = "${pkgs.dunst}/bin/dunst";
-          ExecReload = "${pkgs.dunst}/bin/dunstctl reload";
-        };
-     };
       
       files.".config/dunst/dunstrc".text = ''
         [global]
