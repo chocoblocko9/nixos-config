@@ -1,31 +1,23 @@
-{ lib, config, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
-  options = {
-    hjemSettings.btop = {
-      enable = lib.mkEnableOption "Enable btop";
-    };
-  };
+  hjem.users.${config.userName} = {
+    packages = [
+      pkgs.btop-rocm 
+    ];
 
-  config = lib.mkIf config.hjemSettings.btop.enable {
-    hjem.users.${config.userName} = {
-      packages = [
-        pkgs.btop-rocm 
-      ];
+    files.".config/btop/btop.conf".text = ''
+      color_theme = "solarized_dark"
+      theme_background = false
+      true_color = true
 
-      files.".config/btop/btop.conf".text = ''
-        color_theme = "solarized_dark"
-        theme_background = false
-        true_color = true
+      vim_keys = true
+      rounded_corners = true
+      terminal_sync = true 
 
-        vim_keys = true
-        rounded_corners = true
-        terminal_sync = true 
+      shown_boxes = "cpu mem net proc gpu0"
 
-        shown_boxes = "cpu mem net proc gpu0"
-
-        proc_tree = true 
-      '';
-    };
+      proc_tree = true 
+    '';
   };
 }

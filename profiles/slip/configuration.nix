@@ -16,28 +16,12 @@
 
   config = {
     systemSettings = {
-      audio.enable = true;
-      bluetooth.enable = true;
-      firefox.enable = true;
-      flatpak.enable = true;
       gaming.enable = true;
       hyprland.enable = true;
       ly = {
         enable = true;
         profile = "slip";
       };
-      nano.enable = true;
-      networking.enable = true;
-      nh.enable = true;
-      niri.enable = false;
-      obs.enable = true;
-      plasma.enable = false;
-      polkit.enable = true;
-      shell.enable = true;
-      theming.enable = true;
-      thunar.enable = true;
-      virtualisation.enable = false;
-      vnstat.enable = true;
     };
    
     userName = "conor"; # For my hjem abstraction layer

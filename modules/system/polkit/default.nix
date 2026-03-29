@@ -1,15 +1,7 @@
-{ lib, config, pkgs, ... }:
+{ pkgs, ...} :
 
 {
-  options = {
-    systemSettings.polkit = {
-      enable = lib.mkEnableOption "Enable polkit with soteria";
-    };
-  };
+  security.polkit.enable = true;
 
-  config = lib.mkIf config.systemSettings.polkit.enable {
-    security.polkit.enable = true;
-
-    environment.systemPackages = [ pkgs.soteria ];
-  };
+  environment.systemPackages = [ pkgs.soteria ];
 }

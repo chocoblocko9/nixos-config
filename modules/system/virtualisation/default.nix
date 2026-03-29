@@ -1,33 +1,25 @@
-{ lib, config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  options = {
-    systemSettings.virtualisation = {
-      enable = lib.mkEnableOption "Enable Thunar file manager";
+  environment.systemPackages = [ pkgs.looking-glass-client ];
+
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      swtpm.enable = true;  # TPM for Windows 11
+      verbatimConfig = ''
+        cgroup_device_acl = [
+          "/dev/kvmfr0"
+        ]
+      '';
     };
   };
 
-  config = lib.mkIf config.systemSettings.virtualisation.enable {
-    environment.systemPackages = [ pkgs.looking-glass-client ];
+  users.users.conor.extraGroups = [ "libvirtd" ];
 
-    virtualisation.libvirtd = {
-      enable = true;
-      qemu = {
-        package = pkgs.qemu_kvm;
-        swtpm.enable = true;  # TPM for Windows 11
-        verbatimConfig = ''
-          cgroup_device_acl = [
-            "/dev/kvmfr0"
-          ]
-        '';
-      };
-    };
+  programs.virt-manager.enable = true;
 
-    users.users.conor.extraGroups = [ "libvirtd" ];
-
-    programs.virt-manager.enable = true;
-
-    boot.kernelModules = [ "vfio-pci" ];
-    boot.kernelParams = [ "amd_iommu=on" ];
-  };
+  boot.kernelModules = [ "vfio-pci" ];
+  boot.kernelParams = [ "amd_iommu=on" ];
 }

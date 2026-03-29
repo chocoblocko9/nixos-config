@@ -9,28 +9,10 @@
       VISUAL = "nvim";
     };
   };
-    
+
   hjemSettings = {
-    apps.enable = true;
-    btop.enable = true;
-    dunst.enable = true;
-    fuzzel.enable = true;
     gaming.enable = true;
-    dev.enable = true;
-    git.enable = true;
-    kitty.enable = true;
-    hyprland = {
-      enable = true;
-    };
-    hyprpaper.enable = true;
-    hyprsunset.enable = true;
-    music.enable = true;
-    neovim.enable = true;
-    quickshell.enable = true;
-    rstudio.enable = false;
-    theming.enable = true;
-    vesktop.enable = true;
     waybar.enable = false;
-  }; 
+  };
 }
 
