@@ -2,7 +2,7 @@
   description = "System flake that I'm scared of (how does this work)";
 
   outputs = 
-  	{ nixpkgs, determinate, ... } @ inputs:
+  	{ nixpkgs, ... } @ inputs:
   	
     let
       lib = nixpkgs.lib;
@@ -13,7 +13,6 @@
           inherit inputs; 
         };
         modules = [ 
-          determinate.nixosModules.default
           inputs.hjem.nixosModules.default
           ./profiles/slip/hjem.nix
           ./profiles/slip/configuration.nix 
@@ -34,7 +33,6 @@
   };
 
   inputs = {
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nixpkgs.url = "nixpkgs/nixos-unstable";
     # nixpkgs-2511.url = "nixpkgs/nixos-25.11";
 

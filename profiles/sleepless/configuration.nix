@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports =
@@ -7,40 +7,14 @@
       ./hjem.nix 
     ];
 
-  options = {
-    userName = lib.mkOption { 
-      default = "conor";  
-      type = lib.types.str;
-    };
-  };
-
-
   config = {
     systemSettings = {
-      audio.enable = true;
-      bluetooth.enable = true;
-      firefox.enable = true;
-      hyprland.enable = true;
+      gaming.enable = true;
       ly = {
         enable = true;
-        profile = "sleepless";
+        profile = "slip";
       };
-      nano.enable = true;
-      networking.enable = true;
-      nh.enable = true;
-      obs.enable = true;
-      polkit.enable = true;
-      shell.enable = true;
-      theming.enable = true;
-      thunar.enable = true;
-      vnstat.enable = true;
     };
-
-  userName = "conor";
-
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-38.8.4" # no idea what's even using this tbh LMAO
-  ];
 
   # Hyprland Cachix
   nix.settings = {

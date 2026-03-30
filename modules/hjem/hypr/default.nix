@@ -2,28 +2,22 @@
 
 {
   hjem.users.conor = {
-    packages = with pkgs; [ 
-      hyprpicker
-      hyprshutdown
-      grim
-      slurp
-      wl-clipboard
+    packages = [ 
+      pkgs.hyprsunset
+      pkgs.hyprpaper
+      pkgs.hyprpicker
+      pkgs.hyprshutdown
 
-      runapp
-
-      # Script stuff
-      xdotool
-      socat
-      jq
+      pkgs.grim
+      pkgs.slurp
+      pkgs.wl-clipboard
     ];
 
     files = {
       #".config/hypr/hyprland".source = ./hyprland;
+      ".config/hypr/hyprpaper.conf".source = ./hyprpaper.conf;
+      ".config/hypr/hyprsunset.conf".source = ./hyprsunset.conf;
 
-      /*  
-      It would be nice to do this in lua and in fact I can but this is cleaner cus 
-      os.getenv("HOST") doesn't work for unknown reasons, subject to change
-      */
       ".config/hypr/hyprland.lua".text =
         let 
           hostConfig = if config.networking.hostName == "slip" 

@@ -2,6 +2,7 @@
 
 {
   hjem.users.conor = {
+    /*
     packages = [ pkgs.dunst ];
     
     files.".config/dunst/dunstrc".text = ''
@@ -15,5 +16,6 @@
       progress_bar="true"
       width="(0,400)"
     '';
+    */
   };
 }

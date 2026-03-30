@@ -26,7 +26,6 @@
       [main]
       font=DejaVu Sans:size=16
       icon-theme=Numix
-      launch-prefix=runapp
       use-bold=true  
       terminal=kitty
       width=60
