@@ -2,44 +2,27 @@
   description = "System flake that I'm scared of (how does this work)";
 
   outputs = 
-  	{ 
-  		nixpkgs, 
-      nix-on-droid,
-  		... 
-  	} @ inputs:
+  	{ nixpkgs, determinate, ... } @ inputs:
   	
     let
       lib = nixpkgs.lib;
-      system = "x86_64-linux";
     in {
     nixosConfigurations = {
       slip = lib.nixosSystem {
         specialArgs = { 
           inherit inputs; 
-          inherit system;
         };
         modules = [ 
+          determinate.nixosModules.default
           inputs.hjem.nixosModules.default
           ./profiles/slip/hjem.nix
           ./profiles/slip/configuration.nix 
         ];
       };
 
-      superliminal = lib.nixosSystem {
-        specialArgs = { 
-          inherit inputs; 
-          inherit system;
-        };
-        modules = [
-          ./profiles/superliminal/configuration.nix
-          ./modules/system/modules.nix
-        ];
-      };
-
       sleepless = lib.nixosSystem {
         specialArgs = { 
 	  			inherit inputs; 
-          inherit system;
 				};
         modules = [
           inputs.hjem.nixosModules.default
@@ -48,52 +31,24 @@
         ];
       };
     };
-
-    nixOnDroidConfigurations = {
-      default = nix-on-droid.lib.nixOnDroidConfiguration {
-        pkgs = import nixpkgs { system = "aarch64-linux"; };
-        modules = [ 
-          .profiles/squid/nix-on-droid.nix
-        ];
-      };
-    };
-
-    /*
-    homeConfigurations = {
-      "ezra@superliminal" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = {
-          inherit inputs;
-        };
-        modules = [ 
-        	./profiles/superliminal/home.nix
-          ./modules/user/modules.nix
-        ];
-      };
-    };
-    */
   };
 
   inputs = {
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-2511.url = "nixpkgs/nixos-25.11";
+    # nixpkgs-2511.url = "nixpkgs/nixos-25.11";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
-    hyprland.url = "github:hyprwm/Hyprland";
+    # hyprland.url = "github:hyprwm/Hyprland";
     hyprlua = {
-      #url = "github:vaxerski/Hyprland/lua-lua-lua-lua-lua-lua-lua";
-      url = "git+file:///home/conor/Hyprland";
+      url = "github:vaxerski/Hyprland/lua-lua-lua-lua-lua-lua-lua";
+      # url = "git+file:///home/conor/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     hjem = {
       url = "github:feel-co/hjem";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports =
@@ -7,25 +7,15 @@
       ../../modules/system/modules.nix
     ];
   
- options = {
-    userName = lib.mkOption { 
-      default = "conor";  
-      type = lib.types.str;
-    };
-  }; 
-
   config = {
     systemSettings = {
       gaming.enable = true;
-      hyprland.enable = true;
       ly = {
         enable = true;
         profile = "slip";
       };
     };
    
-    userName = "conor"; # For my hjem abstraction layer
-
     nix.settings = {
       # Hyprland Cachix
       substituters = [ "https://hyprland.cachix.org" ];
@@ -47,69 +37,73 @@
     };
 
     # Bootloader & Kernel
-    boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_19;
-    boot.supportedFilesystems = ["ntfs"];
-    boot.loader = {
-      systemd-boot.enable = false;
-  
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
-      };
-  
-      grub = {
-        enable = true;
-        device = "nodev";
-        useOSProber = true;
-        splashImage = ../../themes/solarized/bootloader-solarized.png;
-        extraEntries = ''
-          menuentry 'Windows Boot Manager (on /dev/nvme0n1p1)' --class windows --class os $menuentry_id_option 'osprober-efi-54A5-22B3' {
-            insmod part_gpt
-            insmod fat
-            search --no-floppy --fs-uuid --set=root 54A5-22B3
-            chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-          }
-          menuentry 'Arch Linux (on 2TB Hard Drive)' --class arch --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-simple-ec21-0eb4f241-ec21-4840-8321-4c66a2f2cd89' {
-            ismod part_msdos
-            ismod fat
-            set root='hd0,msdos3'
-            if [x $feature_platform_search_hint = xy ]; then
-              search --no-floppy --fs-uuid --set=root --hint-ieee1275='ieee1275//disk@0,msdos3' --hint-bios=hd0,msdos3 --hint-efi=hd1,msdos3 --hint-baremetal=ahcil,msdos3 E31D-C6D1
-            else
-              search --no-floppy --fs-uuid --set=root E31D-C6D1
-            fi
-            linux /vmlinuz-linux root=UUID=0eb4f241-ec21-4840-8321-4c66a2f2cd89 rw loglevel=3 quiet
-            initrd /initramfs-linux.img
-          }
-          menuentry "Shutdown" {
-            echo "System shutting down..."
-            halt
-          }
-          menuentry 'Reboot to UEFI' --id 'uefi-firmware' {
-            echo "Entering UEFI Settings..."
-            fwsetup
-          }
-        '';
+    boot = {
+      kernelPackages = pkgs.linuxKernel.packages.linux_6_19;
+      supportedFilesystems = ["ntfs"];
+      loader = {
+        systemd-boot.enable = false;
+
+        efi = {
+          canTouchEfiVariables = true;
+          efiSysMountPoint = "/boot";
+        };
+
+        grub = {
+          enable = true;
+          device = "nodev";
+          useOSProber = true;
+          splashImage = ../../themes/solarized/bootloader-solarized.png;
+          extraEntries = ''
+            menuentry 'Windows Boot Manager (on /dev/nvme0n1p1)' --class windows --class os $menuentry_id_option 'osprober-efi-54A5-22B3' {
+              insmod part_gpt
+              insmod fat
+              search --no-floppy --fs-uuid --set=root 54A5-22B3
+              chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+            }
+            menuentry 'Arch Linux (on 2TB Hard Drive)' --class arch --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-simple-ec21-0eb4f241-ec21-4840-8321-4c66a2f2cd89' {
+              ismod part_msdos
+              ismod fat
+              set root='hd0,msdos3'
+              if [x $feature_platform_search_hint = xy ]; then
+                search --no-floppy --fs-uuid --set=root --hint-ieee1275='ieee1275//disk@0,msdos3' --hint-bios=hd0,msdos3 --hint-efi=hd1,msdos3 --hint-baremetal=ahcil,msdos3 E31D-C6D1
+              else
+                search --no-floppy --fs-uuid --set=root E31D-C6D1
+              fi
+              linux /vmlinuz-linux root=UUID=0eb4f241-ec21-4840-8321-4c66a2f2cd89 rw loglevel=3 quiet
+              initrd /initramfs-linux.img
+            }
+            menuentry "Shutdown" {
+              echo "System shutting down..."
+              halt
+            }
+            menuentry 'Reboot to UEFI' --id 'uefi-firmware' {
+              echo "Entering UEFI Settings..."
+              fwsetup
+            }
+          '';
+        };
       };
     };
     
     # fstab mounts
-    fileSystems."/home/conor/2TB-Hard-Drive" = {
-      device = "/dev/disk/by-uuid/203EA3F63EA3C2E0";
-      fsType = "ntfs";
-      options = [ "users" "nofail" "exec" ];
-    };
+    fileSystems = { 
+      "/home/conor/2TB-Hard-Drive" = {
+        device = "/dev/disk/by-uuid/203EA3F63EA3C2E0";
+        fsType = "ntfs";
+        options = [ "users" "nofail" "exec" ];
+      };
   
-    fileSystems."/home/conor/1TB-Hard-Drive" = {
-      device = "/dev/disk/by-uuid/98046F01046EE22C";
-      fsType = "ntfs";
-      options = [ "users" "nofail" "exec" ];
-    };
-  
-    # Auto-mount USB (probably Ventoy)
-    fileSystems."/home/conor/USB-Mount" = {
-      device = "/dev/sdc1";
-      options = [ "users" "nofail" ];
+      "/home/conor/1TB-Hard-Drive" = {
+        device = "/dev/disk/by-uuid/98046F01046EE22C";
+        fsType = "ntfs";
+        options = [ "users" "nofail" "exec" ];
+      };
+    
+      # Auto-mount USB (probably Ventoy)
+      "/home/conor/USB-Mount" = {
+        device = "/dev/sdc1";
+        options = [ "users" "nofail" ];
+      };
     };
   
     networking.hostName = "slip";
@@ -137,7 +131,6 @@
       options = "ctrl:swapcaps";
     };
   
-    environment.systemPackages = [ pkgs.os-prober ];
     # Define a user account. Don't forget to set a password with ‘passwd’.
     users.users.conor = {
       isNormalUser = true;

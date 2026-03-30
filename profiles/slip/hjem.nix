@@ -10,9 +10,6 @@
     };
   };
 
-  hjemSettings = {
-    gaming.enable = true;
-    waybar.enable = false;
-  };
+  hjemSettings.gaming.enable = true;
 }
 

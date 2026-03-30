@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  hjem.users.${config.userName} = {
+  hjem.users.conor = {
     packages = with pkgs; [ # stable because theming takes SO long to build
       adw-gtk3
       numix-icon-theme

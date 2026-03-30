@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  hjem.users.${config.userName} = {
+  hjem.users.conor = {
     packages = [
       pkgs.btop-rocm 
     ];

@@ -8,18 +8,12 @@
   };
 
   config = lib.mkIf config.systemSettings.gaming.enable {
-    hardware = {
-      graphics = {
+    hardware.amdgpu = {
+      opencl.enable = true;
+      initrd.enable = true;
+      overdrive = { # GPU overclocking stuff
         enable = true;
-        enable32Bit = true;
-      };
-      amdgpu = {
-        opencl.enable = true;
-        initrd.enable = true;
-        overdrive = { # GPU overclocking stuff
-          enable = true;
-          ppfeaturemask = "0xfffd7fff";
-        };
+        ppfeaturemask = "0xfffd7fff";
       };
     };
 

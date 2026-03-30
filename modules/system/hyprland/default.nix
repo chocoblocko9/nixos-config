@@ -1,26 +1,17 @@
-{ lib, config, pkgs, inputs, ... }:
+{ pkgs, inputs, ... }:
 
 let
   source = inputs.hyprlua.packages.${pkgs.stdenv.hostPlatform.system};
   #source = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
-  cfg = config.systemSettings.hyprland;
 in {
-  options = {
-    systemSettings.hyprland = {
-      enable = lib.mkEnableOption "Enable hyprland";
-    };
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+    package = source.hyprland;
+    portalPackage = source.xdg-desktop-portal-hyprland;
   };
 
-  config = lib.mkIf cfg.enable {
-    programs.hyprland = {
-      enable = true;
-      xwayland.enable = true;
-      package = source.hyprland;
-      portalPackage = source.xdg-desktop-portal-hyprland;
-    };
-
-    environment.sessionVariables = {
-  	  NIXOS_OZONE_WL = "1"; 
-    };
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1"; 
   };
 }

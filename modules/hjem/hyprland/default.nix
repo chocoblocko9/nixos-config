@@ -1,7 +1,7 @@
-{ lib, config, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
-  hjem.users.${config.userName} = {
+  hjem.users.conor = {
     packages = with pkgs; [ 
       hyprpicker
       hyprshutdown
@@ -24,19 +24,23 @@
       It would be nice to do this in lua and in fact I can but this is cleaner cus 
       os.getenv("HOST") doesn't work for unknown reasons, subject to change
       */
-      ".config/hypr/hyprland.lua".text = ''
-        ${lib.optionalString (config.networking.hostName == "slip") "host = \"slip\""}
-        ${lib.optionalString (config.networking.hostName == "sleepless") "host = \"sleepless\""}
+      ".config/hypr/hyprland.lua".text =
+        let 
+          hostConfig = if config.networking.hostName == "slip" 
+                       then "host = \"slip\""
+                       else "host = \"sleepless\"";
+        in ''
+          ${hostConfig}
 
-        require("hyprland/animations")
-        require("hyprland/autostart")
-        require("hyprland/binds")
-        require("hyprland/functions")
-        require("hyprland/general")
-        require("hyprland/input")
-        require("hyprland/rules")
-        require("hyprland/workspaces")
-      '';
+          require("hyprland/animations")
+          require("hyprland/autostart")
+          require("hyprland/binds")
+          require("hyprland/functions")
+          require("hyprland/general")
+          require("hyprland/input")
+          require("hyprland/rules")
+          require("hyprland/workspaces")
+        '';
 
       ".config/hypr/xdph.conf".text = ''
         screencopy {

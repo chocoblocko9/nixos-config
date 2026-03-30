@@ -10,7 +10,7 @@
   };
 
   config = lib.mkIf config.hjemSettings.gaming.enable {
-    hjem.users.${config.userName} = {
+    hjem.users.conor = {
       packages =
       (with pkgs; [
         #heroic # Good games launcher
