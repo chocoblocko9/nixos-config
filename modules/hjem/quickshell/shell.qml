@@ -833,35 +833,77 @@ ShellRoot {
                 // Volume 
                 Rectangle {
                     Layout.preferredHeight: barHeight - 6
-                    Layout.preferredWidth: volBarRow.implicitWidth + 14
+                    Layout.preferredWidth: volAudioRow.implicitWidth + 14
                     radius: widgetRadius
                     color: colBgWidget
 
                     RowLayout {
-                        id: volBarRow
+                        id: volAudioRow
                         anchors.centerIn: parent
-                        spacing: 4
+                        spacing: 8
 
-                        Text {
-                            text: volumeMuted ? "󰝟" : (volumePercent > 50 ? "󰕾" : "󰖀")
-                            color: volumeMuted ? colRed : colFg
-                            font { family: fontFamily; pixelSize: fontSize + 3 }
+                        RowLayout {
+                            anchors.centerIn: parent
+                            spacing: 4
+
+                            Text {
+                                text: volumeMuted ? "󰝟" : (volumePercent > 50 ? "󰕾" : "󰖀")
+                                color: volumeMuted ? colRed : colFg
+                                font { family: fontFamily; pixelSize: fontSize + 3 }
+                            }
+                            Text {
+                                text: volumePercent + "%"
+                                color: colFg
+                                font { family: fontFamily; pixelSize: fontSize + 1 }
+                            }
                         }
-                        Text {
-                            text: volumePercent + "%"
-                            color: colFg
-                            font { family: fontFamily; pixelSize: fontSize + 1 }
+
+                        Rectangle { width: 1; height: 14; color: colSeparator; visible: batItem.visible ? true : false  }
+
+                        WrapperItem {
+                            id: batItem
+                            visible: batteryPercent >= 0
+                            Layout.preferredHeight: barHeight - 6
+                            Layout.preferredWidth: batRow.implicitWidth + 14
+
+                            RowLayout {
+                                id: batRow
+                                anchors.centerIn: parent
+                                spacing: 4
+
+                                Text {
+                                    text: {
+                                        if (batteryCharging) return "󰂄"
+                                        if (batteryPercent > 80) return "󰁹"
+                                        if (batteryPercent > 60) return "󰂀"
+                                        if (batteryPercent > 40) return "󰁾"
+                                        if (batteryPercent > 20) return "󰁻"
+                                        return "󰂃"
+                                    }
+                                    color: {
+                                        if (batteryCharging) return colGreen
+                                        if (batteryPercent > 40) return colFg
+                                        if (batteryPercent > 20) return colYellow
+                                        return colRed
+                                    }
+                                    font { family: fontFamily; pixelSize: fontSize }
+                                }
+                                Text {
+                                    text: batteryPercent + "%"
+                                    color: colFg
+                                    font { family: fontFamily; pixelSize: fontSize + 1 }
+                                }
+                            }
                         }
                     }
                 }
 
                 // Battery
-                Rectangle {
+                /*
+                WrapperItem {
                     visible: batteryPercent >= 0
                     Layout.preferredHeight: barHeight - 6
                     Layout.preferredWidth: batRow.implicitWidth + 14
-                    radius: widgetRadius
-                    color: colBgWidget
 
                     RowLayout {
                         id: batRow
@@ -892,6 +934,7 @@ ShellRoot {
                         }
                     }
                 }
+                */
 
                 // Clock
                 Rectangle {
