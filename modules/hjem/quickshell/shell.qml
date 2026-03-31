@@ -1,3 +1,6 @@
+// QuickShell 0.2.1 
+// I know master has a polkit agent, and bluetooth, AND networking but 
+// that's for another time 
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Wayland
@@ -25,7 +28,7 @@ ShellRoot {
     property color colRed:       "#e06070"
     property color colSeparator: "#1a3a4a"
 
-    property string fontFamily: "JetBrainsMono Nerd Font "
+    property string fontFamily: "JetBrainsMono Nerd Font"
     property int fontSize: 13
     property int barHeight: 36
     property int barRadius: 0
@@ -40,7 +43,7 @@ ShellRoot {
         id: notifServer
         keepOnReload: true
         onNotification: notification => {
-            if (dndOn) {
+            if (dndOn) { // DND immediately expires notifications
                 notification.expire()
                 return
             }
@@ -73,26 +76,23 @@ ShellRoot {
     property bool bluetoothOn: true
     property bool dndOn: false 
 
-    // ── Processes ────────────────────────────────────────────────────
+    // ── Pipewire Handler ───────────────────────────────────────────── 
 
-    Process {
-        id: cpuProc
-        command: ["sh", "-c", "head -1 /proc/stat"]
-        stdout: SplitParser {
-            onRead: data => {
-                if (!data) return
-                var p = data.trim().split(/\s+/)
-                var idle = parseInt(p[4]) + parseInt(p[5])
-                var total = p.slice(1, 8).reduce((a, b) => a + parseInt(b), 0)
-                if (lastCpuTotal > 0) {
-                    cpuUsage = Math.round(100 * (1 - (idle - lastCpuIdle) / (total - lastCpuTotal)))
-                }
-                lastCpuTotal = total
-                lastCpuIdle = idle
-            }
-        }
-        Component.onCompleted: running = true
+    PwObjectTracker {
+        property PwNode sink: Pipewire.defaultAudioSink
+        property PwNode source: Pipewire.defaultAudioSource
+
+        property PwNodeAudio output: sink.audio 
+        property PwNodeAudio input: source.audio 
+
+        id: audioHandler
+        objects: [
+          sink, // track main output
+          source // track main input (might be useful?)
+        ] 
     }
+
+    // ── Processes ────────────────────────────────────────────────────
 
     Process {
         id: userProc
@@ -193,10 +193,7 @@ ShellRoot {
     // ── Timers ───────────────────────────────────────────────────────
     Timer {
         interval: 2000; running: true; repeat: true
-        onTriggered: {
-            cpuProc.running = true
-            volumeProc.running = true
-        }
+        onTriggered: volumeProc.running = true
     }
 
     Timer {
@@ -210,19 +207,6 @@ ShellRoot {
     Timer {
         interval: 600000; running: true; repeat: true
         onTriggered: weatherProc.running = true
-    }
-
-    // ── Volume control processes ─────────────────────────────────────
-    property string pendingVolume: ""
-
-    Process {
-        id: volSetProc
-        command: ["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", pendingVolume]
-    }
-
-    Process {
-        id: volMuteProc
-        command: ["wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle"]
     }
 
     // ── Bar (per-screen) ─────────────────────────────────────────────
@@ -246,8 +230,8 @@ ShellRoot {
                 anchor.window: barWindow
                 anchor.rect.x: barWindow.width - 320
                 anchor.rect.y: barHeight
-                width: 310
-                height: ccColumn.implicitHeight + 36
+                implicitWidth: 310
+                implicitHeight: ccColumn.implicitHeight + 36
                 visible: controlCenterOpen
                 color: "transparent"
 
@@ -412,15 +396,11 @@ ShellRoot {
                         // ── Volume slider ────────────────────────
                         Rectangle {
 
+                            // TODO: make it look actually good
                             width: parent.width; height: 50; radius: 10
                             color: colBgWidget
 
                             RowLayout {
-
-                                PwObjectTracker {
-                                    property PwNode sink: Pipewire.defaultAudioSink
-                                    objects: [sink]
-                                }
 
                                 anchors.fill: parent
                                 anchors.margins: 10
@@ -430,8 +410,8 @@ ShellRoot {
                                     property PwNode sink: Pipewire.defaultAudioSink
                                     property int volume: Math.floor(sink.audio.volume * 100)
 
-                                    text: sink.audio.muted ? "󰝟" : (volumePercent > 50 ? "󰕾" : "󰖀")
-                                    color: sink.audio.muted ? colRed : colAccent
+                                    text: audioHandler.output.muted ? "󰝟" : (volumePercent > 50 ? "󰕾" : "󰖀")
+                                    color: audioHandler.output.muted ? colRed : colAccent
                                     font { family: fontFamily; pixelSize: 16 }
                                     MouseArea {
                                         property PwNode sink: Pipewire.defaultAudioSink
@@ -449,9 +429,12 @@ ShellRoot {
                                 }
 
                                 Text {
-                                    text: volumePercent + "%"
+                                    property PwNode sink: Pipewire.defaultAudioSink
+                                    property int volume: Math.floor(sink.audio.volume * 100)
+
+                                    text: volume + "%"
                                     color: colFg
-                                    font { family: fontFamily; pixelSize: fontSize - 1 }
+                                    font { family: fontFamily; pixelSize: fontSize }
                                     Layout.preferredWidth: 30
                                     horizontalAlignment: Text.AlignRight
                                 }
@@ -570,14 +553,16 @@ ShellRoot {
                 }
             }
 
+            
+
             // ── Notification toasts ──────────────────────────────────
             PopupWindow {
                 id: notifPopup
                 anchor.window: barWindow
                 anchor.rect.x: barWindow.width - 364 // fits with my hyprland windows
                 anchor.rect.y: barHeight + 10        // cus that's cool I think
-                width: 350
-                height: notifToastCol.implicitHeight + 12
+                implicitHeight: notifToastCol.implicitHeight + 12
+                implicitWidth: 350
                 visible: notifModel.count > 0 && !controlCenterOpen
                 color: "transparent"
 
@@ -596,6 +581,8 @@ ShellRoot {
                             required property var notif
                             required property int index
 
+                            id: panel
+                            x: 350 
                             width: parent.width
                             height: notifContent.implicitHeight + 20
                             radius: 10
@@ -603,10 +590,49 @@ ShellRoot {
                             border.color: colSeparator
                             border.width: 1
 
+                            states: [
+                                State {
+                                    name: "visible"
+                                    PropertyChanges { target: panel; x: 0 } // Move on-screen
+                                }
+                            ]
+
+                            // What the fuck am I cooking
+                            transitions: [
+                                Transition {
+                                    from: ""; to: "visible"; reversible: true
+                                    NumberAnimation { 
+                                        id: notifAnimation
+                                        properties: "x"; 
+                                        duration: 180; 
+                                        easing.type: Easing.InOutBack
+                                    }
+                                }
+                            ]
+
+                            // TODO: Figure out the right way to do this
+                            // It's fine cus Qt timers are speedy but this is dumb I think?
+
+                            // especially this, others are like eh but SURELY 
+                            // u can do this better
                             Timer {
-                                interval: 5000
+                                interval: 10 
+                                running: true 
+                                onTriggered: panel.state = "visible"
+                            }
+
+                            Timer {
+                                interval: 7000
                                 running: true
-                                onTriggered: notifModel.remove(index) // dismisses after 5s
+                                onTriggered: panel.state = ""
+                            }
+
+                            Timer {
+                                interval: 7000 + notifAnimation.duration
+                                running: true
+                                onTriggered: notifModel.remove(index) 
+                                // dismisses after animation so it doesn't just disappear
+                                // but still stay off screen lol
                             }
 
                             Column {
@@ -802,8 +828,6 @@ ShellRoot {
  
                 Item { Layout.fillWidth: true }
 
-                Item { Layout.fillWidth: true }
-
                 // ═══════════════ RIGHT ══════════════════════════════
 
                 // Volume 
@@ -911,8 +935,10 @@ ShellRoot {
 
                 // ═══════════════ NOTIFICATION BELL ══════════════════
                 Rectangle {
-                    // visible: notifModel.count > 0
-                    visible: false
+                    visible: notifModel.count > 0
+                    // It's kinda dumb, but I'll leave it cus the logic is kinda 
+                    // cool so if I can integrate it in a better way, sure
+                    // visible: false
                     Layout.preferredHeight: barHeight - 6
                     Layout.preferredWidth: 28
                     radius: widgetRadius
@@ -996,6 +1022,8 @@ ShellRoot {
                 }
             }
 
+            
+
             // ── Media player (centered overlay) ──────────────────────
             Rectangle {
                 property var player: Mpris.players.values[0] ?? null
@@ -1069,12 +1097,12 @@ ShellRoot {
                             return "Playing"
                         }
                         color: colFg
-                        font { family: fontFamily; pixelSize: fontSize - 1 }
+                        font { family: fontFamily; pixelSize: fontSize; bold: true }
                         elide: Text.ElideRight
                         Layout.maximumWidth: 320
                     }
                 }
-            }
-        }
+            }   
+        }         
     }
 }
