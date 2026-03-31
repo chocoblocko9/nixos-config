@@ -85,6 +85,8 @@ ShellRoot {
         property PwNodeAudio output: sink.audio 
         property PwNodeAudio input: source.audio 
 
+        property int volume: Math.floor(output.volume * 100 )
+
         id: audioHandler
         objects: [
           sink, // track main output
@@ -114,7 +116,7 @@ ShellRoot {
         stdout: SplitParser {
             onRead: data => {
                 if (!data || data.trim() === "NONE") {
-                    batteryPercent = -1
+                    batteryPercent = -1 
                     return
                 }
                 var lines = data.trim()
@@ -124,22 +126,6 @@ ShellRoot {
                 } else {
                     batteryCharging = lines.indexOf("Charging") >= 0
                 }
-            }
-        }
-        Component.onCompleted: running = true
-    }
-
-    Process {
-        id: volumeProc
-        command: ["sh", "-c", "wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null || echo '0'"]
-        stdout: SplitParser {
-            onRead: data => {
-                if (!data) return
-                var match = data.match(/Volume:\s+([\d.]+)/)
-                if (match) {
-                    volumePercent = Math.round(parseFloat(match[1]) * 100)
-                }
-                volumeMuted = data.indexOf("[MUTED]") >= 0
             }
         }
         Component.onCompleted: running = true
@@ -191,11 +177,6 @@ ShellRoot {
     }
 
     // ── Timers ───────────────────────────────────────────────────────
-    Timer {
-        interval: 2000; running: true; repeat: true
-        onTriggered: volumeProc.running = true
-    }
-
     Timer {
         interval: 10000; running: true; repeat: true
         onTriggered: {
@@ -407,10 +388,7 @@ ShellRoot {
                                 spacing: 10
 
                                 Text {
-                                    property PwNode sink: Pipewire.defaultAudioSink
-                                    property int volume: Math.floor(sink.audio.volume * 100)
-
-                                    text: audioHandler.output.muted ? "󰝟" : (volumePercent > 50 ? "󰕾" : "󰖀")
+                                    text: audioHandler.output.muted ? "󰝟" : (audioHandler.volume > 50 ? "󰕾" : "󰖀")
                                     color: audioHandler.output.muted ? colRed : colAccent
                                     font { family: fontFamily; pixelSize: 16 }
                                     MouseArea {
@@ -744,7 +722,7 @@ ShellRoot {
 
                 // User info
                 Rectangle {
-                    Layout.preferredHeight: barHeight - 6
+                    Layout.preferredHeight: barHeight - 8
                     Layout.preferredWidth: userRow.implicitWidth + 16
                     radius: widgetRadius
                     color: colBgWidget
@@ -770,7 +748,7 @@ ShellRoot {
                 // ═══════════════ WORKSPACES ══════════════════════════
 
                 Rectangle {
-                    Layout.preferredHeight: barHeight - 6
+                    Layout.preferredHeight: barHeight - 8
                     Layout.preferredWidth: wsRow.implicitWidth + 14
                     radius: widgetRadius
                     color: colBgWidget
@@ -789,7 +767,7 @@ ShellRoot {
                                 property bool hovered: false
 
                                 width: 8
-                                height: barHeight - 6
+                                height: barHeight - 8
 
                                 Rectangle {
                                     anchors.centerIn: parent
@@ -830,29 +808,27 @@ ShellRoot {
 
                 // ═══════════════ RIGHT ══════════════════════════════
 
-                // Volume 
+                // Volume & Battery
                 Rectangle {
-                    Layout.preferredHeight: barHeight - 6
-                    Layout.preferredWidth: volAudioRow.implicitWidth + 14
+                    Layout.preferredHeight: barHeight - 8
+                    Layout.preferredWidth: volBatRow.implicitWidth + 14
                     radius: widgetRadius
                     color: colBgWidget
 
                     RowLayout {
-                        id: volAudioRow
+                        id: volBatRow
                         anchors.centerIn: parent
                         spacing: 8
 
                         RowLayout {
-                            anchors.centerIn: parent
-                            spacing: 4
 
                             Text {
-                                text: volumeMuted ? "󰝟" : (volumePercent > 50 ? "󰕾" : "󰖀")
-                                color: volumeMuted ? colRed : colFg
+                                text: audioHandler.output.muted ? "󰝟" : (audioHandler.volume > 50 ? "󰕾" : "󰖀")
+                                color: audioHandler.output.muted ? colRed : colFg
                                 font { family: fontFamily; pixelSize: fontSize + 3 }
                             }
                             Text {
-                                text: volumePercent + "%"
+                                text: audioHandler.volume + "%"
                                 color: colFg
                                 font { family: fontFamily; pixelSize: fontSize + 1 }
                             }
@@ -863,13 +839,10 @@ ShellRoot {
                         WrapperItem {
                             id: batItem
                             visible: batteryPercent >= 0
-                            Layout.preferredHeight: barHeight - 6
-                            Layout.preferredWidth: batRow.implicitWidth + 14
 
                             RowLayout {
                                 id: batRow
                                 anchors.centerIn: parent
-                                spacing: 4
 
                                 Text {
                                     text: {
@@ -898,47 +871,9 @@ ShellRoot {
                     }
                 }
 
-                // Battery
-                /*
-                WrapperItem {
-                    visible: batteryPercent >= 0
-                    Layout.preferredHeight: barHeight - 6
-                    Layout.preferredWidth: batRow.implicitWidth + 14
-
-                    RowLayout {
-                        id: batRow
-                        anchors.centerIn: parent
-                        spacing: 4
-
-                        Text {
-                            text: {
-                                if (batteryCharging) return "󰂄"
-                                if (batteryPercent > 80) return "󰁹"
-                                if (batteryPercent > 60) return "󰂀"
-                                if (batteryPercent > 40) return "󰁾"
-                                if (batteryPercent > 20) return "󰁻"
-                                return "󰂃"
-                            }
-                            color: {
-                                if (batteryCharging) return colGreen
-                                if (batteryPercent > 40) return colFg
-                                if (batteryPercent > 20) return colYellow
-                                return colRed
-                            }
-                            font { family: fontFamily; pixelSize: fontSize }
-                        }
-                        Text {
-                            text: batteryPercent + "%"
-                            color: colFg
-                            font { family: fontFamily; pixelSize: fontSize + 1 }
-                        }
-                    }
-                }
-                */
-
                 // Clock
                 Rectangle {
-                    Layout.preferredHeight: barHeight - 6
+                    Layout.preferredHeight: barHeight - 8
                     Layout.preferredWidth: clockRow.implicitWidth + 16
                     radius: widgetRadius
                     color: colBgWidget
@@ -982,7 +917,7 @@ ShellRoot {
                     // It's kinda dumb, but I'll leave it cus the logic is kinda 
                     // cool so if I can integrate it in a better way, sure
                     // visible: false
-                    Layout.preferredHeight: barHeight - 6
+                    Layout.preferredHeight: barHeight - 8
                     Layout.preferredWidth: 28
                     radius: widgetRadius
                     color: colBgWidget
@@ -1028,7 +963,7 @@ ShellRoot {
 
                 // ═══════════════ CONTROL CENTER BUTTON ══════════════
                 Rectangle {
-                    Layout.preferredHeight: barHeight - 6
+                    Layout.preferredHeight: barHeight - 8
                     Layout.preferredWidth: ccBtnRow.implicitWidth + 14
                     radius: widgetRadius
                     color: controlCenterOpen ? colAccent2 : colBgWidget
@@ -1061,6 +996,9 @@ ShellRoot {
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
                         onClicked: controlCenterOpen = !controlCenterOpen
+                        hoverEnabled: true
+                        onEntered: controlCenterOpen = true 
+                        // onExited: controlCenterOpen = false
                     }
                 }
             }
@@ -1074,7 +1012,7 @@ ShellRoot {
 
                 anchors.centerIn: parent
                 width: mediaRow.implicitWidth + 16
-                height: barHeight - 6
+                height: barHeight - 8
                 clip: true
                 radius: widgetRadius
                 color: colBgWidget
