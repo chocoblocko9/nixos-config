@@ -30,7 +30,9 @@ hl.config({
     dim_special = 0.6,
 
     rounding = 14,
-    rounding_power = 1.3 
+    rounding_power = 1.3,
+
+    shadow = { enabled = false },
   },
 
   dwindle = {

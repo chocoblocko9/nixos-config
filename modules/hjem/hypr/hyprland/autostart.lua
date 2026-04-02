@@ -1,4 +1,4 @@
-hl.exec_once("hyprpaper & hyprsunset & soteria")
+hl.exec_once("hyprpaper & hyprsunset & soteria & dunst")
 hl.exec_once("firefox")
 hl.exec_once("qs")
 hl.exec_once("kitty --class kitty-nvim --config ~/.files/modules/hjem/kitty/nvim.conf nvim &")

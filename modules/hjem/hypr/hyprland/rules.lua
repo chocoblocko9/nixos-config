@@ -1,6 +1,6 @@
 ------  VARIABLES  ------
 
-local defFloat = {
+local def_float = {
   "Open.*",
   "File Upload.*",
   "Select what to share",
@@ -10,7 +10,7 @@ local defFloat = {
 
 ------ WINDOW RULES ------
 hl.window_rule({ workspace = "2 silent", match = { class = "kitty-nvim" } })
-hl.window_rule({ opacity = "0.96, 0.75", match = { class = "negative:kitty" } })
+hl.window_rule({ opacity = "0.97, 0.75", match = { class = "negative:kitty" } })
 
 hl.window_rule({
   name = "vesktop behaviour",
@@ -28,9 +28,8 @@ hl.window_rule({
   size = "1463 1023",
 })
 
-for _, t in ipairs(defFloat) do 
+for _, t in ipairs(def_float) do 
   hl.window_rule({
-    name = "Default Float Behaviour",
     float = true,
     match = { title = t },
     size = "(monitor_w*0.75) (monitor_h*0.75)",
@@ -39,7 +38,6 @@ for _, t in ipairs(defFloat) do
 end
 
 hl.window_rule({
-  name = "Lollypop float",
   float = true,
   match = { class = "lollypop" },
   size = "(monitor_w*0.9) (monitor_h*0.9)",
@@ -47,18 +45,19 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    name  = "fix-xwayland-drags",
-    no_focus = true,
-    match = {
-        class      = "^$",
-        title      = "^$",
-        xwayland   = true,
-        float      = true,
-        fullscreen = false,
-        pin        = false,
-    },
+  name  = "fix-xwayland-drags",
+  no_focus = true,
+  match = {
+      class      = "^$",
+      title      = "^$",
+      xwayland   = true,
+      float      = true,
+      fullscreen = false,
+      pin        = false,
+  },
 })
 
 ------ LAYER RULES ------
 
 hl.layer_rule({ no_anim = true, match = { namespace = "selector" } }) -- fix for weird 1px black border on screenshots
+hl.layer_rule({ blur = true, match = { namespace = "quickshell" } })
