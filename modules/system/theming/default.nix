@@ -1,6 +1,12 @@
 { pkgs, ... }:
 
 {
+  qt = {
+    enable = true;
+    style = "kvantum";
+    platformTheme = "qt5ct";
+  };
+
   fonts = {
     packages = [
       pkgs.nerd-fonts.jetbrains-mono
