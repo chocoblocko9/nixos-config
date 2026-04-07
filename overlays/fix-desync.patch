@@ -1,0 +1,13 @@
+diff --git a/src/Compositor.cpp b/src/Compositor.cpp
+index 2a9b0947..0efe209d 100644
+--- a/src/Compositor.cpp
++++ b/src/Compositor.cpp
+@@ -1292,6 +1292,8 @@ void CCompositor::changeWindowZOrder(PHLWINDOW pWindow, bool top) {
+ 
+     if (top)
+         pWindow->m_createdOverFullscreen = true;
++    else
++        pWindow->m_createdOverFullscreen = false;
+ 
+     if (pWindow == (top ? m_windows.back() : m_windows.front()))
+         return;
