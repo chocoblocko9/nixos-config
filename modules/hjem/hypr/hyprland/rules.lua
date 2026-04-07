@@ -18,6 +18,7 @@ hl.window_rule({
   match = { class = "vesktop", workspace = 1 },
   move = "12 44",
   size = "1463 1023",
+  suppress_event = "maximize"
 })
 
 hl.window_rule({
@@ -33,16 +34,16 @@ for _, t in ipairs(def_float) do
     float = true,
     match = { title = t },
     size = "(monitor_w*0.75) (monitor_h*0.75)",
-    pin = true,
+--    pin = true,
   })
 end
 
-hl.window_rule({
+hl.window_rule {
   float = true,
   match = { class = "lollypop" },
   size = "(monitor_w*0.9) (monitor_h*0.9)",
   workspace = "special:music silent",
-})
+}
 
 hl.window_rule({
   name  = "fix-xwayland-drags",

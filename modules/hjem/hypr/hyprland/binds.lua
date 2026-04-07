@@ -11,7 +11,7 @@ local menu = "fuzzel"
 hl.bind(MOD .. " + Q", hl.exec_cmd(term))
 hl.bind(MOD .. " + C", hl.window.close()) -- TODO: Steam script?
 hl.bind(MOD .. " + F", hl.exec_cmd("firefox"))
-hl.bind(MOD .. " + M", hl.exec_cmd("hyprctl dispatch exit")) -- TODO: hyprshutdown?
+hl.bind(MOD .. " + M", hl.exec_cmd("hyprshutdown"))
 hl.bind(MOD .. " + E", hl.exec_cmd(fm))
 hl.bind(MOD .. " + V", hl.window.float({ action = "toggle" }))
 hl.bind(MOD .. " + D", hl.exec_cmd(menu))

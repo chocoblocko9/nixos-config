@@ -1,12 +1,11 @@
-hl.exec_once("hyprpaper & hyprsunset & soteria & dunst")
+hl.exec_once("hyprpaper & hyprsunset & soteria & lollypop")
 hl.exec_once("firefox")
 hl.exec_once("qs")
 hl.exec_once("kitty --class kitty-nvim --config ~/.files/modules/hjem/kitty/nvim.conf nvim &")
 
 if (host == "slip") then
-  hl.exec_once("[ float; size 444 44; workspace 1 ] kitty")
   hl.exec_once("vesktop")
-  hl.exec_once("mprisence & nicotine -s & lollypop & mpris-scrobbler")
+  hl.exec_once("mprisence & nicotine -s & mpris-scrobbler")
   hl.exec_once("sleep 5; hyprctl --batch 'dispatch tagwindow +firefox class:firefox; dispatch tagwindow +vesktop class:vesktop'")
 end
 --[[

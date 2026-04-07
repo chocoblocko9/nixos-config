@@ -5,17 +5,17 @@ end
 
 hl.config({
   general = {
-    gaps_in = 5,
+    gaps_in = 1,
     gaps_out = {
-      top = 5,
-      bottom = 10,
-      right = 10,
-      left = 10,
+      top = 4,
+      bottom = 5,
+      right = 5,
+      left = 5,
     },
 
     border_size = 3,
     col = {
-      active_border = "rgb(2A7B9B)",
+      active_border = "rgb(144d63)",
       inactive_border = "rgb(072242)",
     },
 
