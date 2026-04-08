@@ -9,18 +9,17 @@ local menu = "fuzzel"
 
 -- Normal binds
 hl.bind(MOD .. " + Q", hl.exec_cmd(term))
+hl.bind(MOD .. " + Return", hl.exec_cmd(term))
 hl.bind(MOD .. " + C", hl.window.close()) -- TODO: Steam script?
 hl.bind(MOD .. " + F", hl.exec_cmd("firefox"))
-hl.bind(MOD .. " + M", hl.exec_cmd("hyprshutdown"))
+hl.bind(MOD .. " + M", hl.exit())
 hl.bind(MOD .. " + E", hl.exec_cmd(fm))
 hl.bind(MOD .. " + V", hl.window.float({ action = "toggle" }))
 hl.bind(MOD .. " + D", hl.exec_cmd(menu))
 hl.bind(MOD .. " + P", hl.window.pseudo())
 hl.bind(MOD .. " + J", hl.layout("togglesplit"))
 
--- bind=$mod, R, exec, bash ~/.files/modules/hjem/hyprland/scripts/reset.sh
-hl.bind(MOD .. " + R", function() -- TODO: Implement above function
-end)
+hl.bind(MOD .. " + R", reset)
 
 -- bind=$mod, B, exec, bash ~/.files/modules/hjem/hyprland/scripts/minimisetospecial.sh
 hl.bind(MOD .. " + B", function() -- TODO: Implement above function

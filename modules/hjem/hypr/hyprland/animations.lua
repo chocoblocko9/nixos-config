@@ -25,11 +25,11 @@ for _, p in ipairs {
   hl.animation { leaf = p[1], enabled = p[2], speed = p[3], bezier = p[4], style = p[5] } 
 end
 
-hl.config({
+hl.config {
   animations = {
     enabled = true,
     workspace_wraparound = true,
   },
-})
+}
 
 

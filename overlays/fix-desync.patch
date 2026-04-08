@@ -11,3 +11,22 @@ index 2a9b0947..0efe209d 100644
  
      if (pWindow == (top ? m_windows.back() : m_windows.front()))
          return;
+diff --git a/src/config/lua/objects/LuaWindow.cpp b/src/config/lua/objects/LuaWindow.cpp
+index 79f406d3..b396db52 100644
+--- a/src/config/lua/objects/LuaWindow.cpp
++++ b/src/config/lua/objects/LuaWindow.cpp
+@@ -80,6 +80,14 @@ static int                   windowIndex(lua_State* L) {
+         lua_pushinteger(L, static_cast<lua_Integer>(static_cast<uint8_t>(w->m_fullscreenState.client)));
+     else if (key == "over_fullscreen")
+         lua_pushboolean(L, w->m_createdOverFullscreen);
++    else if (key == "tags") {
++        lua_newtable(L);
++        int i = 1;
++        for (const auto& tag : w->m_ruleApplicator->m_tagKeeper.getTags()) {
++            lua_pushstring(L, tag.c_str());
++            lua_rawseti(L, -2, i++);
++        }
++    }
+     else if (key == "stable_id")
+         lua_pushinteger(L, static_cast<lua_Integer>(w->m_stableID));
+     else if (key == "layout") {

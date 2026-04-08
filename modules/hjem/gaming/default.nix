@@ -12,10 +12,10 @@
   config = lib.mkIf config.hjemSettings.gaming.enable {
     hjem.users.conor = {
       packages = [
-        pkgs.heroic # Good games launcher
+        #pkgs.heroic # Good games launcher
         #cemu # Wii U my beloved
         pkgs.prismlauncher # Minecraft
-        #streamlink # thing for the ets2 radio stream
+        pkgs.streamlink # thing for the ets2 radio stream
         #sm64coopdx
       ];
 /*

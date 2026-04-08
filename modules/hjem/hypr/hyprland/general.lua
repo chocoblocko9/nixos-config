@@ -3,6 +3,9 @@ if (host == "sleepless") then
   mon_scale = 1.2
 end
 
+hl.env("XCURSOR_THEME", "phinger-cursors-dark")
+hl.env("XCURSOR_SIZE", "24")
+
 hl.config({
   general = {
     gaps_in = 1,
@@ -41,10 +44,16 @@ hl.config({
     preserve_split = true,
   },
 
+  render = {
+    direct_scanout = 2 
+  },
+
+  --[[
   debug = {
     disable_logs = false,
     enable_stdout_logs = true,
   },
+  ]]
 })
 
 hl.monitor({

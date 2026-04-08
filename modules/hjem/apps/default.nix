@@ -10,8 +10,11 @@
       # Tools
       fastfetch
       zip
+      libnotify
+      socat
+      ffmpeg
+      wf-recorder
       unzip
-      feh # GUI image viewer
       xarchiver # GUI archive manager
       ncdu 
       wev 

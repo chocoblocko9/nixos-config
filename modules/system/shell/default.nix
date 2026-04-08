@@ -10,6 +10,11 @@
     update = "nix flake update --flake ~/.files && nh os switch";
   };
 
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+
   programs.zsh = {
     enable = true;
     syntaxHighlighting.enable = true;

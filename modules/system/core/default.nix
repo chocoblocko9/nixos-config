@@ -46,6 +46,8 @@
     };
   };
 
+  nix.settings.lazy-trees = true;
+
   networking = {
     networkmanager.enable = true;
     firewall = {

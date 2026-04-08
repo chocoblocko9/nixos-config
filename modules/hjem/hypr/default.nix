@@ -25,11 +25,11 @@
                        else "host = \"sleepless\"";
         in ''
           ${hostConfig}
+          require("hyprland/functions")
 
           require("hyprland/animations")
           require("hyprland/autostart")
           require("hyprland/binds")
-          require("hyprland/functions")
           require("hyprland/general")
           require("hyprland/input")
           require("hyprland/rules")
