@@ -85,12 +85,34 @@ in
     @audio   -   memlock    4194304
   '';
 
+  boot.supportedFilesystems = {
+    btrfs.enable = true;
+    ntfs3.enable = true;
+    ext4.enable = true;
+  };
+
   boot.kernelParams = [
     "loglevel=1"
 
     # https://community.frame.work/t/linux-battery-life-tuning/6665/156
     "nvme.noacpi=1"
   ];
+
+  /*
+  fileSystems = {
+    "/home/conor/2TB-Hard-Drive" = {
+      device = "/dev/disk/by-uuid/203EA3F63EA3C2E0";
+      fsType = "ntfs3";
+      options = [ "users" "nofail" "exec" ];
+    };
+
+    "/home/conor/1TB-Hard-Drive" = {
+      device = "/dev/disk/by-uuid/98046F01046EE22C";
+      fsType = "ntfs3";
+      options = [ "users" "nofail" "exec" ];
+    };
+  };
+  */
 
   # TODO: options for nix remote builders
   environment.etc."nix/machines".enable = false;

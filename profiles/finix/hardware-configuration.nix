@@ -11,7 +11,7 @@
   
   fileSystems = { 
     "/" = {
-      device = "/dev/disk/by-uuid/ca7a632a-4555-49ee-b7d4-461010879116";
+      device = "/dev/nvme0n1p6";
       fsType = "btrfs";
       options = [ "compress=zstd:6" "noatime" ];
     };
