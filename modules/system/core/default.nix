@@ -46,7 +46,7 @@
     };
   };
 
-  nix.settings.lazy-trees = true;
+  nix.package = pkgs.lix;
 
   networking = {
     networkmanager.enable = true;

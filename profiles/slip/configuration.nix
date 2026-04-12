@@ -98,12 +98,6 @@
         fsType = "ntfs";
         options = [ "users" "nofail" "exec" ];
       };
-    
-      # Auto-mount USB (probably Ventoy)
-      "/home/conor/USB-Mount" = {
-        device = "/dev/sdc1";
-        options = [ "users" "nofail" ];
-      };
     };
   
     networking.hostName = "slip";
@@ -136,8 +130,11 @@
       isNormalUser = true;
       description = "Conor";
       extraGroups = [ "networkmanager" "wheel" ];
+      password = "$6$gm25FphqvQn/e3xx$1Mbh8F43yc1KcEl1tjhTdSb7ckgyu9WPul3iNvJTTbUu11JfTbtNGRqAAp4A37e9Rx8DZN2xkK5Szq1Lx.VNo1";
     };
   
+    users.users.root.password = "$6$fbD.K0pd60awe9GK$rWNMr2dqbrjBLC0kW2yTBPixM3VIy/Qvg1QNlmO2hcuDAnCRVKwe/pBeY0AjIdc.LbEMmZ/sulIbD6QArcZ.v0";
+
     nixpkgs.config.allowUnfree = true;
     system.stateVersion = "25.11";
   };

@@ -24,8 +24,10 @@
                        then "host = \"slip\""
                        else "host = \"sleepless\"";
         in ''
-          ${hostConfig}
+          host = ${config.networking.hostName}
+
           require("hyprland/functions")
+          local hi = "cheese"
 
           require("hyprland/animations")
           require("hyprland/autostart")

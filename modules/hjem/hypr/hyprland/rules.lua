@@ -69,5 +69,10 @@ hl.window_rule {
 
 ------ LAYER RULES ------
 
-hl.layer_rule({ no_anim = true, match = { namespace = "selector" } }) -- fix for weird 1px black border on screenshots
+hl.layer_rule({ 
+  name = "screenshot fix",
+  no_anim = true, 
+  match = { namespace = "selector" },
+})
+
 hl.layer_rule({ blur = true, match = { namespace = "quickshell" } })

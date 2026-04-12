@@ -7,7 +7,10 @@
     platformTheme = "qt5ct";
   };
 
-  environment.systemPackages = [ pkgs.phinger-cursors ];
+  environment.systemPackages = [ 
+    pkgs.phinger-cursors 
+    pkgs.rose-pine-hyprcursor
+  ];
 
   fonts = {
     packages = [
