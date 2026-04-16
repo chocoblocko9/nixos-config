@@ -38,21 +38,22 @@
 		  			inherit inputs;
 				};
         modules = [
-          inputs.hjem.nixosModules.default
-          ./profiles/sleepless/configuration.nix
-          ./modules/system/modules.nix
-        ];
+          inputs.hjem.nixosModules.default 
+          ./profiles/sleepless/configuration.nix 
+          ./modules/system/modules.nix 
+        ]; 
       };
 
-      finix = finix.lib.finixSystem {
+      subvert = finix.lib.finixSystem {
         inherit (finixpkgs) lib;
 
         specialArgs = {
           modulesPath = toString nixpkgs + "/nixos/modules";
-	  inherit inputs;
+	        inherit inputs;
         };
 
         modules = with finix.nixosModules; [
+          inputs.hjem.finixModules.default
           {
             nixpkgs.pkgs = nixpkgs.lib.mkDefault finixpkgs;
           }
@@ -60,56 +61,32 @@
 
           # (toString nixpkgs + "/nixos/modules/programs/noisetorch.nix")
 
-          anacron
-          atd
           bash
           bluetooth
-          brightnessctl
           chronyd
-          ddccontrol
           dhcpcd
-          dma
-          dropbear
           earlyoom
           fcron
-          fish
-          fprintd
-          fstrim
-          fwupd
           getty
-          gnome-keyring
           greetd
           hyprland
-          hyprlock
-          illum
-          incus
           iwd
-          labwc
           limine
-          mariadb
           nftables
           niri
           nix-daemon
-          nzbget
           openssh
-          pmount
           polkit
-          power-profiles-daemon
           regreet
           rtkit
-          seahorse
           sudo
-          sway
           sysklogd
           system76-scheduler
-          tzupdate
           upower
           uptime-kuma
           virtualbox
-          xwayland-satellite
           zerotierone
           zfs
-          zzz
         ];
       }; 
     };
@@ -117,7 +94,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    finix.url = "github:finix-community/finix";
+    finix.url = "github:chocoblocko9/finix/init-vnstat";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
@@ -129,7 +106,7 @@
     };
 
     hjem = {
-      url = "github:feel-co/hjem";
+      url = "github:r0chd/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

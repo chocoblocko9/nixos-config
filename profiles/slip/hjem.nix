@@ -3,7 +3,7 @@
 
   hjem.users.conor = {
     directory = "/home/conor";
-    systemd.enable = true;
+    # systemd.enable = true;
     environment.sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";

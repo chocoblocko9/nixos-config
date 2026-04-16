@@ -38,7 +38,6 @@
         account required pam_unix.so # unix (order 10900)
 
         # Authentication management.
-        auth sufficient ${config.services.fprintd.package}/lib/security/pam_fprintd.so debug # fprintd (order 11400)
         auth sufficient pam_unix.so likeauth nullok try_first_pass # unix (order 11500)
         auth required pam_deny.so # deny (order 12300)
 
@@ -58,7 +57,6 @@
         account required pam_unix.so # unix (order 10900)
 
         # Authentication management.
-        auth sufficient ${config.services.fprintd.package}/lib/security/pam_fprintd.so debug # fprintd (order 11400)
         auth sufficient pam_unix.so likeauth try_first_pass # unix (order 11500)
         auth required pam_deny.so # deny (order 12300)
 
@@ -78,7 +76,6 @@
         account required pam_unix.so # unix (order 10900)
 
         # Authentication management.
-        auth sufficient ${config.services.fprintd.package}/lib/security/pam_fprintd.so debug # fprintd (order 11400)
         auth sufficient pam_unix.so likeauth try_first_pass # unix (order 11500)
         auth required pam_deny.so # deny (order 12300)
 
@@ -98,7 +95,6 @@
         account required pam_unix.so # unix (order 10900)
 
         # Authentication management.
-        auth sufficient ${config.services.fprintd.package}/lib/security/pam_fprintd.so debug # fprintd (order 11400)
         auth optional pam_unix.so likeauth nullok # unix-early (order 11500)
         auth sufficient pam_unix.so likeauth nullok try_first_pass # unix (order 12800)
         auth required pam_deny.so # deny (order 13600)

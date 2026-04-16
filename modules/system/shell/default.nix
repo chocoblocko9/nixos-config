@@ -22,7 +22,7 @@
       source ${config.hjem.users.conor.environment.loadEnv}
     '';
     ohMyZsh = {
-      enable = true;
+      enable = false;
       theme = "gentoo";
       # theme = "fino-time"; 
     };

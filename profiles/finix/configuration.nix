@@ -28,28 +28,22 @@ in
   imports = [
     ./hardware-configuration.nix
     ./pam.nix
-    # ./podman.nix
+    ./vnstat.nix
+    ./zsh.nix
+    ./flatpak.nix
+    ./ly.nix
+
+
+    ../../profiles/slip/hjem.nix 
   ];
 
-  # experiment with network namespace support for finix
-  # finit.ttys.tty1.extraConfig = "netns:zerotier";
-  # finit.services.zerotierone.extraConfig = "netns:zerotier";
-  # boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
-  # finit.package = pkgs.finit.overrideAttrs (finalAttrs: {
-  #   patches = finalAttrs.patches or [ ] ++ [ /home/aaron/code/finit/netns-support.patch ];
-  # });
-
-  # wip - cups module
-  # services.cups.enable = true;
-
-  # experiment with user level service manager... dinit
-  # finit.services.dinit-user-spawn = {
-  #   command = pkgs.callPackage ./dinit-user-spawn.nix { };
-  #   runlevels = "234";
-  #   conditions = "service/syslogd/ready";
-  #   cgroup.name = "user";
-  #   log = true;
-  # };
+  hjem.users.conor = {
+    directory = "/home/conor";
+    environment.sessionVariables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
+  };
 
   specialisation.udev = {
     services.mdevd.enable = lib.mkForce false;
@@ -69,10 +63,8 @@ in
   programs.limine.enable = true;
   programs.limine.settings.editor_enabled = true;
 
-  programs.pmount.enable = true;
-
   security.pam.environment = {
-    SSH_ASKPASS.default = "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
+    EDITOR.override = "nvim";
 
     # https://wiki.nixos.org/wiki/Accelerated_Video_Playback#Intel
     LIBVA_DRIVER_NAME.default = "iHD";
@@ -84,6 +76,8 @@ in
     @audio   -   nice       -19
     @audio   -   memlock    4194304
   '';
+
+  time.timeZone = "Europe/Dublin";
 
   boot.supportedFilesystems = {
     btrfs.enable = true;
@@ -98,7 +92,6 @@ in
     "nvme.noacpi=1"
   ];
 
-  /*
   fileSystems = {
     "/home/conor/2TB-Hard-Drive" = {
       device = "/dev/disk/by-uuid/203EA3F63EA3C2E0";
@@ -112,21 +105,6 @@ in
       options = [ "users" "nofail" "exec" ];
     };
   };
-  */
-
-  # TODO: options for nix remote builders
-  environment.etc."nix/machines".enable = false;
-  environment.etc."nix/machines".text =
-    lib.concatMapStringsSep "\n" (v: "ssh://${v}.node x86_64-linux - 20 2 benchmark,big-parallel - -")
-      [
-        "arche"
-        "callisto"
-        "europa"
-        "helike"
-        "herse"
-        "kore"
-        # "metis"
-      ];
 
   finit.services.nix-daemon.environment.CURL_CA_BUNDLE = config.security.pki.caBundle;
   finit.services.nix-daemon.path = [
@@ -147,9 +125,7 @@ in
     "-r"
     "3600"
   ];
-  services.fwupd.enable = true;
-  services.fwupd.debug = false;
-  services.illum.enable = true;
+  services.flatpak.enable = true;
   services.dhcpcd.enable = true;
   services.iwd.enable = true;
   services.nix-daemon.enable = true;
@@ -158,6 +134,7 @@ in
     experimental-features = [
       "nix-command"
       "pipe-operators"
+      "flakes"
     ];
     download-buffer-size = 524288000;
     fallback = true;
@@ -277,25 +254,47 @@ in
     '';
   });
   programs.bash.enable = true;
-  programs.fish.enable = true;
-  programs.virtualbox.enable = true;
-  programs.brightnessctl.enable = true;
+  # programs.fish.enable = true;
+  programs.zsh.enable = true;
   programs.sudo.enable = true;
-  programs.zzz.enable = true;
-
-  # https://forums.virtualbox.org/viewtopic.php?p=556540#p556540
-  environment.etc."modprobe.d/blacklist-kvm.conf".text = ''
-    # kernel 6.12 and later ship with kvm enabled by default, which breaks vbox
-    blacklist kvm
-    blacklist kvm_intel
-  '';
 
   # TODO: create graphical desktop profiles
   services.rtkit.enable = true;
   services.bluetooth.enable = true;
   services.seatd.enable = true;
-  services.ddccontrol.enable = true;
-  programs.regreet.enable = true;
+  programs.regreet.enable = false;
+  services.ly = {
+    enable = true;
+    settings = {
+      tty = 2;
+      allow_empty_password = false;
+      auth_fails = 8;
+      default_input = "login";
+      full_color = true;
+      save = true;
+      shutdown_key = "F1";
+      shutdown_cmd = "poweroff";
+      restart_key = "F2";
+      restart_cmd = "reboot";
+      sleep_key = "F3";
+      sleep_cmd = "suspend";
+      brightness_down_key = "F5";
+      brightness_up_key = "F6";
+      brightness_down_cmd = "${pkgs.ddcutil}/bin/ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 - 10";
+      brightness_up_cmd = "${pkgs.ddcutil}/bin/ddcutil --sleep-multiplier .1 --bus=5 setvcp 10 + 10";
+      animation = "colormix";
+      colormix_col1 = "0x20000000";
+      colormix_col2 = "0x01009494";
+      colormix_col3 = "0x01000080";
+      asterisk = ">";
+      bg = "0x20000000";
+      clock = "%H:%M:%S %a, %d/%m/%Y";
+      bigclock = "en";
+      bigclock_seconds = true;
+      bigclock_12hr = false;
+    };
+  };
+
   programs.regreet.compositor = {
     extraArgs = [
       "-d"
@@ -307,12 +306,12 @@ in
       XKB_DEFAULT_LAYOUT = "eu";
     };
   };
+
+  programs.niri.enable = true;
   programs.hyprland.enable = true;
   programs.hyprland.package = inputs.hyprlua.packages.${pkgs.stdenv.hostPlatform.system}.hyprland.overrideAttrs {
     patches = [ ./../../overlays/fix-desync.patch ];
   };
-  programs.seahorse.enable = true;
-  programs.xwayland-satellite.enable = true;
 
   services.system76-scheduler.enable = true;
   services.system76-scheduler.configFile = pkgs.writeText "config.kdl" ''
@@ -338,26 +337,13 @@ in
   };
 
   # misc
-  services.fprintd.enable = true;
-  services.fstrim.enable = true;
-  services.tzupdate.enable = true;
+  services.vnstat.enable = true;
   services.upower.enable = true;
-  services.power-profiles-daemon.enable = true;
   services.zerotierone.enable = true;
-  services.incus.enable = true;
-  finit.services.incusd = lib.mkIf config.services.incus.enable {
-    manual = true;
-  };
 
   # NOTE: https://wiki.alpinelinux.org/wiki/Polkit#Using_polkit_with_seatd
   services.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
-      // allow user "conor" to utilize the fingerprint reader
-      // not great for security but acceptible given this is a single user laptop... i guess
-      if (subject.user == "conor" && action.id.startsWith("net.reactivated.fprint.device.")) {
-        return polkit.Result.YES;
-      }
-
       if (subject.isInGroup("${config.services.seatd.group}") && action.id.startsWith("org.freedesktop.RealtimeKit1.")) {
         return polkit.Result.YES;
       }
@@ -443,7 +429,7 @@ in
 
   users.users.conor = {
     isNormalUser = true;
-    shell = pkgs.fish;
+    shell = pkgs.zsh;
     group = "users";
     home = "/home/conor";
     createHome = true;
@@ -459,6 +445,7 @@ in
       "vboxusers"
       "video"
       "wheel"
+      "flatpak"
     ];
   };
 
@@ -509,6 +496,9 @@ in
     pkgs.kitty
     pkgs.kanshi
     pkgs.musikcube
+
+    pkgs.adw-gtk3
+    pkgs.numix-icon-theme
 
     pkgs.mailutils
     pkgs.man
