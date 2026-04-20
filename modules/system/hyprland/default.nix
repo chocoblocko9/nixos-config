@@ -7,9 +7,7 @@ in {
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
-    package = source.hyprland.overrideAttrs { 
-      patches = [ ./../../../overlays/fix-desync.patch ];
-    };
+    package = source.hyprland;
     portalPackage = source.xdg-desktop-portal-hyprland;
   };
 

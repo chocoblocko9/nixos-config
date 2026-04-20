@@ -28,10 +28,10 @@ in
   imports = [
     ./hardware-configuration.nix
     ./pam.nix
-    ./vnstat.nix
     ./zsh.nix
     ./flatpak.nix
     ./ly.nix
+    ./steam.nix
 
 
     ../../profiles/slip/hjem.nix 
@@ -63,6 +63,8 @@ in
   programs.limine.enable = true;
   programs.limine.settings.editor_enabled = true;
 
+  services.elogind.package = pkgs.elogind;
+
   security.pam.environment = {
     EDITOR.override = "nvim";
 
@@ -92,17 +94,35 @@ in
     "nvme.noacpi=1"
   ];
 
+  programs.steam.enable = false;
+
   fileSystems = {
     "/home/conor/2TB-Hard-Drive" = {
       device = "/dev/disk/by-uuid/203EA3F63EA3C2E0";
       fsType = "ntfs3";
-      options = [ "users" "nofail" "exec" ];
+      options = [ 
+        "users" 
+        "nofail" 
+        "exec" 
+        "uid=1000"
+        "gid=100"
+        "dmask=022"
+        "fmask=133"
+      ];
     };
 
     "/home/conor/1TB-Hard-Drive" = {
       device = "/dev/disk/by-uuid/98046F01046EE22C";
       fsType = "ntfs3";
-      options = [ "users" "nofail" "exec" ];
+      options = [ 
+        "users" 
+        "nofail" 
+        "exec" 
+        "uid=1000"
+        "gid=100"
+        "dmask=022"
+        "fmask=133"
+      ];
     };
   };
 
@@ -141,7 +161,7 @@ in
     log-lines = 25;
     warn-dirty = false;
     builders-use-substitutes = true;
-    build-dir = "/var/tmp";
+    build-dir = "/nix/tmp";
 
     trusted-users = [
       "root"
@@ -266,8 +286,10 @@ in
   services.ly = {
     enable = true;
     settings = {
-      tty = 2;
-      allow_empty_password = false;
+      # setup_cmd = "~/.files/modules/system/ly/lysetup.sh";
+      tty = 4;
+      show_tty = true;
+      allow_empty_password = true;
       auth_fails = 8;
       default_input = "login";
       full_color = true;
@@ -309,9 +331,7 @@ in
 
   programs.niri.enable = true;
   programs.hyprland.enable = true;
-  programs.hyprland.package = inputs.hyprlua.packages.${pkgs.stdenv.hostPlatform.system}.hyprland.overrideAttrs {
-    patches = [ ./../../overlays/fix-desync.patch ];
-  };
+  programs.hyprland.package = inputs.hyprlua.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
 
   services.system76-scheduler.enable = true;
   services.system76-scheduler.configFile = pkgs.writeText "config.kdl" ''
@@ -344,6 +364,10 @@ in
   # NOTE: https://wiki.alpinelinux.org/wiki/Polkit#Using_polkit_with_seatd
   services.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
+      if (action.id.indexOf("org.freedesktop.Flatpak.") == 0 && subject.isInGroup("wheel")) {
+        return polkit.Result.YES;
+      }
+
       if (subject.isInGroup("${config.services.seatd.group}") && action.id.startsWith("org.freedesktop.RealtimeKit1.")) {
         return polkit.Result.YES;
       }
@@ -354,10 +378,7 @@ in
     });
   '';
 
-  xdg.portal.portals = [
-    pkgs.xdg-desktop-portal-gnome
-    pkgs.xdg-desktop-portal-gtk
-  ];
+  xdg.portal.portals = [ inputs.hyprlua.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland ];
 
   services.dbus.packages = [
     pkgs.dconf
@@ -476,6 +497,7 @@ in
     # TODO: xdg.icon module
     "/share/icons"
     "/share/pixmaps"
+    "/share/X11"
   ];
 
   environment.systemPackages = [
@@ -491,11 +513,15 @@ in
     pkgs.fuzzel
     pkgs.lollypop
     pkgs.cava
+    pkgs.xwayland
 
     pkgs.ddcutil
     pkgs.kitty
     pkgs.kanshi
     pkgs.musikcube
+
+    pkgs.oxwm
+    pkgs.alacritty
 
     pkgs.adw-gtk3
     pkgs.numix-icon-theme
@@ -523,8 +549,7 @@ in
 
     pkgs.firefox
     pkgs.qbittorrent
-    pkgs.steam
-    pkgs.steam.run
+    pkgs.gamescope
     pkgs.xarchiver
     pkgs.vesktop
     pkgs.quickshell
@@ -564,8 +589,4 @@ in
 
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
-
-  # https://wiki.nixos.org/wiki/Accelerated_Video_Playback#Intel
-  hardware.graphics.extraPackages = [ pkgs.intel-media-driver ];
-  hardware.graphics.extraPackages32 = [ pkgs.pkgsi686Linux.intel-media-driver ];
 }

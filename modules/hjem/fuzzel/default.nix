@@ -10,9 +10,7 @@
       generator = lib.generators.toINI {};
       
       value = {
-        border = {
-          width = 3;
-        };
+        border.width = 3;
 
         # RRGGBBAA
         colors = {

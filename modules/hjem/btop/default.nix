@@ -1,23 +1,25 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   hjem.users.conor = {
-    packages = [
-      pkgs.btop-rocm 
-    ];
+    packages = [ pkgs.btop-rocm ];
 
-    files.".config/btop/btop.conf".text = ''
-      color_theme = "solarized_dark"
-      theme_background = false
-      true_color = true
+    files.".config/btop/btop.conf" = {
+      generator = lib.generators.toKeyValue {};
 
-      vim_keys = true
-      rounded_corners = true
-      terminal_sync = true 
+      value = {
+        color_theme = "solarized_dark";
+        theme_background = false;
+        true_color = true;
 
-      shown_boxes = "cpu mem net proc gpu0"
+        vim_keys = true;
+        rounded_corners = true;
+        terminal_sync = true;
 
-      proc_tree = true 
-    '';
+        shown_boxes = "cpu mem net proc gpu0";
+
+        proc_tree = true;
+      };
+    };
   };
 }

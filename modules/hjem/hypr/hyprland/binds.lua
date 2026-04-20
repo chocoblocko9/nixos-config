@@ -41,8 +41,8 @@ for i = 1, 10 do
 end
 
 -- Mouse binds
-hl.bind(MOD .. " + mouse_up",   hl.workspace("e-1"))
-hl.bind(MOD .. " + mouse_down", hl.workspace("e+1"))
+hl.bind(MOD .. " + mouse_up",   hl.workspace("r-1"))
+hl.bind(MOD .. " + mouse_down", hl.workspace("r+1"))
 hl.bind(MOD .. " + mouse_right", hl.layout("cyclenext"))
 hl.bind(MOD .. " + mouse_left", hl.layout("cycleprev"))
 hl.bind(MOD .. " + mouse:272", hl.window.drag(),  { mouse = true })
@@ -68,12 +68,17 @@ end
 hl.bind("XF86AudioRaiseVolume", hl.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 10%+", { locked = true, repeating = true }))
 hl.bind("XF86AudioLowerVolume", hl.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 10%-", { locked = true, repeating = true }))
 hl.bind("XF86AudioMute", hl.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle", { locked = true }))
+
 for _, pair in ipairs({ {"Next","next"}, {"Prev","previous"}, {"Play","play-pause"}, {"Stop","stop"} }) do
     hl.bind("XF86Audio" .. pair[1], hl.exec_cmd("playerctl --player=Lollypop " .. pair[2], { locked = true } ))
 end
 
 -- TODO: port to hyprctl eval
-hl.bind(MOD .. " + Z", hl.exec_cmd("hyprctl eval 'hl.config({ cursor = { zoom_factor = 2.5 }})' && hyprctl reload"))
+
+hl.bind(MOD .. " + Z", function()
+  hl.exec_cmd("hyprctl eval 'hl.config({ cursor = { zoom_factor = 2.5 }})'")
+end)
+-- hl.bind(MOD .. " + Z", hl.exec_cmd("hyprctl eval 'hl.config({ cursor = { zoom_factor = 2.5 }})' && hyprctl reload"))
 hl.bind(MOD .. " + X", hl.exec_cmd("hyprctl eval 'hl.config({ cursor = { zoom_factor = 1 }})' && hyprctl reload", { release = true }))
 
 ------ CONFIG ------

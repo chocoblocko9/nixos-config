@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   hjem.users.conor = {
@@ -18,25 +18,23 @@
       ".config/hypr/hyprpaper.conf".source = ./hyprpaper.conf;
       ".config/hypr/hyprsunset.conf".source = ./hyprsunset.conf;
 
-      ".config/hypr/hyprland.lua".text =
-        let 
-          hostConfig = if config.networking.hostName == "slip" 
-                       then "host = \"slip\""
-                       else "host = \"sleepless\"";
-        in ''
-          host = ${config.networking.hostName}
+      ".config/hypr/hyprland.lua".text = ''
+        host = "${config.networking.hostName}"
 
-          require("hyprland/functions")
-          local hi = "cheese"
+        if (host == "subvert") then 
+          hl.exec_once("${inputs.hyprlua.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland}/libexec/xdg-desktop-portal-hyprland")
+        end
 
-          require("hyprland/animations")
-          require("hyprland/autostart")
-          require("hyprland/binds")
-          require("hyprland/general")
-          require("hyprland/input")
-          require("hyprland/rules")
-          require("hyprland/workspaces")
-        '';
+        require("hyprland/functions")
+
+        require("hyprland/animations")
+        require("hyprland/autostart")
+        require("hyprland/binds")
+        require("hyprland/general")
+        require("hyprland/input")
+        require("hyprland/rules")
+        require("hyprland/workspaces")
+      '';
 
       ".config/hypr/xdph.conf".text = ''
         screencopy {

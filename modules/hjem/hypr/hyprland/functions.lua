@@ -1,5 +1,9 @@
 local tracked = { firefox = 0, vesktop = 0 }
 
+hl.on("window.kill", function(w)
+  hl.exec_cmd("notify-send killed.")()
+end)
+
 hl.on("window.active", function(w) 
   if (w.class == "vesktop") then 
     hl.window.alter_zorder({ window = "class:firefox", mode = "bottom" })()
@@ -8,6 +12,7 @@ hl.on("window.active", function(w)
   end
 end)
 
+-- Adds 1 to counters, tags it with the respective tag if it's the first one opened
 hl.on("window.open", function(w)
   if (w.class == "firefox") then 
     tracked.firefox = tracked.firefox + 1
@@ -22,6 +27,7 @@ hl.on("window.open", function(w)
   end
 end)
 
+-- Removes 1 from the counters when a window is closed
 hl.on("window.close", function(w) 
   if (w.class == "firefox") then 
     tracked.firefox = tracked.firefox - 1 
@@ -30,6 +36,7 @@ hl.on("window.close", function(w)
   end
 end)
 
+-- Resets windows if they've moved/changed size, otherwise slides them to the side
 function reset() 
   local ws = hl.get_windows()
   local f_target = { x = 444, y = 44, w = 1463, h = 1023 }
@@ -50,10 +57,10 @@ function reset()
   end
     
   if (tables_equal(f_real, f_target) and tables_equal(v_real, v_target)) then
-    hl.window.move({ window = "class:firefox", x = 1468, y = 0 })()
-    hl.window.move({ window = "class:vesktop", x = (-1468), y = 0 })()
+    hl.window.move({ window = "class:firefox", x = 1480, y = -540, relative = true })()
+    hl.window.move({ window = "class:vesktop", x = -1480, y = 540, relative = true })()
   else 
-    hl.window.move({ window = "class:firefox", x = (444 - f_real.x), y = (44 - f_real.y) })()
-    hl.window.move({ window = "class:vesktop", x = (12 - v_real.x), y = (44 - v_real.y) })()
+    hl.window.move({ window = "class:firefox", x = 444, y = 44 })()
+    hl.window.move({ window = "class:vesktop", x = 12, y = 44 })()
   end
 end

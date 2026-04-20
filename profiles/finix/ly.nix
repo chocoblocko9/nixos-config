@@ -126,35 +126,44 @@ in
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = "Whether to enable ly as a display manager.";
+      description = "Whether to enable ly, a lightweight TUI (ncurses-like) display manager for Linux and BSD, as a display manager.";
     };
 
     package = lib.mkPackageOption pkgs "ly" { };
 
     settings = lib.mkOption {
-      type = with lib.types; attrsOf iniFmt.lib.types.atom;
+      type = with lib.types; attrsOf (oneOf [ str int bool ]);
       default = { };
       description = ''
-        ly configuration. See [upstream documentation](https://github.com/fairyglade/ly#configuration)
+        ly configuration. See [upstream example](https://github.com/fairyglade/ly/blob/master/res/config.ini)
         for available options.
       '';
+      example = {
+        # Set the background color to black in 0xSSRRGGBB format, where SS is the styling. See the upstream example
+        bg = "0x00000000";
+
+        # TODO: Better example config
+      };
     };
   };
   config = lib.mkIf cfg.enable {
     services.ly.settings = {
-      tty = lib.mkDefault 2;
+      tty = lib.mkDefault 4;
       path = lib.mkDefault "/run/current-system/sw/bin";
       service_name = lib.mkDefault "ly";
       term_reset_cmd = lib.mkDefault "${pkgs.ncurses}/bin/tput reset";
       term_restore_cursor_cmd = lib.mkDefault "${pkgs.ncurses}/bin/tput cnorm";
       waylandsessions = lib.mkDefault "/run/current-system/sw/share/wayland-sessions";
       xsessions = lib.mkDefault "/run/current-system/sw/share/xsessions";
-      setup_cmd = lib.mkDefault "/etc/ly/setup.sh"; 
+      setup_cmd = lib.mkDefault "/etc/ly/setup.sh"; # TODO: Fix this
       # setup_cmd = "exec '$@'";
     };
 
     environment.etc."ly/config.ini".source = configFile;
-    environment.etc."ly/setup.sh".text = setupScript;
+    environment.etc."ly/setup.sh" = {
+      text = setupScript;
+      mode = "0755";
+    };
 
     environment.pathsToLink = [ "/share/ly" ];
 

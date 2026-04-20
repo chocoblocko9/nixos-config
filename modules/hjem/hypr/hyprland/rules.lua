@@ -12,31 +12,30 @@ local def_float = {
 hl.window_rule({ workspace = "2 silent", match = { class = "kitty-nvim" } })
 hl.window_rule({ opacity = "0.97, 0.75", match = { class = "negative:kitty" } })
 
-if (host == "slip") then
-  hl.window_rule {
-    name = "vesktop behaviour",
-    float = true,
-    match = { class = "vesktop", workspace = 1 },
-    move = "12 44",
-    size = "1463 1023",
-    suppress_event = "maximize"
-  }
+hl.window_rule({
+  name = "vesktop behaviour",
+  float = true,
+  match = { class = "vesktop", workspace = 1 },
+  move = "12 44",
+  size = "1463 1023",
+  suppress_event = "maximize"
+})
 
-  hl.window_rule {
-    name = "firefox behaviour",
-    float = true,
-    match = { class = "firefox", workspace = 1 },
-    move = "444 44",
-    size = "1463 1023",
-  }
-end
-  
+hl.window_rule({
+  name = "firefox behaviour",
+  float = true,
+  match = { class = "firefox", workspace = 1 },
+  move = "444 44",
+  size = "1463 1023",
+})
+
 for _, t in ipairs(def_float) do 
-  hl.window_rule {
+  hl.window_rule({
     float = true,
     match = { title = t },
     size = "(monitor_w*0.75) (monitor_h*0.75)",
-  }
+--    pin = true,
+  })
 end
 
 hl.window_rule {
@@ -46,15 +45,16 @@ hl.window_rule {
   workspace = "special:music silent",
 }
 
-hl.window_rule {
+hl.window_rule({
   name = "Fix GD Fullscreen",
   match = { title = "Geometry Dash" },
   fullscreen_state = "2 0",
+  immediate = true,
   content = "game"
   -- Launch Options: WINEDLLOVERRIDES="xinput1_4=n,b" gamescope -r 75 -f -w 1920 -h 1080 -- %command%
-}
+})
 
-hl.window_rule {
+hl.window_rule({
   name  = "fix-xwayland-drags",
   no_focus = true,
   match = {
@@ -65,14 +65,12 @@ hl.window_rule {
       fullscreen = false,
       pin        = false,
   },
-}
+})
 
 ------ LAYER RULES ------
 
 hl.layer_rule({ 
-  name = "screenshot fix",
+  name = "no-anim-screenshots",
   no_anim = true, 
-  match = { namespace = "selector" },
+  match = { namespace = "selection" } 
 })
-
-hl.layer_rule({ blur = true, match = { namespace = "quickshell" } })

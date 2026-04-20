@@ -84,7 +84,7 @@
           system76-scheduler
           upower
           uptime-kuma
-          virtualbox
+          vnstat
           zerotierone
           zfs
         ];

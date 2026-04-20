@@ -3,8 +3,13 @@ if (host == "sleepless") then
   mon_scale = 1.2
 end
 
-hl.env("XCURSOR_THEME", "phinger-cursors-dark")
-hl.env("XCURSOR_SIZE", "24")
+-- hl.env("XCURSOR_THEME", "phinger-cursors-dark")
+-- hl.env("XCURSOR_SIZE", "24")
+
+hl.env("DISPLAY", ":0.0")
+hl.env("HYPRCURSOR_THEME", "rose-pine-hyprcursor")
+-- hl.env("HYPRCURSOR_THEME", "cyncline")
+hl.env("HYPRCURSOR_SIZE", "32")
 
 hl.config({
   general = {
