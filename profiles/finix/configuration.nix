@@ -30,7 +30,6 @@ in
     ./pam.nix
     ./zsh.nix
     ./flatpak.nix
-    ./ly.nix
     ./steam.nix
 
 
@@ -285,9 +284,9 @@ in
   programs.regreet.enable = false;
   services.ly = {
     enable = true;
+    tty = 2;
     settings = {
       # setup_cmd = "~/.files/modules/system/ly/lysetup.sh";
-      tty = 4;
       show_tty = true;
       allow_empty_password = true;
       auth_fails = 8;
@@ -295,9 +294,7 @@ in
       full_color = true;
       save = true;
       shutdown_key = "F1";
-      shutdown_cmd = "poweroff";
       restart_key = "F2";
-      restart_cmd = "reboot";
       sleep_key = "F3";
       sleep_cmd = "suspend";
       brightness_down_key = "F5";

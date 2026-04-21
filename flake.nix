@@ -72,6 +72,7 @@
           hyprland
           iwd
           limine
+          ly
           nftables
           niri
           nix-daemon
@@ -94,7 +95,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    finix.url = "github:chocoblocko9/finix/init-vnstat";
+    finix.url = "github:finix-community/finix/init-ly";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 

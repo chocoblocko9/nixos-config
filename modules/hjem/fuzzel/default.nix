@@ -14,8 +14,8 @@
 
         # RRGGBBAA
         colors = {
-          background = "011e2599";
-          border = "0d73ccff";
+          background = "011e25ee";
+          border = "0f5570dd";
           counter = "eee8d5ff"; 
           input = "cac6b8ff";
           match = "cecb00ff";
@@ -33,6 +33,8 @@
           use-bold = true;
           terminal = "kitty";
           width = 60;
+          anchor = "top";
+          y-margin = 8;
         };
       };
     };

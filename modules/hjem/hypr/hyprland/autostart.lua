@@ -6,6 +6,7 @@ hl.exec_once("kitty --class kitty-nvim --config ~/.files/modules/hjem/kitty/nvim
 if (host == "subvert") then 
   hl.exec_once("pipewire & pipewire-pulse & wireplumber")
   hl.exec_once("xdg-desktop-portal-hyprland")
+  hl.exec_once(xdph .. "/libexec/xdg-desktop-portal-hyprland")
 end
 
 if (host ~= "sleepless") then
