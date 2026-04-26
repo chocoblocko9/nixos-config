@@ -1,37 +1,46 @@
 { pkgs, ... }:
 
+let 
+  mlspp = pkgs.callPackage ../../derivations/acheron/mlspp { };
+  
+  acheron = pkgs.callPackage ../../derivations/acheron {
+    inherit mlspp;
+  };
+in
 {
   hjem.users.conor = {
-    packages = with pkgs; [
+    packages = [
       # Programs
-      vlc
-      vesktop 
+      pkgs.vlc
+      pkgs.vesktop 
+      acheron
 
       # Tools
-      fastfetch
-      zip
-      libnotify
-      socat
-      ffmpeg
-      wf-recorder
-      unzip
-      xarchiver # GUI archive manager
-      ncdu 
-      wev 
-      unipicker
+      pkgs.fastfetch
+      pkgs.zip
+      pkgs.libnotify
+      pkgs.socat
+      pkgs.ffmpeg
+      pkgs.wf-recorder
+      pkgs.unzip
+      pkgs.xarchiver # GUI archive manager
+      pkgs.ncdu 
+      pkgs.wev 
+      pkgs.unipicker
+      pkgs.abaddon
 
       # Game dev
-      godot 
-      libresprite 
+      pkgs.godot 
+      pkgs.libresprite 
 
       # Music
-      mprisence # discord RPC using mpris2
-      lollypop # GNOME music player (my beloved)
-      mpris-scrobbler # Last.fm scrobbler for mpris2
-      nicotine-plus # Soulseek
-      puddletag # song file tagger
-      cava # visualiser
-      playerctl # useful for mpris stuff
+      pkgs.mprisence # discord RPC using mpris2
+      pkgs.lollypop # GNOME music player (my beloved)
+      pkgs.mpris-scrobbler # Last.fm scrobbler for mpris2
+      pkgs.nicotine-plus # Soulseek
+      pkgs.puddletag # song file tagger
+      pkgs.cava # visualiser
+      pkgs.playerctl # useful for mpris stuff
     ];
 
     # files.".config/apps/apps.conf".text = ''

@@ -4,7 +4,7 @@
 export __NIXOS_SET_ENVIRONMENT_DONE=1
 
 export DIRENV_CONFIG="/etc/direnv"
-export EDITOR="NVIM"
+export EDITOR="nvim"
 export GIO_EXTRA_MODULES="/nix/store/y8dqwhsf4bvggqawlv7zia65lbr8rp51-dconf-0.49.0-lib/lib/gio/modules"
 export GTK_A11Y="none"
 export GTK_PATH="$HOME/.local/share/flatpak/exports/lib/gtk-2.0:$HOME/.local/share/flatpak/exports/lib/gtk-3.0:$HOME/.local/share/flatpak/exports/lib/gtk-4.0:/var/lib/flatpak/exports/lib/gtk-2.0:/var/lib/flatpak/exports/lib/gtk-3.0:/var/lib/flatpak/exports/lib/gtk-4.0:$HOME/.nix-profile/lib/gtk-2.0:$HOME/.nix-profile/lib/gtk-3.0:$HOME/.nix-profile/lib/gtk-4.0:${XDG_STATE_HOME}/nix/profile/lib/gtk-2.0:${XDG_STATE_HOME}/nix/profile/lib/gtk-3.0:${XDG_STATE_HOME}/nix/profile/lib/gtk-4.0:$HOME/.local/state/nix/profile/lib/gtk-2.0:$HOME/.local/state/nix/profile/lib/gtk-3.0:$HOME/.local/state/nix/profile/lib/gtk-4.0:/etc/profiles/per-user/$USER/lib/gtk-2.0:/etc/profiles/per-user/$USER/lib/gtk-3.0:/etc/profiles/per-user/$USER/lib/gtk-4.0:/nix/var/nix/profiles/default/lib/gtk-2.0:/nix/var/nix/profiles/default/lib/gtk-3.0:/nix/var/nix/profiles/default/lib/gtk-4.0:/run/current-system/sw/lib/gtk-2.0:/run/current-system/sw/lib/gtk-3.0:/run/current-system/sw/lib/gtk-4.0"

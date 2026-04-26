@@ -1,14 +1,14 @@
 local tracked = { firefox = 0, vesktop = 0 }
 
 hl.on("window.kill", function(w)
-  hl.exec_cmd("notify-send killed.")()
+  hl.notification.create({ text = "notify-send killed.", time = 5000, icon = "info" })
 end)
 
 hl.on("window.active", function(w) 
   if (w.class == "vesktop") then 
-    hl.window.alter_zorder({ window = "class:firefox", mode = "bottom" })()
+    hl.dsp.window.alter_zorder({ window = "class:firefox", mode = "bottom" })()
   elseif (w.class == "firefox") then 
-    hl.window.alter_zorder({ window = "class:vesktop", mode = "bottom" })()
+    hl.dsp.window.alter_zorder({ window = "class:vesktop", mode = "bottom" })()
   end
 end)
 
@@ -17,12 +17,12 @@ hl.on("window.open", function(w)
   if (w.class == "firefox") then 
     tracked.firefox = tracked.firefox + 1
     if (tracked.firefox == 1) then 
-      hl.window.tag({ window = "class:firefox", tag = "w1firefox" })()
+      hl.dsp.window.tag({ window = "class:firefox", tag = "w1firefox" })()
     end
   elseif (w.class == "vesktop") then 
     tracked.vesktop = tracked.vesktop + 1
     if (tracked.vesktop == 1) then 
-      hl.window.tag({ window = "class:vesktop", tag = "w1vesktop" })()
+      hl.dsp.window.tag({ window = "class:vesktop", tag = "w1vesktop" })()
     end
   end
 end)
@@ -57,10 +57,10 @@ function reset()
   end
     
   if (tables_equal(f_real, f_target) and tables_equal(v_real, v_target)) then
-    hl.window.move({ window = "class:firefox", x = 1480, y = -540, relative = true })()
-    hl.window.move({ window = "class:vesktop", x = -1480, y = 540, relative = true })()
+    hl.dsp.window.move({ window = "class:firefox", x = 1480, y = -540, relative = true })()
+    hl.dsp.window.move({ window = "class:vesktop", x = -1480, y = 540, relative = true })()
   else 
-    hl.window.move({ window = "class:firefox", x = 444, y = 44 })()
-    hl.window.move({ window = "class:vesktop", x = 12, y = 44 })()
+    hl.dsp.window.move({ window = "class:firefox", x = 444, y = 44 })()
+    hl.dsp.window.move({ window = "class:vesktop", x = 12, y = 44 })()
   end
 end

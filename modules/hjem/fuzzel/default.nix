@@ -14,7 +14,7 @@
 
         # RRGGBBAA
         colors = {
-          background = "011e25ee";
+          background = "011e25cc";
           border = "0f5570dd";
           counter = "eee8d5ff"; 
           input = "cac6b8ff";

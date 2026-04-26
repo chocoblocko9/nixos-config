@@ -7,8 +7,7 @@ end
 -- hl.env("XCURSOR_SIZE", "24")
 
 hl.env("DISPLAY", ":0.0")
-hl.env("HYPRCURSOR_THEME", "rose-pine-hyprcursor")
--- hl.env("HYPRCURSOR_THEME", "cyncline")
+hl.env("HYPRCURSOR_THEME", "cyncline")
 hl.env("HYPRCURSOR_SIZE", "32")
 
 hl.config({
@@ -23,7 +22,7 @@ hl.config({
 
     border_size = 3,
     col = {
-      active_border = "rgb(144d63)",
+      active_border = "rgb(0f5570)",
       inactive_border = "rgb(072242)",
     },
 
@@ -40,6 +39,7 @@ hl.config({
     rounding = 14,
     rounding_power = 1.3,
 
+    blur = { special = true },
     shadow = { enabled = false },
   },
 
@@ -49,9 +49,7 @@ hl.config({
     preserve_split = true,
   },
 
-  render = {
-    direct_scanout = 2 
-  },
+  render = { direct_scanout = 2 },
 
   --[[
   debug = {

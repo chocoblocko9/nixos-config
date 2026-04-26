@@ -69,6 +69,7 @@
           fcron
           getty
           greetd
+          gnome-keyring
           hyprland
           iwd
           limine
@@ -95,7 +96,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    finix.url = "github:finix-community/finix/init-ly";
+    finix.url = "github:finix-community/finix";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 

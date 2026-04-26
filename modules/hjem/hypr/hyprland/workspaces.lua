@@ -13,10 +13,4 @@ hl.config({
   },
 })
 
-hl.config({
-  decoration = {
-    blur = {
-     special = true
-    },
-  },
-})
+hl.config({ [ "decoration.blur.special" ] = true })

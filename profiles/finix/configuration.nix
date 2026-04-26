@@ -23,6 +23,21 @@ let
       pipewire = pipewire';
     }
   );
+
+  libinput = pkgs.libinput.override (
+    lib.optionalAttrs config.services.mdevd.enable {
+      udev = pkgs.libudev-zero;
+      wacomSupport = false;
+    }
+  );
+
+  aquamarine = pkgs.aquamarine.override (
+    lib.optionalAttrs config.services.mdevd.enable {
+      inherit libinput;
+
+      udev = pkgs.libudev-zero;
+    }
+  );
 in
 {
   imports = [
@@ -31,7 +46,6 @@ in
     ./zsh.nix
     ./flatpak.nix
     ./steam.nix
-
 
     ../../profiles/slip/hjem.nix 
   ];
@@ -97,7 +111,7 @@ in
 
   fileSystems = {
     "/home/conor/2TB-Hard-Drive" = {
-      device = "/dev/disk/by-uuid/203EA3F63EA3C2E0";
+      device = "/dev/sda2";
       fsType = "ntfs3";
       options = [ 
         "users" 
@@ -111,7 +125,7 @@ in
     };
 
     "/home/conor/1TB-Hard-Drive" = {
-      device = "/dev/disk/by-uuid/98046F01046EE22C";
+      device = "/dev/sdb2";
       fsType = "ntfs3";
       options = [ 
         "users" 
@@ -276,6 +290,7 @@ in
   # programs.fish.enable = true;
   programs.zsh.enable = true;
   programs.sudo.enable = true;
+  programs.gnome-keyring.enable = true;
 
   # TODO: create graphical desktop profiles
   services.rtkit.enable = true;
@@ -284,7 +299,7 @@ in
   programs.regreet.enable = false;
   services.ly = {
     enable = true;
-    tty = 2;
+    # tty = 2;
     settings = {
       # setup_cmd = "~/.files/modules/system/ly/lysetup.sh";
       show_tty = true;
@@ -328,7 +343,11 @@ in
 
   programs.niri.enable = true;
   programs.hyprland.enable = true;
-  programs.hyprland.package = inputs.hyprlua.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+  programs.hyprland.package = inputs.hyprlua.packages.${pkgs.stdenv.hostPlatform.system}.hyprland.override {
+    inherit aquamarine libinput;
+
+    withSystemd = false;
+  };
 
   services.system76-scheduler.enable = true;
   services.system76-scheduler.configFile = pkgs.writeText "config.kdl" ''
@@ -522,6 +541,7 @@ in
 
     pkgs.adw-gtk3
     pkgs.numix-icon-theme
+    pkgs.adwaita-icon-theme
 
     pkgs.mailutils
     pkgs.man

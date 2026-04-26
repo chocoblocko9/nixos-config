@@ -58,12 +58,12 @@ hl.window_rule({
   name  = "fix-xwayland-drags",
   no_focus = true,
   match = {
-      class      = "^$",
-      title      = "^$",
-      xwayland   = true,
-      float      = true,
-      fullscreen = false,
-      pin        = false,
+    class      = "^$",
+    title      = "^$",
+    xwayland   = true,
+    float      = true,
+    fullscreen = false,
+    pin        = false,
   },
 })
 
@@ -73,4 +73,10 @@ hl.layer_rule({
   name = "no-anim-screenshots",
   no_anim = true, 
   match = { namespace = "selection" } 
+})
+
+hl.layer_rule({
+  name = "fuzzel-blur",
+  blur = true,
+  match = { namespace = "launcher" }
 })

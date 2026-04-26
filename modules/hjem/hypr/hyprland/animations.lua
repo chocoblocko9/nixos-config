@@ -15,9 +15,12 @@ end
 
 -- Animtions
 for _, p in ipairs { 
+  { "layersIn",            true, 2.4, "easeOutExpoOvershoot", "slide top"     },
+  { "layersOut",           true, 4.5, "easeInOutBack",        "slide bottom"  },
   { "windowsIn",           true, 2.5, "easeOutExpo",          "popin"         },
   { "windowsOut",          true, 4,   "easeOutExpo",          "popin 10%"     },
   { "windowsMove",         true, 0.9, "easeOutExpo",          ""              },
+  { "fadeLayers",          true, 1.5, "easeOutExpo",          ""              },
   { "workspaces",          true, 1.4, "easeInOutSine",        "slidefade 50%" },
   { "specialWorkspaceIn",  true, 2.8, "easeOutExpoOvershoot", "slide top"     },
   { "specialWorkspaceOut", true, 5,   "easeInOutBack",        "slide bottom"  },

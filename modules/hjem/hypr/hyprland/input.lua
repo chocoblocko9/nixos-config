@@ -20,4 +20,9 @@ hl.gesture({
   action = "close"
 })
 
--- gesture = 3, swipe, mod: ALT, resize TODO: port to lua
+hl.gesture({
+  fingers = 3,
+  direction = "swipe",
+  mods = "ALT",
+  action = "resize"
+})
