@@ -1,9 +1,3 @@
-local tracked = { firefox = 0, vesktop = 0 }
-
-hl.on("window.kill", function(w)
-  hl.notification.create({ text = "notify-send killed.", time = 5000, icon = "info" })
-end)
-
 hl.on("window.active", function(w) 
   if (w.class == "vesktop") then 
     hl.dsp.window.alter_zorder({ window = "class:firefox", mode = "bottom" })()
@@ -12,27 +6,18 @@ hl.on("window.active", function(w)
   end
 end)
 
--- Adds 1 to counters, tags it with the respective tag if it's the first one opened
+-- Tags the window it with the respective tag if it's the first one opened
 hl.on("window.open", function(w)
-  if (w.class == "firefox") then 
-    tracked.firefox = tracked.firefox + 1
-    if (tracked.firefox == 1) then 
+  if w.class == "firefox" then 
+    local firefoxes = hl.get_windows({ class = "firefox" })
+    if #firefoxes == 1 then
       hl.dsp.window.tag({ window = "class:firefox", tag = "w1firefox" })()
     end
-  elseif (w.class == "vesktop") then 
-    tracked.vesktop = tracked.vesktop + 1
-    if (tracked.vesktop == 1) then 
+  elseif w.class == "vesktop" then 
+    local vesktops = hl.get_windows({ class = "vesktop" })
+    if #vesktops == 1 then
       hl.dsp.window.tag({ window = "class:vesktop", tag = "w1vesktop" })()
     end
-  end
-end)
-
--- Removes 1 from the counters when a window is closed
-hl.on("window.close", function(w) 
-  if (w.class == "firefox") then 
-    tracked.firefox = tracked.firefox - 1 
-  elseif (w.class == "vesktop") then 
-    tracked.vesktop = tracked.vesktop - 1 
   end
 end)
 

@@ -15,6 +15,8 @@ import QtQuick.Layouts
 import QtQuick.Controls
 
 ShellRoot {
+    id: root
+
     // ── Theme ────────────────────────────────────────────────────────
     property color colBg:            "#0a1a24"
     property color colBgLight:       "#0f2833"
@@ -42,6 +44,49 @@ ShellRoot {
     // ── Dropdown state ───────────────────────────────────────────────
     property bool controlCenterOpen: false
     property bool mediaDropdownOpen: false
+    property bool audioDropdownOpen: false
+
+    // ── MPRIS player selection ───────────────────────────────────────
+    property var selectedMpris: null // Currently chosen player
+    property string preferredPlayerName: "Lollypop" // Preferred player to fall back to if none is chosen (start-up)
+
+    // The "current" player aka whatever the rest of the UI should show 
+    // priority top to bottom
+    readonly property var currentMpris: {
+        var players = Mpris.players.values
+        if (!players || players.length === 0) return null
+
+        // 1. User selection, if still alive
+        if (selectedMpris && players.indexOf(selectedMpris) >= 0) {
+            return selectedMpris
+        }
+
+        // 2. Preferred player by identity
+        if (preferredPlayerName) {
+            var needle = preferredPlayerName.toLowerCase()
+            for (var i = 0; i < players.length; i++) {
+                var p = players[i]
+                var id = (p.identity || "").toLowerCase()
+                var bus = (p.dbusName || "").toLowerCase()
+                if (id.indexOf(needle) >= 0 || bus.indexOf(needle) >= 0) {
+                    return p
+                }
+            }
+        }
+
+        // 3. Fallback to first available
+        return players[0]
+    }
+
+    // Cycle through players, used by the little chip in the media dropdown.
+    function cycleMpris() {
+        var players = Mpris.players.values
+        if (!players || players.length <= 1) return
+        var cur = currentMpris
+        var idx = players.indexOf(cur)
+        var next = players[(idx + 1) % players.length]
+        selectedMpris = next
+    }
 
     // ── Notification server ──────────────────────────────────────────
     NotificationServer {
@@ -83,15 +128,55 @@ ShellRoot {
     property PwNode sink: Pipewire.defaultAudioSink
     property PwNode source: Pipewire.defaultAudioSource
 
-    property PwNodeAudio output: sink.audio 
-    property PwNodeAudio input: source.audio 
+    property PwNodeAudio output: sink ? sink.audio : null
+    property PwNodeAudio input: source ? source.audio : null
 
-    property int outputVolumePercent: Math.floor(output.volume * 100)
+    property int outputVolumePercent: output ? Math.floor(output.volume * 100) : 0
 
     PwObjectTracker { objects: [
       sink, // track main output
       source // track main input (might be useful?)
     ] }
+
+    // All output sinks (for device picker)
+    readonly property var allSinks: {
+        var out = []
+        var nodes = Pipewire.nodes.values
+        for (var i = 0; i < nodes.length; i++) {
+            var n = nodes[i]
+            if (n && n.isSink && !n.isStream && n.audio) {
+                out.push(n)
+            }
+        }
+        return out
+    }
+
+    // All application output streams (things playing INTO a sink) — these
+    // are what show up in pavucontrol's "Playback" tab.
+    readonly property var appStreams: {
+        var out = []
+        var nodes = Pipewire.nodes.values
+        for (var i = 0; i < nodes.length; i++) {
+            var n = nodes[i]
+            if (n && n.isStream && !n.isSink && n.audio) {
+                // TODO: fix this, my logic is wrong i think
+                out.push(n)
+            }
+        }
+        return out
+    }
+
+    // Track every sink + stream so their properties stay live.
+    PwObjectTracker {
+        objects: {
+            var arr = []
+            var s = allSinks
+            var a = appStreams
+            for (var i = 0; i < s.length; i++) arr.push(s[i])
+            for (var j = 0; j < a.length; j++) arr.push(a[j])
+            return arr
+        }
+    }
 
     // ── Processes ────────────────────────────────────────────────────
 
@@ -191,13 +276,19 @@ ShellRoot {
         onTriggered: mediaDropdownOpen = false
     }
 
+    Timer {
+        id: audioCloseDelay
+        interval: 200
+        onTriggered: audioDropdownOpen = false
+    }
+
     // ── Cava data ────────────────────────────────────────────────────
     property var cavaData: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
     Process {
         id: cavaProc
         command: ["sh", "-c", "cava -p /dev/stdin <<< '[general]\nbars=24\nframerate=30\n[output]\nmethod=raw\nraw_target=/dev/stdout\ndata_format=ascii\nascii_max_range=100\n'"]
-        running: (Mpris.players.values[0]?.isPlaying ?? false) // && mediaDropdownOpen 
+        running: (root.currentMpris?.isPlaying ?? false)
         // uncomment the end if you want to be LAME and OPTIMISED but I like the cava actually working
         // when I open the centre instead of having to restart every time, cava is light anyways
         stdout: SplitParser {
@@ -449,14 +540,13 @@ ShellRoot {
                                     spacing: 10
 
                                     Text {
-                                        text: output.muted ? "󰝟" : (outputVolumePercent > 50 ? "󰕾" : "󰖀")
-                                        color: output.muted ? colRed : colAccent
+                                        text: (output && output.muted) ? "󰝟" : (outputVolumePercent > 50 ? "󰕾" : "󰖀")
+                                        color: (output && output.muted) ? colRed : colAccent
                                         font { family: fontFamily; pixelSize: 16 }
                                         MouseArea {
-                                            property PwNode sink: Pipewire.defaultAudioSink
                                             anchors.fill: parent
                                             cursorShape: Qt.PointingHandCursor
-                                            onClicked: sink.audio.muted = !sink.audio.muted 
+                                            onClicked: { if (output) output.muted = !output.muted }
                                         }
                                     }
 
@@ -464,8 +554,8 @@ ShellRoot {
                                         id: ccVolumeSlider
 
                                         Layout.fillWidth: true
-                                        value: output.volume
-                                        onValueChanged: output.volume = value
+                                        value: output ? output.volume : 0
+                                        onValueChanged: { if (output) output.volume = value }
 
                                         handle: Rectangle {
                                             x: ccVolumeSlider.leftPadding + ccVolumeSlider.visualPosition * (ccVolumeSlider.availableWidth - width)
@@ -516,7 +606,7 @@ ShellRoot {
 
                                     Text {
                                         text: {
-                                            if (batteryStatus == "Full" ) return ""
+                                            if (batteryStatus == "Full" ) return ""
                                             if (batteryStatus == "Charging" ) return "󰂄"
                                             if (batteryPercent > 80) return "󰁹"
                                             if (batteryPercent > 60) return "󰂀"
@@ -899,14 +989,18 @@ ShellRoot {
 
                 // ═══════════════ RIGHT ══════════════════════════════
 
-                // Volume & Battery
+                // Volume & Battery — now hoverable, opens audio manager
                 Rectangle {
+                    id: volBatWidget
                     Layout.preferredHeight: barHeight - 8
                     Layout.preferredWidth: volBatRow.implicitWidth + 14
                     radius: widgetRadius
-                    color: colBgWidget
-                    border.color: colBorder
+                    color: audioDropdownOpen ? colAccent2 : colBgWidget
+                    border.color: audioDropdownOpen ? colBorderActive : colBorder
                     border.width: 1
+
+                    Behavior on color { ColorAnimation { duration: 125 } }
+                    Behavior on border.color { ColorAnimation { duration: 125 } }
 
                     RowLayout {
                         id: volBatRow
@@ -916,13 +1010,13 @@ ShellRoot {
                         RowLayout {
 
                             Text {
-                                text: output.muted ? "󰝟" : (outputVolumePercent > 50 ? "󰕾" : "󰖀")
-                                color: output.muted ? colRed : colFg
+                                text: (output && output.muted) ? "󰝟" : (outputVolumePercent > 50 ? "󰕾" : "󰖀")
+                                color: (output && output.muted) ? colRed : (audioDropdownOpen ? colBg : colFg)
                                 font { family: fontFamily; pixelSize: fontSize + 3 }
                             }
                             Text {
                                 text: outputVolumePercent + "%"
-                                color: colFg
+                                color: audioDropdownOpen ? colBg : colFg
                                 font { family: fontFamily; pixelSize: fontSize + 1 }
                             }
                         }
@@ -939,7 +1033,7 @@ ShellRoot {
 
                                 Text {
                                     text: {
-                                        if (batteryStatus == "Full") return ""
+                                        if (batteryStatus == "Full") return ""
                                         if (batteryStatus == "Charging") return "󰂄"
                                         if (batteryPercent > 80) return "󰁹"
                                         if (batteryPercent > 60) return "󰂀"
@@ -949,7 +1043,7 @@ ShellRoot {
                                     }
                                     color: {
                                         if (batteryStatus == "Full") return colGreen
-                                        if (batteryPercent > 40) return colFg
+                                        if (batteryPercent > 40) return audioDropdownOpen ? colBg : colFg
                                         if (batteryPercent > 20) return colYellow
                                         return colRed
                                     }
@@ -957,11 +1051,22 @@ ShellRoot {
                                 }
                                 Text {
                                     text: batteryPercent + "%"
-                                    color: colFg
+                                    color: audioDropdownOpen ? colBg : colFg
                                     font { family: fontFamily; pixelSize: fontSize + 1 }
                                 }
                             }
                         }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onEntered: {
+                            audioCloseDelay.stop()
+                            audioDropdownOpen = true
+                        }
+                        onExited: audioCloseDelay.start()
                     }
                 }
 
@@ -1111,7 +1216,7 @@ ShellRoot {
             // ── Media player (centered overlay) ──────────────────────
             Rectangle {
                 id: mediaBar
-                property var player: Mpris.players.values[0] ?? null
+                property var player: root.currentMpris
                 visible: player !== null
 
                 anchors.centerIn: parent
@@ -1145,20 +1250,21 @@ ShellRoot {
                     Text {
                         text: ""
                         color: mediaDropdownOpen ? colBg : colFg
-                        font { family: fontFamily; pixelSize: fontSize }
+                        font { family: fontFamily; pixelSize: fontSize + 1 }
                         MouseArea {
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
-                                var p = Mpris.players.values[0]
+                                var p = root.currentMpris
                                 if (p && p.canGoNext) p.next()
                             }
                         }
                     }
 
                     Text {
-                        property var p: Mpris.players.values[0] ?? null
+                        property var p: root.currentMpris
                         text: {
+                            if (!p) return "Nothing playing..."
                             var artist = p.trackArtist || ""
                             var title = p.trackTitle || ""
                             if (artist && title) return artist + " — " + title
@@ -1213,6 +1319,53 @@ ShellRoot {
                             anchors.margins: 12
                             spacing: 10
 
+                            // ── Player picker chip ───────────────────
+                            // Shows current player identity, click to cycle.
+                            // Hidden when there's only one player (or none).
+                            Rectangle {
+                                visible: Mpris.players.values.length > 1
+                                width: playerChipRow.implicitWidth + 16
+                                height: 22
+                                radius: 11
+                                color: colBgWidget
+                                border.color: colBorder
+                                border.width: 1
+                                anchors.horizontalCenter: parent.horizontalCenter
+
+                                RowLayout {
+                                    id: playerChipRow
+                                    anchors.centerIn: parent
+                                    spacing: 6
+
+                                    Text {
+                                        text: "󰓃"
+                                        color: colAccent
+                                        font { family: fontFamily; pixelSize: fontSize - 1 }
+                                    }
+                                    Text {
+                                        text: {
+                                            var p = root.currentMpris
+                                            var name = p ? (p.identity || p.dbusName || "Unknown") : "None"
+                                            var count = Mpris.players.values.length
+                                            return name + "  (" + (Mpris.players.values.indexOf(p) + 1) + "/" + count + ")"
+                                        }
+                                        color: colFg
+                                        font { family: fontFamily; pixelSize: fontSize - 2; bold: true }
+                                    }
+                                    Text {
+                                        text: "󰁔"
+                                        color: colFgDim
+                                        font { family: fontFamily; pixelSize: fontSize - 2 }
+                                    }
+                                }
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    cursorShape: Qt.PointingHandCursor
+                                    onClicked: root.cycleMpris()
+                                }
+                            }
+
                             // ── Album art + track info ───────────────
                             RowLayout {
                                 width: parent.width
@@ -1226,7 +1379,7 @@ ShellRoot {
 
                                     Image {
                                         anchors.fill: parent
-                                        source: (Mpris.players.values[0]?.trackArtUrl) ?? ""
+                                        source: (root.currentMpris?.trackArtUrl) ?? ""
                                         fillMode: Image.PreserveAspectCrop
                                         visible: source !== ""
                                     }
@@ -1236,7 +1389,7 @@ ShellRoot {
                                         text: "󰎈"
                                         color: colFgDim
                                         font { family: fontFamily; pixelSize: 28 }
-                                        visible: (Mpris.players.values[0]?.trackArtUrl ?? "") === ""
+                                        visible: (root.currentMpris?.trackArtUrl ?? "") === ""
                                     }
                                 }
 
@@ -1246,7 +1399,7 @@ ShellRoot {
                                     spacing: 3
 
                                     Text {
-                                        property var p: Mpris.players.values[0] ?? null
+                                        property var p: root.currentMpris
                                         text: p?.trackTitle ?? "Nothing playing"
                                         color: colFg
                                         font { family: fontFamily; pixelSize: fontSize + 1; bold: true }
@@ -1255,7 +1408,7 @@ ShellRoot {
                                     }
 
                                     Text {
-                                        property var p: Mpris.players.values[0] ?? null
+                                        property var p: root.currentMpris
                                         text: p?.trackArtist ?? ""
                                         color: colFgDim
                                         font { family: fontFamily; pixelSize: fontSize }
@@ -1265,7 +1418,7 @@ ShellRoot {
                                     }
 
                                     Text {
-                                        property var p: Mpris.players.values[0] ?? null
+                                        property var p: root.currentMpris
                                         text: p?.trackAlbum ?? ""
                                         color: colSeparator
                                         font { family: fontFamily; pixelSize: fontSize - 1 }
@@ -1338,7 +1491,7 @@ ShellRoot {
                                 
                                 Text {
                                     anchors.centerIn: parent 
-                                    text: "- - - - - - - - - - - - - - - - - - - - - - - - - - - - "
+                                    text: "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - "
                                     color: colFgDim
                                 }
 
@@ -1347,7 +1500,7 @@ ShellRoot {
                                     width: parent.width
                                     height: 28
 
-                                    property var player: Mpris.players.values[0] ?? null
+                                    property var player: root.currentMpris
                                     property real progress: {
                                         if (!player || !player.lengthSupported || player.length <= 0) return 0
                                         return player.position / player.length
@@ -1417,8 +1570,8 @@ ShellRoot {
                                         anchors.fill: parent
                                         cursorShape: Qt.PointingHandCursor
                                         onClicked: mouse => {
-                                            var p = Mpris.players.values[0]
-                                            p.position = (mouse.x / width) * p.length
+                                            var p = root.currentMpris
+                                            if (p) p.position = (mouse.x / width) * p.length
                                         }
                                     }
                                 }
@@ -1437,7 +1590,7 @@ ShellRoot {
                                 width: parent.width
 
                                 Text {
-                                    property var p: Mpris.players.values[0] ?? null
+                                    property var p: root.currentMpris
                                     property real pos: p?.position ?? 0
                                     text: {
                                         var s = Math.floor(pos)
@@ -1452,7 +1605,7 @@ ShellRoot {
                                 Item { Layout.fillWidth: true }
 
                                 Text {
-                                    property var p: Mpris.players.values[0] ?? null
+                                    property var p: root.currentMpris
                                     property real len: p?.length ?? 0
                                     text: {
                                         var s = Math.floor(len)
@@ -1470,66 +1623,56 @@ ShellRoot {
                                 width: parent.width
                                 spacing: 0
 
-                                Text {
-                                    text: ""
-                                    color: colAccent 
-                                    font { family: fontFamily; pixelSize: fontSize + 6 }
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: {
-                                            var p = Mpris.players.values[0]
-                                            if (p && p.canGoPrevious) p.previous()
+                                // Player volume slider
+                                Slider {
+                                    id: mdVolumeSlider
+
+                                    Layout.fillWidth: true
+                                    value: root.currentMpris?.volume ?? 0
+                                    onValueChanged: {
+                                        var p = root.currentMpris
+                                        if (p && p.volumeSupported) p.volume = value
+                                    }
+
+                                    handle: Rectangle {
+                                        x: mdVolumeSlider.leftPadding + mdVolumeSlider.visualPosition * (mdVolumeSlider.availableWidth - width)
+                                        y: mdVolumeSlider.topPadding + mdVolumeSlider.availableHeight / 2 - height / 2
+                                        implicitWidth: 6
+                                        implicitHeight: 16
+                                        radius: 4 
+                                    }
+
+                                    background: Rectangle {
+                                        anchors.centerIn: parent
+                                        color: colSeparator
+                                        implicitHeight: 6
+                                        width: mdVolumeSlider.availableWidth
+                                        height: implicitHeight
+                                        radius: 3
+
+                                        Rectangle {
+                                            width: mdVolumeSlider.visualPosition * parent.width
+                                            height: parent.height
+                                            color: colAccent
+                                            radius: 3
                                         }
                                     }
                                 }
 
-                                Item { width: 8 }
-
-                                Slider {
-                                        id: mdVolumeSlider
-
-                                        Layout.fillWidth: true
-                                        value: Mpris.players.values[0].volume 
-                                        onValueChanged: Mpris.players.values[0].volume = value
-
-                                        handle: Rectangle {
-                                            x: mdVolumeSlider.leftPadding + mdVolumeSlider.visualPosition * (mdVolumeSlider.availableWidth - width)
-                                            y: mdVolumeSlider.topPadding + mdVolumeSlider.availableHeight / 2 - height / 2
-                                            implicitWidth: 6
-                                            implicitHeight: 16
-                                            radius: 4 
-                                        }
-
-                                        background: Rectangle {
-                                            anchors.centerIn: parent
-                                            color: colFgDimDim
-                                            implicitHeight: 6
-                                            width: mdVolumeSlider.availableWidth
-                                            height: implicitHeight
-                                            radius: 3
-
-                                            Rectangle {
-                                                width: mdVolumeSlider.visualPosition * parent.width
-                                                height: parent.height
-                                                color: colAccent
-                                                radius: 3
-                                            }
-                                        }
-                                    }
-
                                 Item { Layout.fillWidth: true }
 
                                 Text {
-                                    property int l: Mpris.players.values[0].loopState 
+                                    property int l: root.currentMpris?.loopState ?? 0
                                     text: l == 0 ? "󰑗" : (l == 1 ? "󰑘" : "󰑖")
                                     color: colFgDim
                                     font { family: fontFamily; pixelSize: fontSize + 4 }
                                     MouseArea {
-                                        property var p: Mpris.players.values[0] 
                                         anchors.fill: parent
                                         cursorShape: Qt.PointingHandCursor
-                                        onClicked: p.loopState = (p.loopState + 1) % 3
+                                        onClicked: {
+                                            var p = root.currentMpris
+                                            if (p) p.loopState = (p.loopState + 1) % 3
+                                        }
                                     }
                                 }
 
@@ -1543,7 +1686,7 @@ ShellRoot {
                                         anchors.fill: parent
                                         cursorShape: Qt.PointingHandCursor
                                         onClicked: {
-                                            var p = Mpris.players.values[0]
+                                            var p = root.currentMpris
                                             if (p && p.canGoPrevious) p.previous()
                                         }
                                     }
@@ -1557,7 +1700,7 @@ ShellRoot {
 
                                     Text {
                                         anchors.centerIn: parent
-                                        property var p: Mpris.players.values[0] ?? null
+                                        property var p: root.currentMpris
                                         text: (p && p.isPlaying) ? "󰏤" : "󰐊"
                                         color: colBg
                                         font { family: fontFamily; pixelSize: fontSize + 8 }
@@ -1567,7 +1710,7 @@ ShellRoot {
                                         anchors.fill: parent
                                         cursorShape: Qt.PointingHandCursor
                                         onClicked: {
-                                            var pl = Mpris.players.values[0]
+                                            var pl = root.currentMpris
                                             if (pl && pl.canTogglePlaying) pl.isPlaying = !pl.isPlaying
                                         }
                                     }
@@ -1583,7 +1726,7 @@ ShellRoot {
                                         anchors.fill: parent
                                         cursorShape: Qt.PointingHandCursor
                                         onClicked: {
-                                            var p = Mpris.players.values[0]
+                                            var p = root.currentMpris
                                             if (p && p.canGoNext) p.next()
                                         }
                                     }
@@ -1593,18 +1736,19 @@ ShellRoot {
                     }
                 }
             }
-            
+
+            // ═══════════════ AUDIO MANAGER DROPDOWN ═════════════════
             LazyLoader {
                 loading: audioDropdownOpen
 
                 PopupWindow {
                     id: audioDropdown
                     anchor.window: barWindow
-                    anchor.rect.x: (barWindow.width - 340) / 2
+                    anchor.rect.x: Math.max(8, barWindow.width - 360)
                     anchor.rect.y: barHeight
-                    implicitWidth: 340
-                    implicitHeight: mdContent.implicitHeight + 36
-                    visible: audioDropdownOpen 
+                    implicitWidth: 350
+                    implicitHeight: audioContent.implicitHeight + 36
+                    visible: audioDropdownOpen
                     color: "transparent"
 
                     HoverHandler {
@@ -1626,314 +1770,373 @@ ShellRoot {
                         border.width: 1
 
                         Column {
-                            id: adContent
+                            id: audioContent
                             anchors.left: parent.left
                             anchors.right: parent.right
                             anchors.top: parent.top
                             anchors.margins: 12
                             spacing: 10
 
-                            // ── Album art + track info ───────────────
+                            // ── Header ───────────────────────────────
                             RowLayout {
                                 width: parent.width
-                                spacing: 12
-
-                                // Album art
-                                Rectangle {
-                                    width: 72; height: 72; radius: 8
-                                    color: colBgWidget
-                                    clip: true
-
-                                    Image {
-                                        anchors.fill: parent
-                                        source: (Mpris.players.values[0]?.trackArtUrl) ?? ""
-                                        fillMode: Image.PreserveAspectCrop
-                                        visible: source !== ""
-                                    }
-
-                                    Text {
-                                        anchors.centerIn: parent
-                                        text: "󰎈"
-                                        color: colFgDim
-                                        font { family: fontFamily; pixelSize: 28 }
-                                        visible: (Mpris.players.values[0]?.trackArtUrl ?? "") === ""
-                                    }
+                                spacing: 6
+                                Text {
+                                    text: "󰕾"
+                                    color: colAccent
+                                    font { family: fontFamily; pixelSize: fontSize + 2 }
                                 }
-
-                                // Track info
-                                Column {
+                                Text {
+                                    text: "Audio"
+                                    color: colFg
+                                    font { family: fontFamily; pixelSize: fontSize; bold: true }
                                     Layout.fillWidth: true
-                                    spacing: 3
-
-                                    Text {
-                                        property var p: Mpris.players.values[0] ?? null
-                                        text: p?.trackTitle ?? "Nothing playing"
-                                        color: colFg
-                                        font { family: fontFamily; pixelSize: fontSize + 1; bold: true }
-                                        elide: Text.ElideRight
-                                        width: parent.width
-                                    }
-
-                                    Text {
-                                        property var p: Mpris.players.values[0] ?? null
-                                        text: p?.trackArtist ?? ""
-                                        color: colFgDim
-                                        font { family: fontFamily; pixelSize: fontSize }
-                                        elide: Text.ElideRight
-                                        width: parent.width
-                                        visible: text !== ""
-                                    }
-
-                                    Text {
-                                        property var p: Mpris.players.values[0] ?? null
-                                        text: p?.trackAlbum ?? ""
-                                        color: colSeparator
-                                        font { family: fontFamily; pixelSize: fontSize - 1 }
-                                        elide: Text.ElideRight
-                                        width: parent.width
-                                        visible: text !== ""
-                                    }
                                 }
-                            }
-
-                            // ── Wavy progress bar ────────────────────
-                            Item { 
-                                width: parent.width
-                                height: 28 
-
-                                Rectangle {
-                                    anchors.left: parent.left
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    width: 4 
-                                    height: 20 
-                                    radius: 4 
-                                    color: colAccent 
-                                }
-                                
                                 Text {
-                                    anchors.centerIn: parent 
-                                    text: "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - "
+                                    text: allSinks.length + " device" + (allSinks.length === 1 ? "" : "s")
                                     color: colFgDim
-                                }
-
-                                Canvas {
-                                    id: wavyProgress
-                                    width: parent.width
-                                    height: 28
-
-                                    property var player: Mpris.players.values[0] ?? null
-                                    property real progress: {
-                                        if (!player || !player.lengthSupported || player.length <= 0) return 0
-                                        return player.position / player.length
-                                    }
-
-                                    // Animate the waves
-                                    property real wavePhase: 0
-                                    NumberAnimation on wavePhase {
-                                        from: 0; to: Math.PI * 2
-                                        duration: 2000
-                                        loops: Animation.Infinite
-                                        running: player?.isPlaying ?? false
-                                    }
-
-                                    // Repaint on position/phase changes
-                                    onProgressChanged: requestPaint()
-                                    onWavePhaseChanged: requestPaint()
-
-                                    // Manual position update
-                                    FrameAnimation {
-                                        running: mediaDropdownOpen && (wavyProgress.player?.isPlaying ?? false)
-                                        onTriggered: {
-                                            if (wavyProgress.player) {
-                                                wavyProgress.player.positionChanged()
-                                            }
-                                        }
-                                    }
-
-                                    onPaint: {
-                                        var ctx = getContext("2d")
-                                        ctx.clearRect(0, 0, width, height)
-
-                                        var midY = height / 2
-                                        var amp = 3
-                                        var freq = 0.06
-                                        var progressX = progress * width
-
-                                        // Played portion — wavy
-                                        if (progressX > 0) {
-                                            ctx.beginPath()
-                                            for (var x = 0; x <= progressX; x += 1) {
-                                                var y = midY + Math.sin(x * freq + wavePhase) * amp
-                                                ctx.lineTo(x, y)
-                                            }
-                                            ctx.strokeStyle = colAccent
-                                            ctx.lineWidth = 3
-                                            ctx.lineCap = "round"
-                                            ctx.stroke()
-                                        }
-
-                                        // Playhead dot
-                                        if (progressX > 0 && progressX < width) {
-                                            var dotY = midY + Math.sin(progressX * freq + wavePhase) * amp
-                                            ctx.beginPath()
-                                            ctx.arc(progressX, dotY, 5, 0, Math.PI * 2)
-                                            ctx.fillStyle = colAccent
-                                            ctx.fill()
-                                            ctx.beginPath()
-                                            ctx.arc(progressX, dotY, 2, 0, Math.PI * 2)
-                                            ctx.fillStyle = colBg
-                                            ctx.fill()
-                                        }
-                                    }
-
-                                    // Click to seek
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: mouse => {
-                                            var p = Mpris.players.values[0]
-                                            p.position = (mouse.x / width) * p.length
-                                        }
-                                    }
-                                }
-                                Rectangle {
-                                    anchors.right: parent.right
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    width: 4
-                                    height: 10
-                                    radius: 4
-                                    color: colAccent
+                                    font { family: fontFamily; pixelSize: fontSize - 2 }
                                 }
                             }
 
-                            // ── Playback controls ────────────────────
+                            // ── Output device picker ─────────────────
+                            // Each sink is a row: icon, name, "default" badge.
+                            Rectangle {
+                                width: parent.width
+                                height: sinkColumn.implicitHeight + 12
+                                radius: 10
+                                color: colBgWidget
+
+                                Column {
+                                    id: sinkColumn
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+                                    anchors.top: parent.top
+                                    anchors.margins: 6
+                                    spacing: 2
+
+                                    Repeater {
+                                        model: allSinks
+
+                                        Rectangle {
+                                            required property var modelData
+                                            property bool isDefault: modelData === Pipewire.defaultAudioSink
+                                            property bool hovered: sinkMouse.containsMouse
+
+                                            width: parent.width
+                                            height: 32
+                                            radius: 6
+                                            color: isDefault ? colBgLight
+                                                 : hovered ? colBgLight
+                                                 : "transparent"
+
+                                            Behavior on color { ColorAnimation { duration: 100 } }
+
+                                            RowLayout {
+                                                anchors.fill: parent
+                                                anchors.leftMargin: 8
+                                                anchors.rightMargin: 8
+                                                spacing: 8
+
+                                                Text {
+                                                    text: isDefault ? "󰓃" : "󰓃"
+                                                    color: isDefault ? colAccent : colFgDim
+                                                    font { family: fontFamily; pixelSize: fontSize }
+                                                }
+
+                                                Text {
+                                                    text: modelData.description
+                                                        || modelData.nickname
+                                                        || modelData.name
+                                                        || "Unknown device"
+                                                    color: isDefault ? colFg : colFgDim
+                                                    font { family: fontFamily; pixelSize: fontSize - 1; bold: isDefault }
+                                                    elide: Text.ElideRight
+                                                    Layout.fillWidth: true
+                                                }
+
+                                                Text {
+                                                    visible: isDefault
+                                                    text: "default"
+                                                    color: colAccent
+                                                    font { family: fontFamily; pixelSize: fontSize - 3; bold: true }
+                                                }
+                                            }
+
+                                            MouseArea {
+                                                id: sinkMouse
+                                                anchors.fill: parent
+                                                hoverEnabled: true
+                                                cursorShape: Qt.PointingHandCursor
+                                                onClicked: {
+                                                    Pipewire.preferredDefaultAudioSink = modelData
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    // Empty state
+                                    Text {
+                                        visible: allSinks.length === 0
+                                        text: "No output devices found"
+                                        color: colFgDim
+                                        font { family: fontFamily; pixelSize: fontSize - 1 }
+                                        anchors.horizontalCenter: parent.horizontalCenter
+                                    }
+                                }
+                            }
+
+                            // ── Master output slider ─────────────────
+                            Rectangle {
+                                width: parent.width
+                                height: masterCol.implicitHeight + 16
+                                radius: 10
+                                color: colBgWidget
+
+                                Column {
+                                    id: masterCol
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+                                    anchors.top: parent.top
+                                    anchors.margins: 8
+                                    spacing: 4
+
+                                    RowLayout {
+                                        width: parent.width
+                                        Text {
+                                            text: "Master"
+                                            color: colFg
+                                            font { family: fontFamily; pixelSize: fontSize - 1; bold: true }
+                                            Layout.fillWidth: true
+                                            elide: Text.ElideRight
+                                        }
+                                        Text {
+                                            text: outputVolumePercent + "%"
+                                            color: colFgDim
+                                            font { family: fontFamily; pixelSize: fontSize - 2 }
+                                        }
+                                    }
+
+                                    RowLayout {
+                                        width: parent.width
+                                        spacing: 8
+
+                                        Text {
+                                            text: (output && output.muted) ? "󰝟" : (outputVolumePercent > 50 ? "󰕾" : "󰖀")
+                                            color: (output && output.muted) ? colRed : colAccent
+                                            font { family: fontFamily; pixelSize: fontSize + 1 }
+                                            MouseArea {
+                                                anchors.fill: parent
+                                                cursorShape: Qt.PointingHandCursor
+                                                onClicked: { if (output) output.muted = !output.muted }
+                                            }
+                                        }
+
+                                        Slider {
+                                            id: masterSlider
+                                            Layout.fillWidth: true
+                                            from: 0
+                                            to: 1
+                                            value: output ? output.volume : 0
+                                            onMoved: { if (output) output.volume = value }
+
+                                            handle: Rectangle {
+                                                x: masterSlider.leftPadding + masterSlider.visualPosition * (masterSlider.availableWidth - width)
+                                                y: masterSlider.topPadding + masterSlider.availableHeight / 2 - height / 2
+                                                implicitWidth: 6
+                                                implicitHeight: 16
+                                                radius: 4
+                                                color: colAccent
+                                            }
+
+                                            background: Rectangle {
+                                                anchors.centerIn: parent
+                                                color: colSeparator
+                                                implicitHeight: 6
+                                                width: masterSlider.availableWidth
+                                                height: implicitHeight
+                                                radius: 3
+
+                                                Rectangle {
+                                                    width: masterSlider.visualPosition * parent.width
+                                                    height: parent.height
+                                                    color: (output && output.muted) ? colFgDim : colAccent
+                                                    radius: 3
+                                                    Behavior on color { ColorAnimation { duration: 120 } }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            // ── Per-app streams header ───────────────
                             RowLayout {
                                 width: parent.width
-                                spacing: 0
-
+                                visible: appStreams.length > 0
                                 Text {
-                                    text: ""
-                                    color: colAccent 
-                                    font { family: fontFamily; pixelSize: fontSize + 6 }
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: {
-                                            var p = Mpris.players.values[0]
-                                            if (p && p.canGoPrevious) p.previous()
-                                        }
-                                    }
+                                    text: "Applications"
+                                    color: colFgDim
+                                    font { family: fontFamily; pixelSize: fontSize - 2; bold: true }
+                                    Layout.fillWidth: true
                                 }
+                                Text {
+                                    text: appStreams.length
+                                    color: colFgDim
+                                    font { family: fontFamily; pixelSize: fontSize - 2 }
+                                }
+                            }
 
-                                Item { width: 8 }
+                            // ── Per-app streams ──────────────────────
+                            Repeater {
+                                model: appStreams
 
-                                Slider {
-                                        id: mdVolumeSlider
+                                Rectangle {
+                                    required property var modelData
+                                    width: parent.width
+                                    height: appCol.implicitHeight + 16
+                                    radius: 10
+                                    color: colBgWidget
 
-                                        Layout.fillWidth: true
-                                        value: Mpris.players.values[0].volume 
-                                        onValueChanged: Mpris.players.values[0].volume = value
+                                    // Try a couple names if soemthing is being annoying
+                                    property string appLabel: {
+                                        var n = modelData
+                                        if (!n) return "Unknown"
+                                        // Known PwNode fields
+                                        if (n.properties) {
+                                            var p = n.properties
+                                            if (p["application.name"]) return p["application.name"]
+                                            if (p["application.process.binary"]) return p["application.process.binary"]
+                                            if (p["media.name"]) return p["media.name"]
+                                        }
+                                        return n.description || n.nickname || n.name || "Stream"
+                                    }
 
-                                        handle: Rectangle {
-                                            x: mdVolumeSlider.leftPadding + mdVolumeSlider.visualPosition * (mdVolumeSlider.availableWidth - width)
-                                            y: mdVolumeSlider.topPadding + mdVolumeSlider.availableHeight / 2 - height / 2
-                                            implicitWidth: 6
-                                            implicitHeight: 16
-                                            radius: 4 
+                                    property string mediaLabel: {
+                                        var n = modelData
+                                        if (n && n.properties && n.properties["media.name"]) {
+                                            return n.properties["media.name"]
+                                        }
+                                        return ""
+                                    }
+
+                                    Column {
+                                        id: appCol
+                                        anchors.left: parent.left
+                                        anchors.right: parent.right
+                                        anchors.top: parent.top
+                                        anchors.margins: 8
+                                        spacing: 4
+
+                                        RowLayout {
+                                            width: parent.width
+                                            Text {
+                                                text: appLabel
+                                                color: colFg
+                                                font { family: fontFamily; pixelSize: fontSize - 1; bold: true }
+                                                elide: Text.ElideRight
+                                                Layout.fillWidth: true
+                                            }
+                                            Text {
+                                                text: modelData.audio
+                                                    ? Math.floor(modelData.audio.volume * 100) + "%"
+                                                    : "—"
+                                                color: colFgDim
+                                                font { family: fontFamily; pixelSize: fontSize - 2 }
+                                            }
                                         }
 
-                                        background: Rectangle {
-                                            anchors.centerIn: parent
-                                            color: colFgDimDim
-                                            implicitHeight: 6
-                                            width: mdVolumeSlider.availableWidth
-                                            height: implicitHeight
-                                            radius: 3
+                                        Text {
+                                            visible: mediaLabel !== "" && mediaLabel !== appLabel
+                                            text: mediaLabel
+                                            color: colFgDim
+                                            font { family: fontFamily; pixelSize: fontSize - 3 }
+                                            elide: Text.ElideRight
+                                            width: parent.width
+                                        }
 
-                                            Rectangle {
-                                                width: mdVolumeSlider.visualPosition * parent.width
-                                                height: parent.height
-                                                color: colAccent
-                                                radius: 3
+                                        RowLayout {
+                                            width: parent.width
+                                            spacing: 8
+
+                                            Text {
+                                                property bool isMuted: modelData.audio ? modelData.audio.muted : false
+                                                text: isMuted ? "󰝟" : "󰕾"
+                                                color: isMuted ? colRed : colAccent2
+                                                font { family: fontFamily; pixelSize: fontSize }
+                                                MouseArea {
+                                                    anchors.fill: parent
+                                                    cursorShape: Qt.PointingHandCursor
+                                                    onClicked: {
+                                                        if (modelData.audio) {
+                                                            modelData.audio.muted = !modelData.audio.muted
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            Slider {
+                                                id: appSlider
+                                                Layout.fillWidth: true
+                                                from: 0
+                                                to: 1
+                                                value: modelData.audio ? modelData.audio.volume : 0
+                                                onMoved: {
+                                                    if (modelData.audio) {
+                                                        modelData.audio.volume = value
+                                                    }
+                                                }
+
+                                                handle: Rectangle {
+                                                    x: appSlider.leftPadding + appSlider.visualPosition * (appSlider.availableWidth - width)
+                                                    y: appSlider.topPadding + appSlider.availableHeight / 2 - height / 2
+                                                    implicitWidth: 6
+                                                    implicitHeight: 14
+                                                    radius: 4
+                                                    color: colAccent2
+                                                }
+
+                                                background: Rectangle {
+                                                    anchors.centerIn: parent
+                                                    color: colSeparator
+                                                    implicitHeight: 5
+                                                    width: appSlider.availableWidth
+                                                    height: implicitHeight
+                                                    radius: 2
+
+                                                    Rectangle {
+                                                        width: appSlider.visualPosition * parent.width
+                                                        height: parent.height
+                                                        color: (modelData.audio && modelData.audio.muted) ? colFgDim : colAccent2
+                                                        radius: 2
+                                                        Behavior on color { ColorAnimation { duration: 120 } }
+                                                    }
+                                                }
                                             }
                                         }
                                     }
+                                }
+                            }
 
-                                Item { Layout.fillWidth: true }
+                            // Empty-state row when nothing is playing
+                            Rectangle {
+                                visible: appStreams.length === 0
+                                width: parent.width
+                                height: 34
+                                radius: 10
+                                color: colBgWidget
 
                                 Text {
-                                    property int l: Mpris.players.values[0].loopState 
-                                    text: l == 0 ? "󰑗" : (l == 1 ? "󰑘" : "󰑖")
+                                    anchors.centerIn: parent
+                                    text: "No applications playing audio"
                                     color: colFgDim
-                                    font { family: fontFamily; pixelSize: fontSize + 4 }
-                                    MouseArea {
-                                        property var p: Mpris.players.values[0] 
-                                        anchors.fill: parent
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: p.loopState = (p.loopState + 1) % 3
-                                    }
-                                }
-
-                                Item { width: 16 }
-
-                                Text {
-                                    text: "󰒮"
-                                    color: colFgDim
-                                    font { family: fontFamily; pixelSize: fontSize + 6 }
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: {
-                                            var p = Mpris.players.values[0]
-                                            if (p && p.canGoPrevious) p.previous()
-                                        }
-                                    }
-                                }
-
-                                Item { width: 16 }
-
-                                Rectangle {
-                                    width: 40; height: 40; radius: 20
-                                    color: colAccent
-
-                                    Text {
-                                        anchors.centerIn: parent
-                                        property var p: Mpris.players.values[0] ?? null
-                                        text: (p && p.isPlaying) ? "󰏤" : "󰐊"
-                                        color: colBg
-                                        font { family: fontFamily; pixelSize: fontSize + 8 }
-                                    }
-
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: {
-                                            var pl = Mpris.players.values[0]
-                                            if (pl && pl.canTogglePlaying) pl.isPlaying = !pl.isPlaying
-                                        }
-                                    }
-                                }
-
-                                Item { width: 16 }
-
-                                Text {
-                                    text: "󰒭"
-                                    color: colFgDim
-                                    font { family: fontFamily; pixelSize: fontSize + 6 }
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: {
-                                            var p = Mpris.players.values[0]
-                                            if (p && p.canGoNext) p.next()
-                                        }
-                                    }
+                                    font { family: fontFamily; pixelSize: fontSize - 2 }
                                 }
                             }
                         }
                     }
                 }
             }
-        }         
+        }
     }
 }
