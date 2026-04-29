@@ -100,12 +100,7 @@
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
-    # hyprland.url = "github:hyprwm/Hyprland";
-    hyprlua = {
-      url = "github:vaxerski/Hyprland/lua-lua-lua-lua-lua-lua-lua";
-      # url = "git+file:///home/conor/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    hyprland.url = "github:hyprwm/Hyprland";
 
     hjem = {
       url = "github:r0chd/hjem";
