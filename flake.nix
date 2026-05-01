@@ -6,26 +6,15 @@
 
     let
       lib = nixpkgs.lib;
+
       finixpkgs = import nixpkgs {
         system = "x86_64-linux";
-
         config.allowUnfree = true;
-        overlays = [
-          self.overlays.custom
-        ];
       };
     in {
-      overlays.custom = final: prev: {
-        seatd = prev.seatd.override { systemdSupport = false; };
-        xdg-desktop-portal = prev.xdg-desktop-portal.override { enableSystemd = false; };
-        xwayland-satellite = prev.xwayland-satellite.override { withSystemd = false; };
-      };
-
     nixosConfigurations = {
       slip = lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-        };
+        specialArgs = { inherit inputs; };
         modules = [
           inputs.hjem.nixosModules.default
           ./profiles/slip/hjem.nix
@@ -34,9 +23,7 @@
       };
 
       sleepless = lib.nixosSystem {
-        specialArgs = {
-		  			inherit inputs;
-				};
+        specialArgs = { inherit inputs; };
         modules = [
           inputs.hjem.nixosModules.default 
           ./profiles/sleepless/configuration.nix 
@@ -65,17 +52,15 @@
           bluetooth
           chronyd
           dhcpcd
-          earlyoom
           fcron
           getty
           greetd
           gnome-keyring
-          hyprland
           iwd
+          hyprland
           limine
           ly
           nftables
-          niri
           nix-daemon
           openssh
           polkit
@@ -83,10 +68,9 @@
           rtkit
           sudo
           sysklogd
-          system76-scheduler
           upower
-          uptime-kuma
           vnstat
+          xserver
           zerotierone
           zfs
         ];
@@ -96,7 +80,8 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    finix.url = "github:finix-community/finix";
+    # finix.url = "github:finix-community/finix";
+    finix.url = "git+file:///home/conor/mdevd/finix";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
