@@ -10,7 +10,7 @@
 
 stdenv.mkDerivation {
   pname = "mlspp";
-  version = "0.1.0";
+  version = "0.1.0-unstable-2026-04-13";
   
   src = fetchFromGitHub {
     owner = "cisco";

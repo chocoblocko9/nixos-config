@@ -20,7 +20,7 @@
   spdlog,
 }:
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation (finalAttrs: {
   pname = "acheron";
   version = "unstable-2026-04-09";
 
@@ -93,11 +93,11 @@ stdenv.mkDerivation rec {
 
   desktopItems = [
     (makeDesktopItem {
-      name = pname;
-      exec = pname;
+      name = finalAttrs.pname;
+      exec = finalAttrs.pname;
       desktopName = "Acheron";
-      genericName = meta.description;
-      startupWMClass = pname;
+      genericName = finalAttrs.meta.description;
+      startupWMClass = finalAttrs.pname;
       categories = [
         "Network"
         "InstantMessaging"
@@ -114,4 +114,4 @@ stdenv.mkDerivation rec {
     maintainers = with lib.maintainers; [ chocoblocko9 ];
     platforms = lib.platforms.linux;
   };
-}
+})
