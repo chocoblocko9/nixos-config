@@ -35,17 +35,17 @@
     },
     "finix": {
       "locked": {
-        "lastModified": 1777503774,
-        "narHash": "sha256-47KEy2tDBRRVqPVJanTk2lv2vRejdo4mUjsB/PSeeG0=",
-        "ref": "refs/heads/main",
-        "rev": "cc24042ac1339f8fc5b99bdb7bdd65a8e3e37459",
-        "revCount": 461,
-        "type": "git",
-        "url": "file:///home/conor/mdevd/finix"
+        "lastModified": 1777723838,
+        "narHash": "sha256-8ikF9+I9xLRq15oLdSYT4RR1NBrPYRFGZwX3b6rcU2s=",
+        "owner": "finix-community",
+        "repo": "finix",
+        "rev": "e8734ebb1597e64f876c5d61d8ba0251ed18fcf3",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/conor/mdevd/finix"
+        "owner": "finix-community",
+        "repo": "finix",
+        "type": "github"
       }
     },
     "flake-compat": {
@@ -182,11 +182,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1777578115,
-        "narHash": "sha256-49zkv12pralLeWh6eqPkaBokjvdWzHSX8O3Dt5/ortI=",
+        "lastModified": 1777677995,
+        "narHash": "sha256-Q1fYHq1Gn79sQAkUDALR6dEC6l2WLkFyaB0cZLZnMQM=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "450d8a0bf703f3ec460d367f38d61b5966daf8fe",
+        "rev": "c065e951d631a3aa3736b45f17b3556597f63c1a",
         "type": "github"
       },
       "original": {
@@ -480,11 +480,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1777268161,
-        "narHash": "sha256-bxrdOn8SCOv8tN4JbTF/TXq7kjo9ag4M+C8yzzIRYbE=",
+        "lastModified": 1777578337,
+        "narHash": "sha256-Ad49moKWeXtKBJNy2ebiTQUEgdLyvGmTeykAQ9xM+Z4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "1c3fe55ad329cbcb28471bb30f05c9827f724c76",
+        "rev": "15f4ee454b1dce334612fa6843b3e05cf546efab",
         "type": "github"
       },
       "original": {

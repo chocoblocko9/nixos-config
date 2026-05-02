@@ -80,8 +80,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    # finix.url = "github:finix-community/finix";
-    finix.url = "git+file:///home/conor/mdevd/finix";
+    finix.url = "github:finix-community/finix";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
