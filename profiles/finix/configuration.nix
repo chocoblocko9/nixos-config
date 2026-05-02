@@ -311,7 +311,6 @@ in
   services.bluetooth.enable = true;
   services.seatd.enable = true;
   finit.services.seatd.command = lib.mkForce "${seatd'.bin}/bin/seatd -n %n -u root -g ${config.services.seatd.group}";
-  programs.regreet.enable = false;
   services.ly = {
     enable = true;
     package = ly';
@@ -343,7 +342,7 @@ in
     };
   };
 
-  services.xserver.enable = true; 
+  # services.xserver.enable = true; 
 
   finit.cgroups = {
     system.settings."cpu.weight" = 100;

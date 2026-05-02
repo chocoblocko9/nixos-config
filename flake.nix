@@ -64,15 +64,13 @@
           nix-daemon
           openssh
           polkit
-          regreet
           rtkit
           sudo
           sysklogd
           upower
           vnstat
-          xserver
+          # xserver
           zerotierone
-          zfs
         ];
       }; 
     };
