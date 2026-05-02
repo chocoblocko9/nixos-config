@@ -87,9 +87,16 @@ require("lazy").setup({
       capabilities = capabilities,
     }
 
+    vim.lsp.config('lua_ls', {
+      cmd = { 'lua-language-server' },
+      filetypes = { 'lua' },
+      root_markers = { '.luarc.json', '.git' },
+    })
+
     -- Enable servers
     vim.lsp.enable("nixd")
     vim.lsp.enable("hls")
+    vim.lsp.enable('lua_ls')
 
     -- Keybindings on attach
     vim.api.nvim_create_autocmd("LspAttach", {

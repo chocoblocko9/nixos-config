@@ -38,7 +38,7 @@
 
     # Bootloader & Kernel
     boot = {
-      kernelPackages = pkgs.linuxKernel.packages.linux_6_19;
+      kernelPackages = pkgs.linuxPackages_6_18;
       supportedFilesystems = ["ntfs"];
       loader = {
         systemd-boot.enable = false;

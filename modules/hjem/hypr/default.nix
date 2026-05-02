@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   hjem.users.conor = {
@@ -15,13 +15,12 @@
 
     files = {
       #".config/hypr/hyprland".source = ./hyprland;
-      ".config/hypr/hyprpaper.conf".source = ./hyprpaper.conf;
       ".config/hypr/hyprsunset.conf".source = ./hyprsunset.conf;
 
       ".config/hypr/hyprland.lua".text = /* lua */ ''
         -- Nix
         host = "${config.networking.hostName}"
-        xdph = "${inputs.hyprlua.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland}"
+        xdph = "/run/current-system/sw/bin/xdg-desktop-portal-hyprland"
         
         -- Import
         require("hyprland/functions")
@@ -42,6 +41,29 @@
           allow_token_by_default = true
         }
       '';
+
+      ".config/hypr/hyprpaper.conf".text = /* hyprlang */ ''
+        wallpaper {
+          monitor =
+          fit_mode = cover
+          path = ~/.files/modules/hjem/hypr/wallpapers/pawel-czerwinski-cyan-fish.jpg
+        }
+        ipc = true
+        splash = false
+      '';
+
+      # ".config/hypr/stubs".source = "${src.hyprland}/share/hypr/stubs";
+
+      ".config/hypr/.luarc.json" = {
+        generator = lib.generators.toJSON {};
+
+        value = {
+          "runtime.version" = "Lua 5.5";
+          "workspace.checkThirdParty" = false;
+          "diagnostics.globals" = [ "hl" ];
+          "workspace.library" =  [ "./stubs" ];
+        };
+      };
     };
   };
 }

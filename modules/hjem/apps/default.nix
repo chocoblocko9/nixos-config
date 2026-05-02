@@ -6,6 +6,10 @@ let
   acheron = pkgs.callPackage ../../derivations/acheron {
     inherit mlspp;
   };
+
+  lollypop' = pkgs.lollypop.override {
+    youtubeSupport = false;
+  };
 in
 {
   hjem.users.conor = {
@@ -35,7 +39,7 @@ in
 
       # Music
       pkgs.mprisence # discord RPC using mpris2
-      pkgs.lollypop # GNOME music player (my beloved)
+      lollypop' # GNOME music player (my beloved)
       pkgs.mpris-scrobbler # Last.fm scrobbler for mpris2
       pkgs.nicotine-plus # Soulseek
       pkgs.puddletag # song file tagger

@@ -1,8 +1,7 @@
 { pkgs, inputs, ... }:
 
 let
-  source = inputs.hyprlua.packages.${pkgs.stdenv.hostPlatform.system};
-  #source = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
+  source = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
 in {
   programs.hyprland = {
     enable = true;

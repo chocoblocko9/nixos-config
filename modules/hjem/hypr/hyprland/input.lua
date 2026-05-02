@@ -26,3 +26,12 @@ hl.gesture({
   mods = "ALT",
   action = "resize"
 })
+
+hl.gesture({
+  fingers = 2,
+  direction = "pinchin",
+  scale = 0.1000000015,
+  action = "cursorZoom",
+  zoom_level = 2,
+  mode = "mult"
+})

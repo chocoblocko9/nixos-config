@@ -1,4 +1,4 @@
-local mon_scale = 1 
+local mon_scale = 1
 if (host == "sleepless") then
   mon_scale = 1.2
 end
@@ -38,6 +38,9 @@ hl.config({
 
   render = { direct_scanout = 2 },
 
+  quirks = {
+    skip_non_kms_dmabuf_formats = true
+  }
   --[[
   debug = {
     disable_logs = false,

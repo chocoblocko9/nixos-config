@@ -30,6 +30,27 @@
         ${lib.optionalString config.services.elogind.enable "session optional ${pkgs.elogind}/lib/security/pam_elogind.so"}
         ${lib.optionalString config.services.seatd.enable "session optional ${pkgs.pam_xdg}/lib/security/pam_xdg.so runtime track_sessions"}
       '';
+
+      ly.text = lib.mkForce ''
+        # Account management.
+        account required pam_unix.so
+
+        # Authentication management.
+        auth required pam_unix.so likeauth nullok
+        auth optional ${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so
+
+        # Password management.
+        password sufficient pam_unix.so nullok yescrypt
+
+        # Session management.
+        session required pam_env.so conffile=/etc/security/pam_env.conf readenv=0
+        session required pam_unix.so
+        session required pam_loginuid.so
+        session optional ${pkgs.pam_xdg}/lib/security/pam_xdg.so runtime track_sessions
+        session optional ${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so auto_start
+
+        ${lib.optionalString config.services.elogind.enable "session optional ${pkgs.elogind}/lib/security/pam_elogind.so"}
+      '';
     }
 
     (lib.mkIf config.programs.doas.enable or false {

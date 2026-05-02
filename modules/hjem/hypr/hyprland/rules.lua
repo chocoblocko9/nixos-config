@@ -10,7 +10,7 @@ local def_float = {
 
 ------ WINDOW RULES ------
 hl.window_rule({ workspace = "2 silent", match = { class = "kitty-nvim" } })
-hl.window_rule({ opacity = "0.97, 0.75", match = { class = "negative:kitty" } })
+hl.window_rule({ opacity = "0.97 0.75", match = { class = "negative:kitty" } })
 
 hl.window_rule({
   name = "vesktop behaviour",
@@ -29,7 +29,7 @@ hl.window_rule({
   size = "1463 1023",
 })
 
-for _, t in ipairs(def_float) do 
+for _, t in ipairs(def_float) do
   hl.window_rule({
     float = true,
     match = { title = t },
@@ -38,12 +38,12 @@ for _, t in ipairs(def_float) do
   })
 end
 
-hl.window_rule {
+hl.window_rule({
   float = true,
   match = { class = "lollypop" },
   size = "(monitor_w*0.9) (monitor_h*0.9)",
   workspace = "special:music silent",
-}
+})
 
 hl.window_rule({
   name = "Fix GD Fullscreen",
@@ -69,14 +69,20 @@ hl.window_rule({
 
 ------ LAYER RULES ------
 
-hl.layer_rule({ 
+hl.layer_rule({
   name = "no-anim-screenshots",
-  no_anim = true, 
-  match = { namespace = "selection" } 
+  no_anim = true,
+  match = { namespace = "selection" }
 })
 
 hl.layer_rule({
   name = "fuzzel-blur",
   blur = true,
   match = { namespace = "launcher" }
+})
+
+hl.layer_rule({
+  name = "qs-blur",
+  blur = true,
+  match = { namespace = "quickshell" }
 })

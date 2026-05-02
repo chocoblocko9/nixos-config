@@ -8,7 +8,7 @@ local menu = "fuzzel"
 -- Normal binds
 hl.bind("SUPER + Q", hl.dsp.exec_cmd(term))
 hl.bind("SUPER + Return", hl.dsp.exec_cmd(term))
-hl.bind("SUPER + C", hl.dsp.window.close()) -- TODO: Steam script?
+hl.bind("SUPER + C", hl.dsp.window.close())
 hl.bind("SUPER + F", hl.dsp.exec_cmd("firefox"))
 hl.bind("SUPER + M", hl.dsp.exit())
 hl.bind("SUPER + E", hl.dsp.exec_cmd(fm))
@@ -16,7 +16,6 @@ hl.bind("SUPER + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + D", hl.dsp.exec_cmd(menu))
 hl.bind("SUPER + P", hl.dsp.window.pseudo())
 hl.bind("SUPER + J", hl.dsp.layout("togglesplit"))
-hl.bind("SUPER + A", hl.dsp.layout("splitratio -0.5"))
 
 hl.bind("SUPER + R", reset)
 
@@ -60,7 +59,7 @@ if (host == "slip") then
   hl.bind("SUPER + F3", hl.dsp.exec_cmd("ddcutil --sleep-multiplier .1 --bus=8 setvcp 10 + 10", { locked = true, repeating = true }))
   hl.bind("SUPER + F2", hl.dsp.exec_cmd("ddcutil --sleep-multiplier .1 --bus=8 setvcp 10 - 10", { locked = true, repeating = true }))
 elseif (host == "sleepless") then
-  hl.bind("XF86MonBrightnessUp",   hl.exec_cmd("brightnessctl -q -n s +10%", { locked = true, repeating = true }))
+  hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl -q -n s +10%", { locked = true, repeating = true }))
   hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -q -n s 10%-", { locked = true, repeating = true }))
 end
 

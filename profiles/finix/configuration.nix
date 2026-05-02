@@ -24,6 +24,21 @@ let
     }
   );
 
+  seatd' = pkgs.seatd.override { systemdSupport = false; };
+
+  xdg-desktop-portal' = pkgs.xdg-desktop-portal.override { enableSystemd = false; };
+
+  ly' = pkgs.ly.overrideAttrs (oldAttrs: {
+    version = "1.4.0";
+    src = pkgs.fetchFromGitea {
+      domain = "codeberg.org";
+      owner = "fairyglade";
+      repo = "ly";
+      tag = "v1.4.0";
+      hash = "sha256-8wAt0gpIV97GY17B6rhjnhVR/UuuGQSAaKOcr+G1mKo=";
+    };
+  });
+
   libinput = pkgs.libinput.override (
     lib.optionalAttrs config.services.mdevd.enable {
       udev = pkgs.libudev-zero;
@@ -38,6 +53,15 @@ let
       udev = pkgs.libudev-zero;
     }
   );
+
+  hyprland' = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland.override {
+    inherit aquamarine libinput;
+    withSystemd = false;
+  };
+
+  xdph' = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland.override {
+    hyprland = hyprland';
+  };
 in
 {
   imports = [
@@ -61,14 +85,6 @@ in
   specialisation.udev = {
     services.mdevd.enable = lib.mkForce false;
     services.udev.enable = lib.mkForce true;
-  };
-
-  specialisation.elogind = {
-    services.mdevd.enable = lib.mkForce false;
-    services.udev.enable = lib.mkForce true;
-
-    services.elogind.enable = lib.mkForce true;
-    services.seatd.enable = lib.mkForce false;
   };
 
   boot.loader.efi.canTouchEfiVariables = true;
@@ -107,11 +123,13 @@ in
     "nvme.noacpi=1"
   ];
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   programs.steam.enable = false;
 
   fileSystems = {
     "/home/conor/2TB-Hard-Drive" = {
-      device = "/dev/sda2";
+      device = "/dev/disk/by-uuid/203EA3F63EA3C2E0";
       fsType = "ntfs3";
       options = [ 
         "users" 
@@ -125,7 +143,7 @@ in
     };
 
     "/home/conor/1TB-Hard-Drive" = {
-      device = "/dev/sdb2";
+      device = "/dev/disk/by-uuid/98046F01046EE22C";
       fsType = "ntfs3";
       options = [ 
         "users" 
@@ -150,30 +168,28 @@ in
 
   finit.runlevel = 3;
 
-  # TODO: create a base system profile
   services.chrony.enable = true;
   services.dbus.enable = true;
-  services.earlyoom.enable = true;
-  services.earlyoom.extraArgs = [
-    "-r"
-    "3600"
-  ];
   services.flatpak.enable = true;
   services.dhcpcd.enable = true;
   services.iwd.enable = true;
   services.nix-daemon.enable = true;
-  services.nix-daemon.nrBuildUsers = 32;
+  services.nix-daemon.package = pkgs.lix;
   services.nix-daemon.settings = {
+    # Hyprland Cachix
+    substituters = [ "https://hyprland.cachix.org" ];
+    trusted-substituters = [ "https://hyprland.cachix.org" ];
+    trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+
+    max-jobs = 1;
+    cores = 12;
+
+    # Flakes 
     experimental-features = [
       "nix-command"
-      "pipe-operators"
       "flakes"
     ];
-    download-buffer-size = 524288000;
-    fallback = true;
-    log-lines = 25;
-    warn-dirty = false;
-    builders-use-substitutes = true;
+
     build-dir = "/nix/tmp";
 
     trusted-users = [
@@ -287,21 +303,19 @@ in
     '';
   });
   programs.bash.enable = true;
-  # programs.fish.enable = true;
   programs.zsh.enable = true;
   programs.sudo.enable = true;
   programs.gnome-keyring.enable = true;
 
-  # TODO: create graphical desktop profiles
   services.rtkit.enable = true;
   services.bluetooth.enable = true;
   services.seatd.enable = true;
+  finit.services.seatd.command = lib.mkForce "${seatd'.bin}/bin/seatd -n %n -u root -g ${config.services.seatd.group}";
   programs.regreet.enable = false;
   services.ly = {
     enable = true;
-    # tty = 2;
+    package = ly';
     settings = {
-      # setup_cmd = "~/.files/modules/system/ly/lysetup.sh";
       show_tty = true;
       allow_empty_password = true;
       auth_fails = 8;
@@ -329,47 +343,11 @@ in
     };
   };
 
-  programs.regreet.compositor = {
-    extraArgs = [
-      "-d"
-      "-s"
-      "-m"
-      "last"
-    ];
-    environment = {
-      XKB_DEFAULT_LAYOUT = "eu";
-    };
-  };
+  services.xserver.enable = true; 
 
-  programs.niri.enable = true;
-  programs.hyprland.enable = true;
-  programs.hyprland.package = inputs.hyprlua.packages.${pkgs.stdenv.hostPlatform.system}.hyprland.override {
-    inherit aquamarine libinput;
-
-    withSystemd = false;
-  };
-
-  services.system76-scheduler.enable = true;
-  services.system76-scheduler.configFile = pkgs.writeText "config.kdl" ''
-    version "2.0"
-
-    process-scheduler enable=true {
-      refresh-rate 60
-      execsnoop true
-
-      assignments {
-        // Keep nix-daemon deprioritized as a backup
-        nix-daemon io=(idle)4 sched="idle" nice=19 {
-          include cgroup="/system/nix-daemon"
-        }
-      }
-    }
-  '';
-
-  finit.services.nix-daemon.cgroup.settings = {
-    "cpu.max" = "800000 100000";
-    "cpu.weight" = 50;
-    "io.weight" = 50;
+  finit.cgroups = {
+    system.settings."cpu.weight" = 100;
+    user.settings."cpu.weight" = 100;
   };
 
   # misc
@@ -394,7 +372,10 @@ in
     });
   '';
 
-  xdg.portal.portals = [ inputs.hyprlua.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland ];
+  xdg.portal.portals = [ 
+    xdph'
+    xdg-desktop-portal'
+  ];
 
   services.dbus.packages = [
     pkgs.dconf
@@ -404,16 +385,10 @@ in
 
   fonts.enableDefaultPackages = true;
   fonts.packages = with pkgs; [
-    fira-code
-    fira-code-symbols
-    font-awesome
-    liberation_ttf
-    mplus-outline-fonts.githubRelease
+    nerd-fonts.jetbrains-mono
     nerd-fonts._0xproto
-    nerd-fonts.droid-sans-mono
     noto-fonts
     noto-fonts-color-emoji
-    proggyfonts
   ];
 
   # TODO: move to services.sysklogd module
@@ -430,9 +405,7 @@ in
     }
     {
       command = "/run/current-system/sw/bin/reboot";
-      users = [ "conor" ];
-      requirePassword = false;
-    }
+      users = [ "conor" ]; requirePassword = false; }
   ]
   ++ lib.optionals config.services.mdevd.enable [
     {
@@ -527,7 +500,19 @@ in
     pkgs.hyprpaper
     pkgs.hyprsunset
     pkgs.fuzzel
-    pkgs.lollypop
+
+    # Can't use module because it dupes
+    hyprland'
+    (lib.hiPrio (pkgs.writeTextDir "share/wayland-sessions/hyprland.desktop" ''
+      [Desktop Entry]
+      Name=Hyprland
+      Comment=An intelligent dynamic tiling Wayland compositor
+      Exec=${pkgs.dbus}/bin/dbus-run-session -- ${lib.getExe hyprland'}
+      Type=Application
+      DesktopNames=Hyprland
+      Keywords=tiling;wayland;compositor;
+    ''))
+    
     pkgs.cava
     pkgs.xwayland
 
@@ -568,18 +553,15 @@ in
     pkgs.qbittorrent
     pkgs.gamescope
     pkgs.xarchiver
-    pkgs.vesktop
-    pkgs.quickshell
+    pkgs.nh
 
     pkgs.libnotify
     pkgs.wiremix
     pipewire'
     pkgs.pavucontrol
     
-    pkgs.pmutils # isn't zzz doing this now?
     wireplumber'
     pkgs.wl-clipboard
-    pkgs.xdg-utils
 
     pkgs.iproute2
     pkgs.iputils

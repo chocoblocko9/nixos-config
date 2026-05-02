@@ -7,7 +7,6 @@ hl.workspace_rule({ workspace = 9, persistent = true, no_rounding = false, borde
 ------ LAYOUT ------
 hl.config({
   dwindle = {
-    -- pseudotile = true,
     smart_split = true,
     preserve_split = true,
   },
