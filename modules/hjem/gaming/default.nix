@@ -13,9 +13,9 @@
     hjem.users.conor = {
       packages = [
         #pkgs.heroic # Good games launcher
-        #cemu # Wii U my beloved
-        pkgs.prismlauncher # Minecraft
-        pkgs.streamlink # thing for the ets2 radio stream
+        #pkgs.cemu # Wii U my beloved
+        #pkgs.prismlauncher # Minecraft
+        #pkgs.streamlink # thing for the ets2 radio stream
         #sm64coopdx
       ];
 /*
