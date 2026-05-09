@@ -2,9 +2,14 @@
 
 let 
   mlspp = pkgs.callPackage ../../derivations/acheron/mlspp { };
+
+  libdave = pkgs.callPackage ../../derivations/acheron/libdave { 
+    inherit mlspp;
+  };
   
   acheron = pkgs.callPackage ../../derivations/acheron {
     inherit mlspp;
+    inherit libdave;
   };
 
   lollypop' = pkgs.lollypop.override {
@@ -17,7 +22,7 @@ in
       # Programs
       pkgs.vlc
       pkgs.vesktop 
-      acheron
+      # acheron
 
       # Tools
       pkgs.fastfetch

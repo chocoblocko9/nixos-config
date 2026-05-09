@@ -2,9 +2,7 @@
 
 {
  hjem.users.conor = {
-    packages = [
-      pkgs.kitty 
-    ];
+    packages = [ pkgs.kitty ];
 
     files.".config/kitty/kitty.conf".text = ''
       font_family JetBrainsMono Nerd Font

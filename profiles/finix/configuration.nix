@@ -28,17 +28,7 @@ let
 
   xdg-desktop-portal' = pkgs.xdg-desktop-portal.override { enableSystemd = false; };
 
-  ly' = pkgs.ly.overrideAttrs (oldAttrs: {
-    version = "1.4.0";
-    src = pkgs.fetchFromGitea {
-      domain = "codeberg.org";
-      owner = "fairyglade";
-      repo = "ly";
-      tag = "v1.4.0";
-      hash = "sha256-8wAt0gpIV97GY17B6rhjnhVR/UuuGQSAaKOcr+G1mKo=";
-    };
-  });
-
+  /*
   libinput = pkgs.libinput.override (
     lib.optionalAttrs config.services.mdevd.enable {
       udev = pkgs.libudev-zero;
@@ -53,9 +43,10 @@ let
       udev = pkgs.libudev-zero;
     }
   );
+  */
 
   hyprland' = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland.override {
-    inherit aquamarine libinput;
+    # inherit aquamarine libinput;
     withSystemd = false;
   };
 
@@ -174,22 +165,20 @@ in
   services.dhcpcd.enable = true;
   services.iwd.enable = true;
   services.nix-daemon.enable = true;
-  services.nix-daemon.package = pkgs.lix;
+  services.nix-daemon.package = pkgs.nix;
+  services.nix-daemon.nrBuildUsers = 32;
   services.nix-daemon.settings = {
-    # Hyprland Cachix
-    substituters = [ "https://hyprland.cachix.org" ];
-    trusted-substituters = [ "https://hyprland.cachix.org" ];
-    trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
-
-    max-jobs = 1;
-    cores = 12;
-
-    # Flakes 
     experimental-features = [
       "nix-command"
+      "pipe-operators"
       "flakes"
     ];
 
+    download-buffer-size = 524288000;
+    fallback = true;
+    log-lines = 25;
+    warn-dirty = false;
+    builders-use-substitutes = true;
     build-dir = "/nix/tmp";
 
     trusted-users = [
@@ -197,6 +186,7 @@ in
       "@wheel"
     ];
   };
+   
   services.openssh.enable = false;
   services.sysklogd.enable = true;
   services.mdevd.enable = true;
@@ -313,7 +303,6 @@ in
   finit.services.seatd.command = lib.mkForce "${seatd'.bin}/bin/seatd -n %n -u root -g ${config.services.seatd.group}";
   services.ly = {
     enable = true;
-    package = ly';
     settings = {
       show_tty = true;
       allow_empty_password = true;
@@ -352,7 +341,6 @@ in
   # misc
   services.vnstat.enable = true;
   services.upower.enable = true;
-  services.zerotierone.enable = true;
 
   # NOTE: https://wiki.alpinelinux.org/wiki/Polkit#Using_polkit_with_seatd
   services.polkit.extraConfig = ''
@@ -434,7 +422,8 @@ in
     wireless-regdb
   ];
 
-  users.users.root.password = "$6$7luPjbNjbmrf1rvj$RAWwzn//WtL3PTm6LRjYqus1ELrAzXagWdmvroHVbPMP8.3Ze0.bzlQN4cRvGTgIfNlKQux6b0Yr2zn.ZvjZa.";
+  # users.users.root.password = "$6$7luPjbNjbmrf1rvj$RAWwzn//WtL3PTm6LRjYqus1ELrAzXagWdmvroHVbPMP8.3Ze0.bzlQN4cRvGTgIfNlKQux6b0Yr2zn.ZvjZa.";
+  users.users.root.password = "$y$j9T$LpPKMPAMtI3uwzInIeJP0.$dKBJ/eMwaHOo.M154IrvjhhtRFNs9yvDgew0jLvs7NC";
 
   users.users.conor = {
     isNormalUser = true;
@@ -516,7 +505,6 @@ in
     pkgs.xwayland
 
     pkgs.ddcutil
-    pkgs.kitty
     pkgs.kanshi
     pkgs.musikcube
 
@@ -544,9 +532,6 @@ in
     pkgs.nix-top
     pkgs.nix-tree
     pkgs.nixd
-    pkgs.ssh-to-age
-    pkgs.tree
-    pkgs.wget
 
     pkgs.firefox
     pkgs.qbittorrent
@@ -555,7 +540,6 @@ in
     pkgs.nh
 
     pkgs.libnotify
-    pkgs.wiremix
     pipewire'
     pkgs.pavucontrol
     
@@ -563,21 +547,11 @@ in
     pkgs.wl-clipboard
 
     pkgs.iproute2
-    pkgs.iputils
-    pkgs.nettools
-
-    pkgs.bustle
-    pkgs.d-spy
-    pkgs.dconf-editor
-
-    pkgs.perl
-    pkgs.strace
-
-    pkgs.dconf
 
     pkgs.util-linux
     pkgs.e2fsprogs
     pkgs.kbd
+    pkgs.xdg-utils
 
     pkgs.imv # TODO: set as default image viewer
 

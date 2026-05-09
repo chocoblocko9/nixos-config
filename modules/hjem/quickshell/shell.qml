@@ -1,6 +1,4 @@
-// QuickShell 0.2.1 
-// I know master has a polkit agent, and bluetooth, AND networking but 
-// that's for another time 
+// QuickShell 0.3.0 
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Wayland
@@ -93,7 +91,8 @@ ShellRoot {
         id: notifServer
         keepOnReload: true
         onNotification: notification => {
-            if (dndOn) { // DND immediately expires notifications
+          if (dndOn) { // DND immediately expires notifications
+                       // but doesn't block discord ping, TODO?
                 notification.expire()
                 return
             }
