@@ -3,14 +3,15 @@
   stdenv,
   fetchFromGitHub,
   cmake,
-  doctest,
   nlohmann_json,
   openssl,
 }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "mlspp";
   version = "0.1.0-unstable-2026-04-13";
+
+  __structuredAttrs = true;
   
   src = fetchFromGitHub {
     owner = "cisco";
@@ -18,13 +19,14 @@ stdenv.mkDerivation {
     rev = "92aaa4134fa45ec39957a7c81a342401fba7feb2";
     hash = "sha256-HElw0fvL7ClDSXBDYRw1qcPw73oWvbMfi7skQokyftY=";
   };
+
+  strictDeps = true;
   
   nativeBuildInputs = [
     cmake
   ];
   
   buildInputs = [
-    doctest
     nlohmann_json
     openssl
   ];
@@ -44,5 +46,7 @@ stdenv.mkDerivation {
     homepage = "https://github.com/cisco/mlspp";
     license = lib.licenses.bsd2;
     maintainers = with lib.maintainers; [ chocoblocko9 ];
+    platforms = lib.platforms.linux;
+    sourceProvenance = with lib.sourceTypes; [ fromSource ];
   };
-}
+})
