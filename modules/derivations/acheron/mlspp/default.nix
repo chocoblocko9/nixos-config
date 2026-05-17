@@ -45,7 +45,7 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Messaging Layer Security (MLS) protocol implementation";
     homepage = "https://github.com/cisco/mlspp";
     license = lib.licenses.bsd2;
-    maintainers = with lib.maintainers; [ chocoblocko9 ];
+    maintainers = with lib.maintainers; [ choco98 ];
     platforms = lib.platforms.linux;
     sourceProvenance = with lib.sourceTypes; [ fromSource ];
   };

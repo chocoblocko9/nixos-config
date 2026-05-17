@@ -2,49 +2,37 @@
   lib,
   fetchFromGitHub,
   stdenv,
+  alsa-lib,
   cmake,
   copyDesktopItems,
-  makeDesktopItem,
-  makeWrapper,
-  pkg-config,
-  alsa-lib,
   curl-impersonate,
   libdave,
   libopus,
   libpulseaudio,
   libsodium,
+  makeDesktopItem,
+  makeWrapper,
   nlohmann_json,
   pcre2,
+  pkg-config,
   qt6Packages,
-  spdlog,
+  voiceSupport ? true,
 }:
 
-let
-  miniaudio-src = fetchFromGitHub {
-    owner = "mackron";
-    repo = "miniaudio";
-    rev = "13d161bc8d856ad61ae46b798bbeffc0f49808e8";
-    hash = "sha256-IUhyDD24HfTRbj8xQi1RNmlvVmvBWmBznKnrydGDQfk=";
-  };
-
-  emoji-segmenter-src = fetchFromGitHub {
-    owner = "google";
-    repo = "emoji-segmenter";
-    rev = "1cada87c62550446fca6a42a69743688b4539a4c";
-    hash = "sha256-qdcb5Tw9MOc40udLqxs+mB+Duz4d3PLdwky+0hnGt9E=";
-  };
-in
 stdenv.mkDerivation (finalAttrs: {
   pname = "acheron";
-  version = "0-unstable-2026-05-04";
+  version = "0-unstable-2026-05-12";
 
   __structuredAttrs = true;
 
   src = fetchFromGitHub {
     owner = "ouwou";
     repo = "acheron";
-    rev = "ac7bd2829baee30001539c17c7a29e276c6739cd";
-    hash = "sha256-QsQO1suP8ezqOoNR0ZQTxtey5MTBuqNo05N6P9WZUrU=";
+    rev = "fa59fa958d52883bcf5ff484263ac992d51147ac";
+    hash = "sha256-rAwfeVh1UwlstAWIB8gxN4ou7F6xiNLq9Qqor/px+x0=";
+    fetchSubmodules = true;
+    # Leave miniaudio and emoji-segmenter vendored because they are single file libraries
+    # so there is little to no benefit to fetching them ourselves.
   };
 
   strictDeps = true;
@@ -59,31 +47,27 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [
     curl-impersonate
-    libdave
-    libopus
-    libsodium
     nlohmann_json
     pcre2
     qt6Packages.qtbase
     qt6Packages.qtimageformats
     qt6Packages.qtkeychain
     qt6Packages.qttools
-    spdlog
-  ];
-  
+  ]
+  ++ (lib.optionals voiceSupport [
+    libdave
+    libopus
+    libsodium
+  ]);
+
   cmakeFlags = [
     # We're not using vcpkg, so disable it.
     "-DCMAKE_TOOLCHAIN_FILE="
     "-DCURL_LIBRARY=${curl-impersonate}/lib/libcurl-impersonate.so"
-  ];
+  ]
+  ++ lib.optional (!voiceSupport) "-DENABLE_VOICE=OFF";
 
-   postPatch = ''
-    rm -rf vendor/emoji-segmenter vendor/miniaudio
-    ln -sf ${emoji-segmenter-src} vendor/emoji-segmenter
-    # There is a miniaudio package on nixpkgs, but acheron just uses
-    # #include "miniaudio.h" so the package cannot be used.
-    ln -sf ${miniaudio-src} vendor/miniaudio
-
+  postPatch = lib.optionalString voiceSupport ''
     substituteInPlace CMakeLists.txt \
       --replace-fail "find_package(unofficial-sodium CONFIG REQUIRED)" \
         "pkg_check_modules(sodium REQUIRED IMPORTED_TARGET libsodium)" \
@@ -96,8 +80,8 @@ stdenv.mkDerivation (finalAttrs: {
       -e '/pkg_check_modules/!s|\<libdave\>|PkgConfig::libdave|' \
       -e 's|unofficial-sodium::sodium|PkgConfig::sodium|' \
       -e 's|Opus::opus|PkgConfig::opus|' \
-      CMakeLists.txt  
-    '';
+      CMakeLists.txt
+  '';
 
   # Upstream cmake has no install rules, so we do it ourselves.
   installPhase = ''
@@ -106,7 +90,12 @@ stdenv.mkDerivation (finalAttrs: {
     install -Dm755 acheron $out/bin/acheron
 
     wrapProgram $out/bin/acheron \
-      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ alsa-lib libpulseaudio ]}"
+      --prefix LD_LIBRARY_PATH : "${
+        lib.makeLibraryPath [
+          alsa-lib
+          libpulseaudio
+        ]
+      }"
 
     runHook postInstall
   '';
@@ -131,7 +120,7 @@ stdenv.mkDerivation (finalAttrs: {
     mainProgram = "acheron";
     homepage = "https://github.com/ouwou/acheron";
     license = lib.licenses.gpl3Plus;
-    maintainers = with lib.maintainers; [ chocoblocko9 ];
+    maintainers = with lib.maintainers; [ choco98 ];
     platforms = lib.platforms.linux;
     sourceProvenance = with lib.sourceTypes; [ fromSource ];
   };

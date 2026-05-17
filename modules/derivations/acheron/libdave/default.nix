@@ -63,7 +63,7 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Discord's End-to-End Audio Visual Encryption (DAVE) library";
     homepage = "https://github.com/discord/libdave";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ chocoblocko9 ];
+    maintainers = with lib.maintainers; [ choco98 ];
     platforms = lib.platforms.linux;
     sourceProvenance = with lib.sourceTypes; [ fromSource ];
   };
