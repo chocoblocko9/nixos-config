@@ -2,7 +2,7 @@
   description = "System flake that I'm scared of (how does this work)";
 
   outputs =
-  	{ self, nixpkgs, finix, finix-patch, ... } @ inputs:
+  	{ nixpkgs, finix, finix-patch, ... } @ inputs:
 
     let
       lib = nixpkgs.lib;
@@ -160,6 +160,7 @@
           chronyd
           dhcpcd
           fcron
+          fwupd
           getty
           greetd
           gnome-keyring
@@ -175,7 +176,7 @@
           sysklogd
           upower
           vnstat
-          # xserver
+          xserver
           zerotierone
         ];
       }; 
@@ -218,6 +219,7 @@
     finix.url = "github:finix-community/finix";
     finix-patch.url = "git+file:///home/conor/finix/wrappers";
 
+    modular-services.url = "github:chocoblocko9/modular-services/fix-finit-check";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     hyprland = {
