@@ -7,6 +7,16 @@
 {
   security.pam.debug = true;
 
+  services.udev.packages = lib.singleton (
+      pkgs.writeTextFile {
+        name = "i2c-udev-rules";
+        text = ''
+          SUBSYSTEM=="usb", ATTRS{idVendor}=="2dc8", ATTRS{idProduct}=="3010", ATTR{authorized}="0"
+        '';
+        destination = "/etc/udev/rules.d/90-controller-vm.rules";
+      }
+    );
+
   security.pam.services = lib.mkMerge [
     {
       login.text = lib.mkForce ''
@@ -46,6 +56,7 @@
         session required pam_env.so conffile=/etc/security/pam_env.conf readenv=0
         session required pam_unix.so
         session required pam_loginuid.so
+        session required pam_limits.so conf=/etc/security/limits.conf debug # limits (order 10400) - needed for rtprio/realtime audio
         session optional ${pkgs.pam_xdg}/lib/security/pam_xdg.so runtime track_sessions
         session optional ${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so auto_start
 
