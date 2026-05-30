@@ -8,7 +8,6 @@ let
   };
   
   acheron = pkgs.callPackage ../../derivations/acheron {
-    inherit mlspp;
     inherit libdave;
   };
 
@@ -22,7 +21,7 @@ in
       # Programs
       pkgs.vlc
       pkgs.vesktop 
-      # acheron
+      acheron
 
       # Tools
       pkgs.fastfetch
