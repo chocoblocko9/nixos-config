@@ -28,93 +28,12 @@
         };
 
         overlays = [
+          (import ./profiles/shift/musl-overlay.nix)
+
           (final: prev: {
-            musl = prev.musl.overrideAttrs (oldAttrs: {
-              nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [ 
-                prev.buildPackages.stdenv.cc.bintools
-                # prev.buildPackages.binutils-unwrapped 
-              ];
-
-              makeFlags = (oldAttrs.makeFlags or []) ++ [
-                "CROSS_COMPILE=x86_64-unknown-linux-musl-"
-              ];
-
-              NIX_CFLAGS_COMPILE = (oldAttrs.NIX_CFLAGS_COMPILE or "") 
-                + " -Wno-error=implicit-function-declaration -Wno-error=int-conversion";
-            });
-              
-            # Unfortunately necessary, nix hates being musl'd i guess
+            # leave me alone :(
             nix = subvertpkgs.nix;
             nix-expr = subvertpkgs.nix-expr;
-            
-            stdenv = prev.stdenv.override (old: {
-              extraAttrs = (old.extraAttrs or {}) // {
-                NIX_CFLAGS_COMPILE = (old.extraAttrs.NIX_CFLAGS_COMPILE or "") 
-                  + " -O3 -pipe -fno-plt";
-              };
-            });
-
-            # Turn off tests because they fail like 1/493 on musl
-            boehm-gc = prev.boehm-gc.overrideAttrs (old: {
-              doCheck = false;
-            });
-
-            wayland = prev.wayland.overrideAttrs (old: {
-              mesonFlags = (old.mesonFlags or []) ++ [
-                "-Ddocumentation=false"
-              ];
-              outputs = ["out" "dev" ];
-            });
-
-            pipewire = (prev.pipewire.override {
-  enableSystemd = false;
-  udev = prev.libudev-zero;
-}).overrideAttrs (o: {
-  doCheck = false;
-  NIX_CFLAGS_COMPILE = (o.NIX_CFLAGS_COMPILE or "") + " -Wno-error=nonnull -Wno-error=stringop-overread";
-  patches = o.patches or [] ++ [ ./profiles/shift/pipewire.patch ];
-});
-
-            wireplumber = prev.wireplumber.override {
-              pipewire = final.pipewire;
-            };
-
-            seatd = prev.seatd.override { systemdSupport = false; };
-
-            gnutls = prev.gnutls.overrideAttrs (old: {
-              doCheck = false;
-            });
-
-            libfaketime = prev.libfaketime.overrideAttrs (old: {
-              doCheck = false;
-              
-              # use the 'env' attribute to consolidate flags cus modern or smth
-              env = (old.env or {}) // {
-                NIX_CFLAGS_COMPILE = toString [
-                  "-include pthread.h"
-                  "-Wno-implicit-function-declaration"
-                  "-Wno-int-conversion"
-                  "-Dforce_stat=1"
-                ];
-              };
-
-              # no -Werror
-              postPatch = (old.postPatch or "") + ''
-                sed -i 's/-Werror//g' src/Makefile
-              '';
-            });
-
-            perl = prev.perl.overrideAttrs (old: {
-              doCheck = false;
-              dontCheck = true;
-              LC_ALL = "C.UTF-8";
-            });
-
-            perlPackages = prev.perlPackages // {
-              Test2Harness = prev.perlPackages.Test2Harness.overrideAttrs { 
-                doCheck = false; 
-              };
-            };
           })
         ];
     };
@@ -147,13 +66,10 @@
         };
 
         modules = with finix.nixosModules; [
-          inputs.hjem.finixModules.default
-          {
-            nixpkgs.pkgs = nixpkgs.lib.mkDefault subvertpkgs;
-          }
+          { nixpkgs.pkgs = nixpkgs.lib.mkDefault subvertpkgs; }
           ./profiles/finix/configuration.nix
 
-          # (toString nixpkgs + "/nixos/modules/programs/noisetorch.nix")
+          inputs.hjem.finixModules.default
 
           bash
           bluetooth
@@ -177,6 +93,7 @@
           upower
           vnstat
           xserver
+          virtualbox
           zerotierone
         ];
       }; 
@@ -190,17 +107,15 @@
         };
 
         modules = with finix.nixosModules; [
-          {
-            nixpkgs.pkgs = nixpkgs.lib.mkDefault muslpkgs;
-            disabledModules = [ "${inputs.finix}/modules/security/wrappers/default.nix" ];
-          }
+          { nixpkgs.pkgs = nixpkgs.lib.mkDefault muslpkgs; }
           ./profiles/shift/configuration.nix
 
-          # (toString nixpkgs + "/nixos/modules/programs/noisetorch.nix")
+          inputs.hjem.finixModules.default 
 
           bash
           dhcpcd
           getty
+          fwupd
           limine
           nftables
           nix-daemon
@@ -216,14 +131,15 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    finix.url = "github:finix-community/finix";
+    finix.url = "github:finix-community/finix/keventd";
     finix-patch.url = "git+file:///home/conor/finix/wrappers";
 
     modular-services.url = "github:chocoblocko9/modular-services/fix-finit-check";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     hyprland = {
-      url = "github:hyprwm/Hyprland";
+      # url = "github:hyprwm/Hyprland";
+      url = "github:chocoblocko9/Hyprland/center-false-fix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

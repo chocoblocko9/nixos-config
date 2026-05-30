@@ -35,15 +35,16 @@
     },
     "finix": {
       "locked": {
-        "lastModified": 1778975258,
-        "narHash": "sha256-VJ+vqtRre/wK0pC7gufYDAxRWWrwqxqww9HxYRGDwaM=",
+        "lastModified": 1779640196,
+        "narHash": "sha256-p0/ZF+C0gq/jJ6wBRYKfJ6BeVx26RlADr/IGjqBOFIg=",
         "owner": "finix-community",
         "repo": "finix",
-        "rev": "472f60067422037c3fac09ede84ce70447e5c06e",
+        "rev": "1c69707f2beefbdd32b0f51e13d25d3f8cb75e65",
         "type": "github"
       },
       "original": {
         "owner": "finix-community",
+        "ref": "keventd",
         "repo": "finix",
         "type": "github"
       }
@@ -109,11 +110,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778715272,
-        "narHash": "sha256-0Zv43Ir/sqztF/I/yYJsdVjvEIJSQeP1q9rDsTGC4nw=",
+        "lastModified": 1779363569,
+        "narHash": "sha256-ygBeOzovrNRdlIdOFC3i6Ms4Y7Z0YOCl2Po1lufRL8A=",
         "owner": "r0chd",
         "repo": "hjem",
-        "rev": "12593def34c584b46a183becd74122a60a765794",
+        "rev": "9e1684824ec06fd749ff88a7de677e2aaaa89035",
         "type": "github"
       },
       "original": {
@@ -199,15 +200,16 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1778966108,
-        "narHash": "sha256-nq8lNb/YRIH6Re3AKtlJDjbx2RhhQYm1sCQVCf5moeY=",
-        "owner": "hyprwm",
+        "lastModified": 1779392976,
+        "narHash": "sha256-mmqkFKO9gjQIYzE3+wtFibJCNbvfsxj0PGVECfwN63A=",
+        "owner": "chocoblocko9",
         "repo": "Hyprland",
-        "rev": "24c5c13c2cef2b4324478f2fb8c2ecc386dd42d3",
+        "rev": "82e183067d3e6a75af5ad74e129e51a81748b870",
         "type": "github"
       },
       "original": {
-        "owner": "hyprwm",
+        "owner": "chocoblocko9",
+        "ref": "center-false-fix",
         "repo": "Hyprland",
         "type": "github"
       }
