@@ -475,6 +475,7 @@ in
     "/share/icons"
     "/share/pixmaps"
     "/share/X11"
+    "/share/hypr"
   ];
 
   environment.systemPackages = [

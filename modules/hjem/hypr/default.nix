@@ -52,7 +52,7 @@
         splash = false
       '';
 
-      # ".config/hypr/stubs".source = "${src.hyprland}/share/hypr/stubs";
+      ".config/hypr/stubs".source = "/run/current-system/sw/share/hypr/stubs";
 
       ".config/hypr/.luarc.json" = {
         generator = lib.generators.toJSON {};
