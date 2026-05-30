@@ -10,7 +10,7 @@ let
     (pkgs.pipewire.override (
       lib.optionalAttrs config.services.mdevd.enable {
         enableSystemd = false;
-        udev = pkgs.libudev-zero;
+        udev = libudev-zero;
       }
     )).overrideAttrs
       (o: {
@@ -28,10 +28,12 @@ let
 
   xdg-desktop-portal' = pkgs.xdg-desktop-portal.override { enableSystemd = false; };
 
-  /*
+  gardendevd = pkgs.callPackage ./gardendevd.nix {};
+  libudev-zero = pkgs.callPackage ./libudev-zero.nix {};
+
   libinput = pkgs.libinput.override (
-    lib.optionalAttrs config.services.mdevd.enable {
-      udev = pkgs.libudev-zero;
+    lib.optionalAttrs (config.services ? meow && config.services.mdevd.enable or false) {
+      udev = libudev-zero;
       wacomSupport = false;
     }
   );
@@ -40,18 +42,25 @@ let
     lib.optionalAttrs config.services.mdevd.enable {
       inherit libinput;
 
+      udev = libudev-zero;
+    }
+
+    /*
+    lib.optionalAttrs config.services.keventd.enable {
+      inherit libinput;
+
       udev = pkgs.libudev-zero;
     }
+    */
   );
-  */
 
-  hyprland' = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland.override {
-    # inherit aquamarine libinput;
+  hyprland = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland.override {
+    inherit aquamarine libinput;
     withSystemd = false;
   };
 
-  xdph' = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland.override {
-    hyprland = hyprland';
+  xdph = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland.override {
+    inherit hyprland;
   };
 in
 {
@@ -190,7 +199,7 @@ in
   services.openssh.enable = false;
   services.sysklogd.enable = true;
   services.mdevd.enable = true;
-  services.mdevd.nlgroups = 4;
+  services.mdevd.nlgroups = 2;
   services.mdevd.debug = true;
 
   # .* 0:0 660 @${pkgs.finit}/libexec/finit/logit -s -t mdevd "event=$ACTION dev=$MDEV subsystem=$SUBSYSTEM path=$DEVPATH devtype=$DEVTYPE modalias=$MODALIAS major=$MAJOR minor=$MINOR"
@@ -301,6 +310,13 @@ in
   services.bluetooth.enable = true;
   services.seatd.enable = true;
   finit.services.seatd.command = lib.mkForce "${seatd'.bin}/bin/seatd -n %n -u root -g ${config.services.seatd.group}";
+
+  finit.services.gardendevd = {
+    description = "hi";
+    conditions = "service/syslogd/ready";
+    command = "${gardendevd}/bin/gardendevd -K -v debug";
+  };
+
   services.ly = {
     enable = true;
     settings = {
@@ -340,10 +356,36 @@ in
 
   # misc
   services.vnstat.enable = true;
+  services.vnstat.package = pkgs.vnstat;
+
   services.upower.enable = true;
 
   # NOTE: https://wiki.alpinelinux.org/wiki/Polkit#Using_polkit_with_seatd
   services.polkit.extraConfig = ''
+      var YES = polkit.Result.YES;
+      var permission = {
+        // required for udisks1:
+        "org.freedesktop.udisks.filesystem-mount": YES,
+        "org.freedesktop.udisks.luks-unlock": YES,
+        "org.freedesktop.udisks.drive-eject": YES,
+        "org.freedesktop.udisks.drive-detach": YES,
+        // required for udisks2:
+        "org.freedesktop.udisks2.filesystem-mount": YES,
+        "org.freedesktop.udisks2.encrypted-unlock": YES,
+        "org.freedesktop.udisks2.eject-media": YES,
+        "org.freedesktop.udisks2.power-off-drive": YES,
+        // required for udisks2 if using udiskie from another seat (e.g. systemd):
+        "org.freedesktop.udisks2.filesystem-mount-other-seat": YES,
+        "org.freedesktop.udisks2.filesystem-unmount-others": YES,
+        "org.freedesktop.udisks2.encrypted-unlock-other-seat": YES,
+        "org.freedesktop.udisks2.encrypted-unlock-system": YES,
+        "org.freedesktop.udisks2.eject-media-other-seat": YES,
+        "org.freedesktop.udisks2.power-off-drive-other-seat": YES
+      };
+
+      if (subject.isInGroup("storage")) {
+        return permission[action.id];
+      }
     polkit.addRule(function(action, subject) {
       if (action.id.indexOf("org.freedesktop.Flatpak.") == 0 && subject.isInGroup("wheel")) {
         return polkit.Result.YES;
@@ -356,22 +398,54 @@ in
       if (subject.isInGroup("${config.services.seatd.group}") && action.id.startsWith("org.freedesktop.UPower.PowerProfiles.")) {
         return polkit.Result.YES;
       }
+
+      
     });
   '';
 
+  /*
+var YES = polkit.Result.YES;
+      var permission = {
+        // required for udisks1:
+        "org.freedesktop.udisks.filesystem-mount": YES,
+        "org.freedesktop.udisks.luks-unlock": YES,
+        "org.freedesktop.udisks.drive-eject": YES,
+        "org.freedesktop.udisks.drive-detach": YES,
+        // required for udisks2:
+        "org.freedesktop.udisks2.filesystem-mount": YES,
+        "org.freedesktop.udisks2.encrypted-unlock": YES,
+        "org.freedesktop.udisks2.eject-media": YES,
+        "org.freedesktop.udisks2.power-off-drive": YES,
+        // required for udisks2 if using udiskie from another seat (e.g. systemd):
+        "org.freedesktop.udisks2.filesystem-mount-other-seat": YES,
+        "org.freedesktop.udisks2.filesystem-unmount-others": YES,
+        "org.freedesktop.udisks2.encrypted-unlock-other-seat": YES,
+        "org.freedesktop.udisks2.encrypted-unlock-system": YES,
+        "org.freedesktop.udisks2.eject-media-other-seat": YES,
+        "org.freedesktop.udisks2.power-off-drive-other-seat": YES
+      };
+
+      if (subject.isInGroup("storage")) {
+        return permission[action.id];
+      }
+      */
   xdg.portal.portals = [ 
-    xdph'
+    xdph
+    # inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland
     xdg-desktop-portal'
   ];
 
+
   services.dbus.packages = [
     pkgs.dconf
-  ];
+    pkgs.udisks
+ ];
 
   fonts.fontconfig.enable = true;
 
   fonts.enableDefaultPackages = true;
   fonts.packages = with pkgs; [
+    vegur
     nerd-fonts.jetbrains-mono
     nerd-fonts._0xproto
     noto-fonts
@@ -442,6 +516,7 @@ in
       "kvm"
       "vboxusers"
       "video"
+      "storage"
       "wheel"
       "flatpak"
     ];
@@ -470,6 +545,8 @@ in
     ];
   };
 
+  services.xserver.enable = true;
+
   environment.pathsToLink = [
     # TODO: xdg.icon module
     "/share/icons"
@@ -484,19 +561,20 @@ in
     pkgs.wl-clipboard
     pkgs.wf-recorder
     pkgs.neovim
-    pkgs.fastfetch
     pkgs.nixos-rebuild-ng
     pkgs.hyprpaper
     pkgs.hyprsunset
     pkgs.fuzzel
 
     # Can't use module because it dupes
-    hyprland'
+    hyprland
+
+    # inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
     (lib.hiPrio (pkgs.writeTextDir "share/wayland-sessions/hyprland.desktop" ''
       [Desktop Entry]
       Name=Hyprland
       Comment=An intelligent dynamic tiling Wayland compositor
-      Exec=${pkgs.dbus}/bin/dbus-run-session -- ${lib.getExe hyprland'}
+      Exec=${pkgs.dbus}/bin/dbus-run-session -- ${lib.getExe hyprland}
       Type=Application
       DesktopNames=Hyprland
       Keywords=tiling;wayland;compositor;
@@ -511,6 +589,7 @@ in
 
     pkgs.oxwm
     pkgs.alacritty
+    pkgs.xinit
 
     pkgs.adw-gtk3
     pkgs.numix-icon-theme
@@ -549,11 +628,23 @@ in
 
     pkgs.iproute2
 
+    gardendevd
+
+    # qt
+    pkgs.libsForQt5.qt5ct
+    pkgs.qt6Packages.qt6ct
+
+    pkgs.libsForQt5.qtstyleplugin-kvantum
+    pkgs.qt6Packages.qtstyleplugin-kvantum
+
+    pkgs.udiskie
+    pkgs.udisks
     pkgs.util-linux
     pkgs.e2fsprogs
     pkgs.kbd
     pkgs.xdg-utils
 
+    pkgs.busybox
     pkgs.imv # TODO: set as default image viewer
 
     # TODO: add `programs.ssh.*` options
