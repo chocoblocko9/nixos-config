@@ -64,7 +64,7 @@ in
 
       HELPDIR="${pkgs.zsh}/share/zsh/$ZSH_VERSION/help"
 
-      source ./set-environment
+      source ~/set-environment
 
       # Tell zsh how to find installed completions.
       for p in ''${(z)NIX_PROFILES}; do
@@ -87,6 +87,9 @@ in
       __ETC_ZSHRC_SOURCED=1
 
       HOST=${config.networking.hostName}
+
+      # Force emacs keybindings for all interactive shells
+      bindkey -e
 
       # Configure sane keyboard defaults.
       . /etc/zinputrc
@@ -111,6 +114,10 @@ in
 
       source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+      if ${lib.boolToString config.programs.direnv.loadInNixShell} || printenv PATH | grep -vqc '/nix/store'; then
+          eval "$(${lib.getExe config.programs.direnv.package} hook zsh)"
+      fi
+
       ZSH_HIGHLIGHT_HIGHLIGHTERS=( main )
 
       # Disable some features to support TRAMP.
@@ -125,6 +132,8 @@ in
       if test -f /etc/zshrc.local; then
           . /etc/zshrc.local
       fi
+
+      eval "$(direnv hook zsh)"
     '';
 
     environment.etc.zinputrc.source = ./zinputrc;
