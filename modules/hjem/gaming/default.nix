@@ -12,6 +12,7 @@
   config = lib.mkIf config.hjemSettings.gaming.enable {
     hjem.users.conor = {
       packages = [
+        #pkgs.lutris
         #pkgs.heroic # Good games launcher
         #pkgs.cemu # Wii U my beloved
         #pkgs.prismlauncher # Minecraft
