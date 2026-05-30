@@ -143,6 +143,7 @@ in
     @audio   -   rtprio     95
     @audio   -   nice       -19
     @audio   -   memlock    4194304
+    conor hard nofile 524288
   '';
 
   time.timeZone = "Europe/Dublin";
@@ -161,8 +162,6 @@ in
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  programs.steam.enable = false;
 
   fileSystems = {
     "/home/conor/2TB-Hard-Drive" = {
@@ -218,6 +217,14 @@ in
       "nix-command"
       "pipe-operators"
       "flakes"
+    ];
+
+    system-features = [ 
+      "kvm"
+      "big-parallel"
+      "nixos-test"
+      "benchmark"
+      "gccarch-native"
     ];
 
     download-buffer-size = 524288000;
@@ -574,6 +581,9 @@ var YES = polkit.Result.YES;
   environment.etc.subuid.text = "conor:100000:65536";
   environment.etc.subgid.text = "conor:100000:65536";
 
+  programs.virtualbox.enable = true;
+  programs.virtualbox.package = pkgs.virtualboxWithExtpack;
+
   users.users.test = {
     isNormalUser = true;
     shell = pkgs.fish;
@@ -650,7 +660,6 @@ var YES = polkit.Result.YES;
     pkgs.direnv
     pkgs.dnsutils
     pkgs.git
-    pkgs.btop
     pkgs.nix-prefetch-git
     pkgs.ncdu
     pkgs.nix-diff
