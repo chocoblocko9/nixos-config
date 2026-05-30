@@ -2,13 +2,70 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
+let
+  pipewire' =
+    (pkgs.pipewire.override (
+      lib.optionalAttrs config.services.mdevd.enable {
+        enableSystemd = false;
+        udev = pkgs.libudev-zero;
+      }
+    )).overrideAttrs
+      (o: {
+        # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/2398#note_2967898
+        patches = o.patches or [ ] ++ lib.optionals config.services.mdevd.enable [ ./pipewire.patch ];
+      });
 
+  wireplumber' = pkgs.wireplumber.override (
+    lib.optionalAttrs config.services.mdevd.enable {
+      pipewire = pipewire';
+    }
+  );
+
+  seatd' = pkgs.seatd.override { systemdSupport = false; };
+
+  xdg-desktop-portal' = pkgs.xdg-desktop-portal.override { enableSystemd = false; };
+
+  libinput = pkgs.libinput.override (
+    lib.optionalAttrs (config.services ? meow && config.services.mdevd.enable or false) {
+      udev = pkgs.libudev-zero;
+      wacomSupport = false;
+    }
+  );
+
+  aquamarine = pkgs.aquamarine.override (
+    lib.optionalAttrs config.services.mdevd.enable {
+      inherit libinput;
+
+      udev = pkgs.libudev-zero;
+    }
+
+    /*
+    lib.optionalAttrs config.services.keventd.enable {
+      inherit libinput;
+
+      udev = pkgs.libudev-zero;
+    }
+    */
+  );
+
+  hyprland = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland.override {
+    inherit aquamarine libinput;
+    withSystemd = false;
+  };
+
+  xdph = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland.override {
+    inherit hyprland;
+  };
+in
 {
   imports = [
     ./pam.nix
     ./hardware-configuration.nix
+
+    ../../profiles/slip/hjem.nix
   ];
 
   specialisation.udev = {
@@ -28,6 +85,8 @@
   '';
 
   time.timeZone = "Europe/Dublin";
+
+  services.dbus.enable = true;
 
   boot.supportedFilesystems = {
     btrfs.enable = true;
@@ -50,6 +109,7 @@
 ];
 
   finit.services.nix-daemon.environment.CURL_CA_BUNDLE = config.security.pki.caBundle;
+  finit.services.nix-daemon.enable = true;
   finit.services.nix-daemon.path = [
     config.services.nix-daemon.package
     pkgs.util-linux
@@ -62,7 +122,7 @@
 
   # services.dbus.enable = true;
   services.dhcpcd.enable = true;
-  services.nix-daemon.enable = false;
+  services.nix-daemon.enable = true;
   services.nix-daemon.package = pkgs.nix; 
   services.nix-daemon.settings = {
     # Flakes 
@@ -276,12 +336,26 @@
   environment.systemPackages = [
     pkgs.fastfetch
     pkgs.btop
+    pkgs.foot
 
     pkgs.man
     pkgs.nano
     pkgs.vim
     pkgs.git
     pkgs.bintools
+
+    hyprland
+
+    # inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
+    (lib.hiPrio (pkgs.writeTextDir "share/wayland-sessions/hyprland.desktop" ''
+      [Desktop Entry]
+      Name=Hyprland
+      Comment=An intelligent dynamic tiling Wayland compositor
+      Exec=${pkgs.dbus}/bin/dbus-run-session -- ${lib.getExe hyprland}
+      Type=Application
+      DesktopNames=Hyprland
+      Keywords=tiling;wayland;compositor;
+    ''))
 
     pkgs.pipewire
     pkgs.wireplumber
