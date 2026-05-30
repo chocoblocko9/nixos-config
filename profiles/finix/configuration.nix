@@ -70,6 +70,8 @@ in
     ./zsh.nix
     ./flatpak.nix
     ./steam.nix
+    ./direnv.nix
+    inputs.modular-services.nixosModules.default
 
     ../../profiles/slip/hjem.nix 
   ];
@@ -85,6 +87,41 @@ in
   specialisation.udev = {
     services.mdevd.enable = lib.mkForce false;
     services.udev.enable = lib.mkForce true;
+    environment.etc."specialisation".text = "udev";
+  };
+
+  finit.package = pkgs.finit.overrideAttrs (o: {
+    version = "5.0";
+    src = pkgs.fetchFromGitHub {
+      owner = "finit-project";
+      repo = "finit";
+      rev = "devman";
+      sha256 = "sha256-HmZPAhnZD0AIuzvkfiwjMudeYrjEIlDXUclsqXvNTI4=";
+    };
+
+    buildInputs = o.buildInputs ++ [ pkgs.util-linuxMinimal.dev ];
+
+    postPatch = (o.postPatch or "") + ''
+      substituteInPlace keventd/uevent.c \
+        --replace-fail '"/sbin/modprobe", "modprobe"' '"${pkgs.kmod}/bin/modprobe", "modprobe"' \
+        --replace-fail '"/usr/lib/firmware/' '"/run/current-system/firmware/lib/firmware/'
+
+      substituteInPlace keventd/builtin.c \
+        --replace-fail  '"/lib/udev/hwdb.d"' '"/run/current-system/sw/lib/udev/hwdb.d"' \
+        --replace-fail  '"/usr/share/hwdata/usb.ids"' '"${pkgs.hwdata}/share/hwdata/usb.ids"'
+    '';
+  });
+
+  specialisation.keventd = {
+    services.keventd.enable = lib.mkForce true;
+    services.mdevd.enable = lib.mkForce false;
+    services.udev.enable = lib.mkForce false;
+
+    services.seatd.enable = lib.mkForce true;
+    services.elogind.enable = lib.mkForce false;
+
+    services.iwd.enable = lib.mkForce true;
+    environment.etc."specialisation".text = "keventd";
   };
 
   boot.loader.efi.canTouchEfiVariables = true;
@@ -201,6 +238,15 @@ in
   services.mdevd.enable = true;
   services.mdevd.nlgroups = 2;
   services.mdevd.debug = true;
+
+  programs.direnv.enable = true;
+  programs.direnv.settings = {
+    global = {
+      hide_env_diff = true;
+      log_format = lib.mkDefault "-";
+      log_filter = lib.mkDefault "^$";
+    };
+  };
 
   # .* 0:0 660 @${pkgs.finit}/libexec/finit/logit -s -t mdevd "event=$ACTION dev=$MDEV subsystem=$SUBSYSTEM path=$DEVPATH devtype=$DEVTYPE modalias=$MODALIAS major=$MAJOR minor=$MINOR"
   # TODO: shouldn't this just be included by default?
