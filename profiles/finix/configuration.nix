@@ -32,7 +32,7 @@ let
   libudev-zero = pkgs.callPackage ./libudev-zero.nix {};
 
   libinput = pkgs.libinput.override (
-    lib.optionalAttrs (config.services ? meow && config.services.mdevd.enable or false) {
+    lib.optionalAttrs config.services.mdevd.enable {
       udev = libudev-zero;
       wacomSupport = false;
     }
@@ -128,6 +128,7 @@ in
 
   programs.limine.enable = true;
   programs.limine.settings.editor_enabled = true;
+  programs.limine.settings.wallpaper = [ ./finix-limine-bg.png ];
 
   services.elogind.package = pkgs.elogind;
 
