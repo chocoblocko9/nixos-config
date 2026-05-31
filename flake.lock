@@ -20,11 +20,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778620495,
-        "narHash": "sha256-Gu7UhWjwKCgSiVC3Qz/Rc7cYi9DNuDTBxYzg3kfLvfM=",
+        "lastModified": 1778857089,
+        "narHash": "sha256-TclWRW2SdFeETLaiTG4BA8C8C4m/LppQEldncqyTzAQ=",
         "owner": "hyprwm",
         "repo": "aquamarine",
-        "rev": "be35f75ac305f430f5f9d89b5f5a4af59ca7567e",
+        "rev": "ab2b0af63fbc9fb779d684f19149b790978be8a8",
         "type": "github"
       },
       "original": {
@@ -35,18 +35,17 @@
     },
     "finix": {
       "locked": {
-        "lastModified": 1779640196,
-        "narHash": "sha256-p0/ZF+C0gq/jJ6wBRYKfJ6BeVx26RlADr/IGjqBOFIg=",
-        "owner": "finix-community",
-        "repo": "finix",
-        "rev": "1c69707f2beefbdd32b0f51e13d25d3f8cb75e65",
-        "type": "github"
+        "lastModified": 1780159035,
+        "narHash": "sha256-Du4/fEOGUH2/a+YAfZOGQj+M20S5a4SUaGCPkynsOp0=",
+        "ref": "refs/heads/limine-fixes",
+        "rev": "dd2994dbae65cd2b30bc150ba5f43c5dacd2d57d",
+        "revCount": 505,
+        "type": "git",
+        "url": "file:///home/conor/programming/nix/finix/limine-fixes"
       },
       "original": {
-        "owner": "finix-community",
-        "ref": "keventd",
-        "repo": "finix",
-        "type": "github"
+        "type": "git",
+        "url": "file:///home/conor/programming/nix/finix/limine-fixes"
       }
     },
     "finix-patch": {
@@ -200,16 +199,16 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1779392976,
-        "narHash": "sha256-mmqkFKO9gjQIYzE3+wtFibJCNbvfsxj0PGVECfwN63A=",
-        "owner": "chocoblocko9",
+        "lastModified": 1780246955,
+        "narHash": "sha256-I84esEHX1rN9L2vQr0KLsbHcQIYM+yHAQcbWG4gmXwY=",
+        "owner": "vaxerski",
         "repo": "Hyprland",
-        "rev": "82e183067d3e6a75af5ad74e129e51a81748b870",
+        "rev": "6bbf676b6d44f69a914731b4ceea75af3f6e0df2",
         "type": "github"
       },
       "original": {
-        "owner": "chocoblocko9",
-        "ref": "center-false-fix",
+        "owner": "vaxerski",
+        "ref": "motion-blur",
         "repo": "Hyprland",
         "type": "github"
       }
@@ -378,11 +377,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778234770,
-        "narHash": "sha256-jAcsogZwWMfXT9MfXxZzkwliAqIuZUV0p71h6Ba9ReE=",
+        "lastModified": 1779475241,
+        "narHash": "sha256-Nw4DN0A5krWNcPBvuWe5Gz2yuxsUUPiDgtu6SVPJQeU=",
         "owner": "hyprwm",
         "repo": "hyprutils",
-        "rev": "a2dbd8a4cc51f7cbe4224732668392bb1aa79df2",
+        "rev": "3cd3972b2ee658a14d2610d8494e09259e530124",
         "type": "github"
       },
       "original": {

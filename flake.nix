@@ -131,15 +131,15 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    finix.url = "github:finix-community/finix/keventd";
+    finix.url = "git+file:///home/conor/programming/nix/finix/limine-fixes";
     finix-patch.url = "git+file:///home/conor/finix/wrappers";
 
     modular-services.url = "github:chocoblocko9/modular-services/fix-finit-check";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     hyprland = {
-      # url = "github:hyprwm/Hyprland";
-      url = "github:chocoblocko9/Hyprland/center-false-fix";
+      url = "github:vaxerski/Hyprland/motion-blur";
+      # url = "github:chocoblocko9/Hyprland/center-false-fix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
