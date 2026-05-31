@@ -1,6 +1,15 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
-{
+{ 
+  options = {
+    hjemSettings.git = {
+      enable = lib.mkEnableOption "Enable git";
+    };
+  };
+
+  config = lib.mkIf config.hjemSettings.git.enable {
+
+
   hjem.users = {
     conor = {
       packages = [ pkgs.git ];
@@ -16,4 +25,5 @@
      '';
     };
   };
+};
 }

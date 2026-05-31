@@ -1,11 +1,19 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
-  hjem.users.conor = {
-    packages = [ pkgs.quickshell ];
+  options = {
+    hjemSettings.quickshell = {
+      enable = lib.mkEnableOption "Enable quickshell";
+    };
+  };
 
-    files = {
-    # ".config/quickshell/shell.qml".source = ./shell.qml;
+  config = lib.mkIf config.hjemSettings.quickshell.enable {
+    hjem.users.conor = {
+      packages = [ pkgs.quickshell ];
+
+      files = {
+      # ".config/quickshell/shell.qml".source = ./shell.qml;
+      };
     };
   };
 }

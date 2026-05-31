@@ -1,6 +1,15 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 
 {
+  options = {
+    hjemSettings.fuzzel = {
+      enable = lib.mkEnableOption "Enable fuzzel";
+    };
+  };
+
+  config = lib.mkIf config.hjemSettings.fuzzel.enable {
+
+
   hjem.users.conor = {
     packages = [
       pkgs.fuzzel
@@ -39,4 +48,5 @@
       };
     };
   };
+};
 }

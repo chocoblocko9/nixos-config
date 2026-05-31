@@ -1,67 +1,70 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
-  hjem.users.conor = {
-    packages = [ 
-      pkgs.hyprsunset
-      pkgs.hyprpaper
-      pkgs.hyprpicker
-      pkgs.hyprshutdown
+  options.hjemSettings.hyprland.enable = lib.mkEnableOption "Enable hypr* things";
 
-      pkgs.grim
-      pkgs.slurp
-      pkgs.wl-clipboard
-    ];
+  config = lib.mkIf config.hjemSettings.hyprland.enable {
+    hjem.users.conor = {
+      packages = [ 
+        pkgs.hyprsunset
+        pkgs.hyprpaper
+        pkgs.hyprpicker
+        pkgs.hyprshutdown
 
-    files = {
-      #".config/hypr/hyprland".source = ./hyprland;
-      ".config/hypr/hyprsunset.conf".source = ./hyprsunset.conf;
+        pkgs.grim
+        pkgs.slurp
+        pkgs.wl-clipboard
+      ];
 
-      ".config/hypr/hyprland.lua".text = /* lua */ ''
-        -- Nix
-        host = "${config.networking.hostName}"
-        xdph = "/run/current-system/sw/bin/xdg-desktop-portal-hyprland"
-        
-        -- Import
-        require("hyprland/functions")
+      files = {
+        #".config/hypr/hyprland".source = ./hyprland;
+        ".config/hypr/hyprsunset.conf".source = ./hyprsunset.conf;
 
-        require("hyprland/animations")
-        require("hyprland/autostart")
-        require("hyprland/binds")
-        require("hyprland/env")
-        require("hyprland/general")
-        require("hyprland/input")
-        require("hyprland/rules")
-        require("hyprland/workspaces")
-      '';
+        ".config/hypr/hyprland.lua".text = /* lua */ ''
+          -- Nix
+          host = "${config.networking.hostName}"
+          
+          -- Import
+          require("hyprland/functions")
 
-      ".config/hypr/xdph.conf".text = /* hyprlang */ ''
-        screencopy {
-          max_fps = 60
-          allow_token_by_default = true
-        }
-      '';
+          require("hyprland/animations")
+          require("hyprland/autostart")
+          require("hyprland/binds")
+          require("hyprland/env")
+          require("hyprland/general")
+          require("hyprland/input")
+          require("hyprland/rules")
+          require("hyprland/workspaces")
+        '';
 
-      ".config/hypr/hyprpaper.conf".text = /* hyprlang */ ''
-        wallpaper {
-          monitor =
-          fit_mode = cover
-          path = ~/.files/modules/hjem/hypr/wallpapers/pawel-czerwinski-cyan-fish.jpg
-        }
-        ipc = true
-        splash = false
-      '';
+        ".config/hypr/xdph.conf".text = /* hyprlang */ ''
+          screencopy {
+            max_fps = 60
+            allow_token_by_default = true
+          }
+        '';
 
-      ".config/hypr/stubs".source = "/run/current-system/sw/share/hypr/stubs";
+        ".config/hypr/hyprpaper.conf".text = /* hyprlang */ ''
+          wallpaper {
+            monitor =
+            fit_mode = cover
+            path = ~/.files/modules/hjem/hypr/wallpapers/pawel-czerwinski-cyan-fish.jpg
+          }
+          ipc = true
+          splash = false
+        '';
 
-      ".config/hypr/.luarc.json" = {
-        generator = lib.generators.toJSON {};
+        ".config/hypr/stubs".source = "/run/current-system/sw/share/hypr/stubs";
 
-        value = {
-          "runtime.version" = "Lua 5.5";
-          "workspace.checkThirdParty" = false;
-          "diagnostics.globals" = [ "hl" ];
-          "workspace.library" =  [ "./stubs" ];
+        ".config/hypr/.luarc.json" = {
+          generator = lib.generators.toJSON {};
+
+          value = {
+            "runtime.version" = "Lua 5.5";
+            "workspace.checkThirdParty" = false;
+            "diagnostics.globals" = [ "hl" ];
+            "workspace.library" =  [ "./stubs" ];
+          };
         };
       };
     };

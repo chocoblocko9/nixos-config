@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let 
   mlspp = pkgs.callPackage ../../derivations/acheron/mlspp { };
@@ -11,11 +11,14 @@ let
     inherit libdave;
   };
 
-  lollypop' = pkgs.lollypop.override {
+  lollypop = pkgs.lollypop.override {
     youtubeSupport = false;
   };
-in
-{
+in {
+  options.hjemSettings.apps.enable = lib.mkEnableOption "Enable apps I usually want";
+
+  config = lib.mkIf config.hjemSettings.apps.enable {
+
   hjem.users.conor = {
     packages = [
       # Programs
@@ -43,7 +46,7 @@ in
 
       # Music
       pkgs.mprisence # discord RPC using mpris2
-      lollypop' # GNOME music player (my beloved)
+      lollypop # GNOME music player (my beloved)
       pkgs.mpris-scrobbler # Last.fm scrobbler for mpris2
       pkgs.nicotine-plus # Soulseek
       pkgs.puddletag # song file tagger
@@ -54,4 +57,5 @@ in
     # files.".config/apps/apps.conf".text = ''
     # '';
   };
+};
 }

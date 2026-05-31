@@ -1,7 +1,17 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
+
+# TODO: this is like top 1 things that could be a wrapper...
 
 {
-  hjem.users.conor = {
+ options = {
+    hjemSettings.btop = {
+      enable = lib.mkEnableOption "Enable btop";
+    };
+  };
+
+  config = lib.mkIf config.hjemSettings.btop.enable {
+
+ hjem.users.conor = {
     packages = [ pkgs.btop-rocm ];
 
     files.".config/btop/btop.conf" = {
@@ -22,4 +32,5 @@
       };
     };
   };
+};
 }
