@@ -4,34 +4,45 @@
   fetchFromCodeberg,
   acl,
   elogind,
-  mdevd,
   meson,
   ninja,
   pkg-config,
   util-linux,
   kmod,
+  uaccessSupport ? true,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "gardendevd";
-  version = "0.1";
+  version = "0.2";
+
+  __structuredAttrs = true;
 
   src = fetchFromCodeberg {
     owner = "Gardenhouse";
     repo = "gardendevd";
-    rev = "v${finalAttrs.version}";
+    tag = "v${finalAttrs.version}";
     sha256 = "sha256-8G6Omeia1W+4dZOVHGtY/9CnKEpqD2x/W8Zkjt7fK/Q=";
   };
 
+  strictDeps = true;
+
   nativeBuildInputs = [
-    acl
-    elogind
     meson
     ninja
     pkg-config
   ];
 
-  buildInputs = [ mdevd ];
+  buildInputs = lib.optionals uaccessSupport [
+    acl
+    elogind
+  ];
+
+  mesonFlags = [
+    "-Dopenrc=false"
+    "-Dmdevd=true"
+    "-Duaccess=${lib.boolToString uaccessSupport}"
+  ];
 
   postPatch = ''
     substituteInPlace src/rules-builtin.c \
@@ -47,13 +58,12 @@ stdenv.mkDerivation (finalAttrs: {
 
   meta = {
     homepage = "https://codeberg.org/Gardenhouse/gardendevd";
-    description = "Daemonless replacement for libudev";
+    description = "udev daemon running on top of mdevd to replace systemd-udev";
     maintainers = with lib.maintainers; [
-      aanderse 
-      choco98 
+      aanderse
+      choco98
     ];
-    license = lib.licenses.mit; # no license in repo im pretty sure lol
-    pkgConfigModules = [ "libudev" ];
+    license = lib.licenses.gpl3Only;
     platforms = lib.platforms.linux;
   };
 })
