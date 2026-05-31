@@ -90,6 +90,7 @@ in
     environment.etc."specialisation".text = "udev";
   };
 
+  /*
   finit.package = pkgs.finit.overrideAttrs (o: {
     version = "5.0";
     src = pkgs.fetchFromGitHub {
@@ -123,12 +124,35 @@ in
     services.iwd.enable = lib.mkForce true;
     environment.etc."specialisation".text = "keventd";
   };
+  */
 
   boot.loader.efi.canTouchEfiVariables = true;
 
   programs.limine.enable = true;
-  programs.limine.settings.editor_enabled = true;
-  programs.limine.settings.wallpaper = [ ./finix-limine-bg.png ];
+  /*
+  programs.limine.package = pkgs.limine.overrideAttrs {
+    version = "11.4.1";
+    src = pkgs.fetchurl {
+      url = "https://github.com/Limine-Bootloader/Limine/releases/download/v11.4.1/limine-11.4.1.tar.gz";
+      hash = "sha256-sTmjVVhOb2EOhohW/SMJgrM8HT5t6afq1ekv+6eZNuY=";
+    };
+  };
+  */
+  programs.limine.settings = {
+    editor_enabled = true;
+    wallpaper = [
+      ./finix-limine12-bg.png
+      # pkgs.nixos-artwork.wallpapers.simple-dark-gray-bootloader.gnomeFilePath
+    ];
+    wallpaper_style = "centered";
+    term_background = "90000000";
+    term_background_bright = "90000000";
+    term_shadow = "90000000";
+    term_margin = "0";
+    interface_resolution = "1920x1080";
+    interface_help_colour = "e43949";
+    interface_branding = "Welcome to finix!";
+  };
 
   services.elogind.package = pkgs.elogind;
 
