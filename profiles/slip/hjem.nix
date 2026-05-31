@@ -10,6 +10,17 @@
     };
   };
 
-  hjemSettings.gaming.enable = true;
+  hjemSettings = {
+    apps.enable = true;
+    btop.enable = true;
+    fuzzel.enable = true;
+    gaming.enable = true;
+    git.enable = true;
+    hyprland.enable = true;
+    kitty.enable = true;
+    neovim.enable = true;
+    quickshell.enable = true;
+    theming.enable = true;
+  };
 }
 
