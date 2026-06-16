@@ -2,7 +2,7 @@
   description = "System flake that I'm scared of (how does this work)";
 
   outputs =
-  	{ nixpkgs, finix, finix-patch, ... } @ inputs:
+    { nixpkgs, finix, finix-old, ... } @ inputs:
 
     let
       lib = nixpkgs.lib;
@@ -10,6 +10,12 @@
       subvertpkgs = import nixpkgs {
         system = "x86_64-linux";
         config.allowUnfree = true;
+
+        overlays = [
+          (final: prev: {
+            libudev-garden = (prev.pkgs.callPackage ./profiles/finix/libudev-garden.nix {});
+          })
+        ];
       };
 
       muslpkgs = import nixpkgs {
@@ -27,16 +33,8 @@
           checkMeta = false;
         };
 
-        overlays = [
-          (import ./profiles/shift/musl-overlay.nix)
-
-          (final: prev: {
-            # leave me alone :(
-            nix = subvertpkgs.nix;
-            nix-expr = subvertpkgs.nix-expr;
-          })
-        ];
-    };
+        overlays = [ (import ./profiles/shift/musl-overlay.nix) ];
+      };
     in {
     nixosConfigurations = {
       slip = lib.nixosSystem {
@@ -71,6 +69,8 @@
 
           inputs.hjem.finixModules.default
 
+          inputs.community-modules.nixosModules.fastfetch
+
           bash
           bluetooth
           chronyd
@@ -98,15 +98,18 @@
         ];
       }; 
 
-      shift = finix-patch.lib.finixSystem {
+      # shift = finix-patch.lib.finixSystem {
+      shift = finix-old.lib.finixSystem {
         inherit (muslpkgs) lib;
 
         specialArgs = {
           modulesPath = toString nixpkgs + "/nixos/modules";
 	        inherit inputs;
+          inherit (subvertpkgs) pkgsStatic;
         };
 
-        modules = with finix.nixosModules; [
+        modules = with finix-old.nixosModules; [
+        # modules = with finix-patch.nixosModules; [
           { nixpkgs.pkgs = nixpkgs.lib.mkDefault muslpkgs; }
           ./profiles/shift/configuration.nix
 
@@ -130,16 +133,18 @@
   };
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
-    finix.url = "git+file:///home/conor/programming/nix/finix/limine-fixes";
-    finix-patch.url = "git+file:///home/conor/finix/wrappers";
+    # nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "git+file:///home/conor/nixpkgs?rev=007a93a1044bc9bab53dd4c6b1e81dde1f6748cc";
+    finix.url = "github:chocoblocko9/finix/gardendevd-init";
+    finix-old.url = "git+file:///home/conor/programming/finix/finix?rev=1f7ac982a6b2c76b2223845ea867c399fd8899a1";
 
+    community-modules.url = "git+file:///home/conor/finix/fastfetch-init";
     modular-services.url = "github:chocoblocko9/modular-services/fix-finit-check";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     hyprland = {
-      url = "github:vaxerski/Hyprland/motion-blur";
-      # url = "github:chocoblocko9/Hyprland/center-false-fix";
+      # url = "github:hyprwm/Hyprland";
+      url = "github:chocoblocko9/Hyprland/center-false-fix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
