@@ -14,7 +14,7 @@
         # TODO: no.
       ];
 
-      files.".config/nvim/init.lua".source = ./init.lua;
+      files.".config/nvim/init.lua".source = "/home/conor/.files/modules/hjem/neovim/init.lua";
     };
   };
 } 
