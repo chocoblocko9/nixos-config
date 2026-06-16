@@ -21,15 +21,15 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "acheron";
-  version = "0-unstable-2026-05-12";
+  version = "0-unstable-2026-06-08";
 
   __structuredAttrs = true;
 
   src = fetchFromGitHub {
     owner = "ouwou";
     repo = "acheron";
-    rev = "fa59fa958d52883bcf5ff484263ac992d51147ac";
-    hash = "sha256-rAwfeVh1UwlstAWIB8gxN4ou7F6xiNLq9Qqor/px+x0=";
+    rev = "d2d2b4ee7b7160612de65d12087c01be2dedfb98";
+    hash = "sha256-YGQSklM1eco4uQXMLEa+3v01p+inCqe/AGRCPfeRPkE=";
     fetchSubmodules = true;
     # Leave miniaudio and emoji-segmenter vendored because they are single file libraries
     # so there is little to no benefit to fetching them ourselves.

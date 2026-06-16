@@ -14,6 +14,8 @@ let
   lollypop = pkgs.lollypop.override {
     youtubeSupport = false;
   };
+
+  wewa = pkgs.callPackage ../../derivations/wewa {};
 in {
   options.hjemSettings.apps.enable = lib.mkEnableOption "Enable apps I usually want";
 
@@ -25,9 +27,10 @@ in {
       pkgs.vlc
       pkgs.vesktop 
       acheron
+      wewa
 
       # Tools
-      pkgs.fastfetch
+      # pkgs.fastfetch
       pkgs.zip
       pkgs.libnotify
       pkgs.socat
