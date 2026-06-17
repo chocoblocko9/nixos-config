@@ -14,15 +14,15 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "gardendevd";
-  version = "0.2";
+  version = "0.2-unstable-2026-06-03";
 
   __structuredAttrs = true;
 
   src = fetchFromCodeberg {
     owner = "Gardenhouse";
     repo = "gardendevd";
-    tag = "v${finalAttrs.version}";
-    sha256 = "sha256-8G6Omeia1W+4dZOVHGtY/9CnKEpqD2x/W8Zkjt7fK/Q=";
+    rev = "7e58bbd06dfab8a47b6f512eee802a23de79d890";
+    sha256 = "sha256-VecujIPKfKQN4EnQ+zCbUW8nN0/+ftsdIGNJUyMyPfY=";
   };
 
   strictDeps = true;
@@ -39,9 +39,10 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   mesonFlags = [
-    "-Dopenrc=false"
-    "-Dmdevd=true"
-    "-Duaccess=${lib.boolToString uaccessSupport}"
+    "-Dopenrc=disabled"
+    "-Ddracut=disabled"
+    "-Dmdevd=enabled"
+    "-Duaccess=${if uaccessSupport then "enabled" else "disabled"}"
   ];
 
   postPatch = ''

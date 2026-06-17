@@ -6,14 +6,16 @@
   ...
 }:
 let
+  ly' = pkgs.callPackage ./ly/package.nix {};
+
   pipewire' =
     (pkgs.pipewire.override (
       lib.optionalAttrs config.services.mdevd.enable {
         enableSystemd = false;
-        udev = libudev-zero;
+        udev = libudev-garden;
       }
     )).overrideAttrs
-      (o: {
+      (o: lib.optionalAttrs config.services.mdevd.enable {
         # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/2398#note_2967898
         patches = o.patches or [ ] ++ lib.optionals config.services.mdevd.enable [ ./pipewire.patch ];
       });
@@ -29,20 +31,20 @@ let
   xdg-desktop-portal' = pkgs.xdg-desktop-portal.override { enableSystemd = false; };
 
   gardendevd = pkgs.callPackage ./gardendevd.nix {};
-  libudev-zero = pkgs.callPackage ./libudev-zero.nix {};
+  libudev-garden = pkgs.callPackage ./libudev-garden.nix {};
 
   libinput = pkgs.libinput.override (
-    lib.optionalAttrs config.services.mdevd.enable {
-      udev = libudev-zero;
+    lib.optionalAttrs (config.services.mdevd.enable || config.services.gardendevd.enable) {
+      udev = libudev-garden;
       wacomSupport = false;
     }
   );
 
   aquamarine = pkgs.aquamarine.override (
-    lib.optionalAttrs config.services.mdevd.enable {
+    lib.optionalAttrs (config.services.mdevd.enable || config.services.gardendevd.enable) {
       inherit libinput;
 
-      udev = libudev-zero;
+      udev = libudev-garden;
     }
 
     /*
@@ -84,8 +86,13 @@ in
     };
   };
 
+  specialisation.gardendevd = {
+    services.mdevd.enable = lib.mkForce false;
+  };
+
   specialisation.udev = {
     services.mdevd.enable = lib.mkForce false;
+    services.gardendevd.enable = lib.mkForce false;
     services.udev.enable = lib.mkForce true;
     environment.etc."specialisation".text = "udev";
   };
@@ -389,14 +396,18 @@ in
   services.seatd.enable = true;
   finit.services.seatd.command = lib.mkForce "${seatd'.bin}/bin/seatd -n %n -u root -g ${config.services.seatd.group}";
 
+  services.gardendevd.enable = true;
+  /*
   finit.services.gardendevd = {
     description = "hi";
     conditions = "service/syslogd/ready";
     command = "${gardendevd}/bin/gardendevd -K -v debug";
   };
+  */
 
   services.ly = {
     enable = true;
+    package = ly';
     settings = {
       show_tty = true;
       allow_empty_password = true;
@@ -729,7 +740,14 @@ var YES = polkit.Result.YES;
 
     # TODO: add `programs.ssh.*` options
     pkgs.openssh
+  ]; 
+
+  i18n.supportedLocales = [
+    "en_US.UTF-8/UTF-8"
+    "en_IE.UTF-8/UTF-8"
   ];
+
+  programs.fastfetch.enable = true;
 
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
