@@ -1,55 +1,24 @@
 { 
   config,
   pkgs,
+  pkgsStatic,
   lib,
   inputs,
   ...
 }:
 let
-  pipewire' =
-    (pkgs.pipewire.override (
-      lib.optionalAttrs config.services.mdevd.enable {
-        enableSystemd = false;
-        udev = pkgs.libudev-zero;
-      }
-    )).overrideAttrs
-      (o: {
-        # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/2398#note_2967898
-        patches = o.patches or [ ] ++ lib.optionals config.services.mdevd.enable [ ./pipewire.patch ];
-      });
+  xdg-desktop-portal = pkgs.xdg-desktop-portal.override { enableSystemd = false; };
 
-  wireplumber' = pkgs.wireplumber.override (
-    lib.optionalAttrs config.services.mdevd.enable {
-      pipewire = pipewire';
-    }
-  );
+  libinput = pkgs.libinput.override {
+    udev = pkgs.libudev-zero;
+    wacomSupport = false;
+  };
 
-  seatd' = pkgs.seatd.override { systemdSupport = false; };
+  aquamarine = pkgs.aquamarine.override {
+    inherit libinput;
 
-  xdg-desktop-portal' = pkgs.xdg-desktop-portal.override { enableSystemd = false; };
-
-  libinput = pkgs.libinput.override (
-    lib.optionalAttrs (config.services ? meow && config.services.mdevd.enable or false) {
-      udev = pkgs.libudev-zero;
-      wacomSupport = false;
-    }
-  );
-
-  aquamarine = pkgs.aquamarine.override (
-    lib.optionalAttrs config.services.mdevd.enable {
-      inherit libinput;
-
-      udev = pkgs.libudev-zero;
-    }
-
-    /*
-    lib.optionalAttrs config.services.keventd.enable {
-      inherit libinput;
-
-      udev = pkgs.libudev-zero;
-    }
-    */
-  );
+    udev = pkgs.libudev-zero;
+  };
 
   hyprland = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland.override {
     inherit aquamarine libinput;
@@ -65,13 +34,8 @@ in
     ./pam.nix
     ./hardware-configuration.nix
 
-    ../../profiles/slip/hjem.nix
+    ./hjem.nix
   ];
-
-  specialisation.udev = {
-    services.mdevd.enable = lib.mkForce false;
-    services.udev.enable = lib.mkForce true;
-  };
 
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -94,19 +58,20 @@ in
     ext4.enable = true;
   };
 
-  boot.kernelParams = [ "loglevel=1" ];
+  boot.kernelParams = [ "loglevel=5" ];
 
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.callPackage ./kernel.nix {});
   boot.initrd.availableKernelModules = lib.mkForce [
-  "ahci"
-  "nvme"
-  "sd_mod"
-  "xhci_hcd"
-  "xhci_pci"
-  "usbhid"
-  "hid_generic"
-  "rtc_cmos"
-];
+    "ahci"
+    "nvme"
+    "sd_mod"
+    "xhci_hcd"
+    "xhci_pci"
+    "usbhid"
+    "hid_generic"
+    "rtc_cmos"
+  ];
 
   finit.services.nix-daemon.environment.CURL_CA_BUNDLE = config.security.pki.caBundle;
   finit.services.nix-daemon.enable = true;
@@ -122,15 +87,36 @@ in
 
   # services.dbus.enable = true;
   services.dhcpcd.enable = true;
+    
+  services.openssh.enable = true;
+  services.sysklogd.enable = true;
+  services.mdevd.enable = true;
+  services.mdevd.nlgroups = 4;
+  services.mdevd.debug = true;
+
   services.nix-daemon.enable = true;
   services.nix-daemon.package = pkgs.nix; 
+  services.nix-daemon.nrBuildUsers = 32;
   services.nix-daemon.settings = {
-    # Flakes 
     experimental-features = [
       "nix-command"
+      "pipe-operators"
       "flakes"
     ];
 
+    system-features = [ 
+      "kvm"
+      "big-parallel"
+      "nixos-test"
+      "benchmark"
+      "gccarch-native"
+    ];
+
+    download-buffer-size = 524288000;
+    fallback = true;
+    log-lines = 25;
+    warn-dirty = false;
+    builders-use-substitutes = true;
     build-dir = "/nix/tmp";
 
     trusted-users = [
@@ -138,12 +124,6 @@ in
       "@wheel"
     ];
   };
-    
-  services.openssh.enable = true;
-  services.sysklogd.enable = true;
-  services.mdevd.enable = true;
-  services.mdevd.nlgroups = 4;
-  services.mdevd.debug = true;
 
   # .* 0:0 660 @${pkgs.finit}/libexec/finit/logit -s -t mdevd "event=$ACTION dev=$MDEV subsystem=$SUBSYSTEM path=$DEVPATH devtype=$DEVTYPE modalias=$MODALIAS major=$MAJOR minor=$MINOR"
   # TODO: shouldn't this just be included by default?
@@ -235,6 +215,7 @@ in
   programs.doas.enable = true;
 
   services.seatd.enable = true;
+
   finit.services.seatd.command = lib.mkForce "${pkgs.seatd.bin}/bin/seatd -n %n -u root -g ${config.services.seatd.group}";
 
   finit.cgroups = {
@@ -333,14 +314,23 @@ in
   environment.etc.subuid.text = "conor:100000:65536";
   environment.etc.subgid.text = "conor:100000:65536";
 
+  hardware.firmware = [ 
+    (pkgs.runCommand "navy-flounder-firmware" {} ''
+    mkdir -p $out/lib/firmware/amdgpu
+    cp ${pkgs.linux-firmware}/lib/firmware/amdgpu/navy_flounder_* $out/lib/firmware/amdgpu/
+  '')
+  ];
+
   environment.systemPackages = [
-    pkgs.fastfetch
+    # pkgs.fastfetch
     pkgs.btop
     pkgs.foot
 
+    pkgs.firefox
+
     pkgs.man
-    pkgs.nano
-    pkgs.vim
+    pkgsStatic.nano
+    pkgsStatic.vim
     pkgs.git
     pkgs.bintools
 
@@ -361,8 +351,13 @@ in
     pkgs.wireplumber
     pkgs.iproute2
 
+    pkgs.fish
+    pkgs.musl
+
     pkgs.util-linux
     pkgs.e2fsprogs
     pkgs.kbd
   ];
+
+  hardware.graphics.enable = true;
 }

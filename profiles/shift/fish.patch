@@ -1,0 +1,13 @@
+diff --git a/tests/checks/default-setup-path.fish b/tests/checks/default-setup-path.fish
+index 2862e38fd..9a44185ea 100644
+--- a/tests/checks/default-setup-path.fish
++++ b/tests/checks/default-setup-path.fish
+@@ -12,7 +12,8 @@ else
+     # this is DEFAULT_PATH
+     # the first element (usually `/usr/local/bin`) depends on PREFIX set in CMake, so we ignore it
+     set -e PATH
+-    $fish -c 'test "$PATH[2..]" = "/usr/bin:/bin"; and echo Success'
++    echo $PATH[2..]
++    $fish -c 'test "$PATH[2..]" = "/usr/bin/env:/bin"; and echo Success'
+ end
+ # CHECK: Success
