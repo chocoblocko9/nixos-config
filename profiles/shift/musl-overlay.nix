@@ -13,19 +13,26 @@
       + " -Wno-error=implicit-function-declaration -Wno-error=int-conversion";
   });
     
+  /*
   stdenv = prev.stdenv.override (old: {
     extraAttrs = (old.extraAttrs or {}) // {
       NIX_CFLAGS_COMPILE = (old.extraAttrs.NIX_CFLAGS_COMPILE or "") 
         + " -O3 -pipe -fno-plt";
     };
   });
+  */
 
-  # Turn off tests because they fail like 1/493 on musl
-  boehm-gc = prev.boehm-gc.overrideAttrs (old: {
-    doCheck = false;
-  });
+  /*
+  firefox = prev.firefox.overrideAttrs (old: {
+  nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ prev.mold ];
+  env = (old.env or {}) // {
+    NIX_LDFLAGS = "-fuse-ld=mold -Wl,--threads=3";
+    RUSTFLAGS = "-C link-arg=-fuse-ld=mold -C link-args=-Wl,--threads=3";
+  };
+});
+*/
 
-  wayland = prev.wayland.overrideAttrs (old: {
+   wayland = prev.wayland.overrideAttrs (old: {
     mesonFlags = (old.mesonFlags or []) ++ [
       "-Ddocumentation=false"
     ];
@@ -41,33 +48,22 @@
     patches = o.patches or [] ++ [ ./pipewire.patch ];
   });
 
+  fish = prev.fish.overrideAttrs (old: {
+    doCheck = false;
+  });
+
+  pytest-timeout = prev.pytest-timeout.overrideAttrs (old: {
+    doCheck = false;
+  });
+
   wireplumber = prev.wireplumber.override {
     pipewire = final.pipewire;
   };
 
   seatd = prev.seatd.override { systemdSupport = false; };
 
-  gnutls = prev.gnutls.overrideAttrs (old: {
-    doCheck = false;
-  });
-
   libfaketime = prev.libfaketime.overrideAttrs (old: {
     doCheck = false;
-    
-    # use the 'env' attribute to consolidate flags cus modern or smth
-    env = (old.env or {}) // {
-      NIX_CFLAGS_COMPILE = toString [
-        "-include pthread.h"
-        "-Wno-implicit-function-declaration"
-        "-Wno-int-conversion"
-        "-Dforce_stat=1"
-      ];
-    };
-
-    # no -Werror
-    postPatch = (old.postPatch or "") + ''
-      sed -i 's/-Werror//g' src/Makefile
-    '';
   });
 
   perl = prev.perl.overrideAttrs (old: {
@@ -76,15 +72,69 @@
     LC_ALL = "C.UTF-8";
   });
 
-  # bad SDL :<
+  # Upstreamed! 
+  # Waiting for staging-next merge
   sdl2-compat = prev.sdl2-compat.overrideAttrs (old: {
+    cmakeFlags = (old.cmakeFlags or [ ]) ++ [
+      (prev.lib.cmakeFeature "CMAKE_BUILD_RPATH" (prev.lib.makeLibraryPath [ final.sdl3 ]))
+    ];
+  });
+
+  ffmpeg_7 = prev.ffmpeg.overrideAttrs (old: {
     doCheck = false;
   });
 
-  sdl3 = prev.sdl3.overrideAttrs (old: {
-    doCheck = false;
+  adw-gtk3 = (prev.adw-gtk3.override {
+    dart-sass = prev.sass; 
+  }).overrideAttrs (old: {
+  postPatch = (prev.postPatch or "") + ''
+    substituteInPlace src/theme-{dark,light}/meson.build \
+      --replace-fail '--no-source-map' '--sourcemap=none'
+    '';
   });
 
+  # PR made
+  glaze = prev.glaze.overrideAttrs (old: {
+    cmakeFlags = (old.cmakeFlags or []) ++ [
+      "-Dglaze_ENABLE_FUZZING=OFF"
+    ];
+  });
+
+  /*
+  firefox-unwrapped = prev.firefox-unwrapped.overrideAttrs (old: {
+nativeBuildInputs = (old.nativeBuildInputs or []) ++ [
+  prev.llvmPackages_21.lld
+];
+env = (old.env or {}) // {
+  # NIX_LDFLAGS = "-fuse-ld=lld -Wl,--threads=3";
+  # RUSTFLAGS = "-C link-arg=-fuse-ld=lld -C link-args=-Wl,--threads=3 -C codegen-units=4";
+  MOZ_MAKE_FLAGS = "-j3";
+  # CARGO_BUILD_JOBS = "3";
+};
+    patches = (old.patches or []) ++ [
+      ./ff-patches/single-threaded-header.patch
+      ./ff-patches/mallinfo.patch
+      ./ff-patches/firefox-148-mach-clobber.patch
+      ./ff-patches/firefox-148-webrtc-missing-includes.patch
+      ./ff-patches/firefox-146-musl-linux-sys-prctl-conflict.patch
+    ];
+  });
+  */
+
+  libcanberra = prev.libcanberra.overrideAttrs (old: {
+    # musl doesn't provide ldconfig, so bypass it
+    #
+    # also bypass relinking as we dont need to do so
+    postConfigure = (old.postConfigure or "") + ''
+      substituteInPlace libtool \
+        --replace-fail 'ldconfig' 'true'
+      substituteInPlace libtool \
+        --replace-fail 'relink_command=' 'true; relink_command='
+    '';
+  });
+
+  # Upstreamed :)
+  # Waiting for new release
   enlightenment.efl = prev.enlightenment.efl.overrideAttrs (old: {
     postPatch = (old.postPatch or "") + ''
       sed -i 's/ino64_t/uint64_t/g; s/off64_t/uint64_t/g' \
@@ -103,13 +153,14 @@
     '';
   });
 
-  hyprshutdown = prev.hyprshutdown.overrideAttrs (old: {
-    # Append the disabling flags to CMake
-    cmakeFlags = (old.cmakeFlags or [ ]) ++ [
-      "-Dglaze_ENABLE_TESTING=OFF"
-      "-DBUILD_TESTING=OFF"
-    ];
+  /*
+  libfyaml = prev.libfyaml.overrideAttrs (old: {
+    postInstall = (old.postInstall or "") + ''
+      sed -i 's/none required//g' \
+        $dev/lib/pkgconfig/libfyaml.pc
+    '';
   });
+  */
 
   lua-language-server = prev.lua-language-server.overrideAttrs (old: {
     doCheck = false;
