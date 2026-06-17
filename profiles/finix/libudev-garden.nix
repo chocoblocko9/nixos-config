@@ -8,20 +8,19 @@
 }:
 
 stdenv.mkDerivation (finalAttrs: {
-  pname = "libudev-zero";
-  version = "unstable";
+  pname = "libudev-garden";
+  version = "0.2.1";
+
+  __structuredAttrs = true;
 
   src = fetchFromCodeberg {
     owner = "Gardenhouse";
-    repo = "libudev-zero";
-    rev = "8573d647bb44efd3569b6adf782bfb947a2b7124";
-    sha256 = "sha256-zlyzsmLr/3Nx0OUCszENZQum4VR9IKB1XJlxrNmt3tI=";
+    repo = "libudev-garden";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-+95+3Hb6lkIhpNZF0pQdM9y5GxZCplp/o2nemZJb5Wc=";
   };
 
-  makeFlags = [
-    "PREFIX=$(out)"
-    "AR=${stdenv.cc.targetPrefix}ar"
-  ];
+  strictDeps = true;
 
   nativeBuildInputs = [
     meson
@@ -30,15 +29,15 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   meta = {
-    homepage = "https://github.com/illiliti/libudev-zero";
+    homepage = "https://codeberg.org/Gardenhouse/libudev-garden";
     description = "Daemonless replacement for libudev";
-    changelog = "https://github.com/illiliti/libudev-zero/releases/tag/${finalAttrs.version}";
     maintainers = with lib.maintainers; [
-      qyliss
-      shamilton
+      aanderse
+      choco98
     ];
     license = lib.licenses.isc;
     pkgConfigModules = [ "libudev" ];
     platforms = lib.platforms.linux;
+    sourceProvenance = [ lib.sourceTypes.fromSource ];
   };
 })
