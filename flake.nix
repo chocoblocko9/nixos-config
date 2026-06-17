@@ -134,7 +134,7 @@
 
   inputs = {
     # nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs.url = "git+file:///home/conor/nixpkgs?rev=007a93a1044bc9bab53dd4c6b1e81dde1f6748cc";
+    nixpkgs.url = "git+file:///home/conor/nixpkgs?rev=989422b4baae846680d10cfbbb7f6a15684b6f70";
     finix.url = "github:chocoblocko9/finix/gardendevd-init";
     finix-old.url = "git+file:///home/conor/programming/finix/finix?rev=1f7ac982a6b2c76b2223845ea867c399fd8899a1";
 
