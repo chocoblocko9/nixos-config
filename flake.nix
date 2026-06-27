@@ -121,6 +121,7 @@
           fwupd
           limine
           nftables
+          niri
           nix-daemon
           openssh
           polkit
@@ -135,8 +136,9 @@
   inputs = {
     # nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs.url = "git+file:///home/conor/nixpkgs?rev=989422b4baae846680d10cfbbb7f6a15684b6f70";
-    finix.url = "github:chocoblocko9/finix/gardendevd-init";
-    finix-old.url = "git+file:///home/conor/programming/finix/finix?rev=1f7ac982a6b2c76b2223845ea867c399fd8899a1";
+    finix.url = "git+file:///home/conor/programming/finix/finix?rev=eafe762ea96c1c39ac7d09019880ac53432a6cd4";
+    # finix.url = "github:chocoblocko9/finix/gardendevd-init";
+    finix-old.url = "git+file:///home/conor/programming/finix/finix?rev=54408f0974074a2c1b7aab8bef4c5c314c901637";
 
     community-modules.url = "git+file:///home/conor/finix/fastfetch-init";
     modular-services.url = "github:chocoblocko9/modular-services/fix-finit-check";
@@ -149,7 +151,7 @@
     };
 
     hjem = {
-      url = "github:r0chd/hjem";
+      url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

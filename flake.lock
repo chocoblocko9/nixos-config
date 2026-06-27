@@ -50,32 +50,32 @@
     },
     "finix": {
       "locked": {
-        "lastModified": 1780957689,
-        "narHash": "sha256-eK34/66T4PMcOPrwKRenZgKJRKko4WWAczAkaNmYa+w=",
-        "owner": "chocoblocko9",
-        "repo": "finix",
-        "rev": "fdc94684c81e75a35cc4f364b62e5f4585b31dac",
-        "type": "github"
-      },
-      "original": {
-        "owner": "chocoblocko9",
-        "ref": "gardendevd-init",
-        "repo": "finix",
-        "type": "github"
-      }
-    },
-    "finix-old": {
-      "locked": {
-        "lastModified": 1781616156,
-        "narHash": "sha256-SSTgiUxkjvdynXjKF2/y0sFjCGAU4Bvkho1QiGmdur0=",
-        "ref": "master",
-        "rev": "1f7ac982a6b2c76b2223845ea867c399fd8899a1",
-        "revCount": 534,
+        "lastModified": 1781724917,
+        "narHash": "sha256-zknI4oIV5SrTBEvkjprzmFlizA5Yx3CZqdDDbDWVwjo=",
+        "ref": "refs/heads/gardendevd-init",
+        "rev": "eafe762ea96c1c39ac7d09019880ac53432a6cd4",
+        "revCount": 535,
         "type": "git",
         "url": "file:///home/conor/programming/finix/finix"
       },
       "original": {
-        "rev": "1f7ac982a6b2c76b2223845ea867c399fd8899a1",
+        "rev": "eafe762ea96c1c39ac7d09019880ac53432a6cd4",
+        "type": "git",
+        "url": "file:///home/conor/programming/finix/finix"
+      }
+    },
+    "finix-old": {
+      "locked": {
+        "lastModified": 1781655909,
+        "narHash": "sha256-NbIMZ26a9ur+bdZ2Xxi3PAQ79ym3W/crkhusSEriTLU=",
+        "ref": "refs/heads/main",
+        "rev": "54408f0974074a2c1b7aab8bef4c5c314c901637",
+        "revCount": 549,
+        "type": "git",
+        "url": "file:///home/conor/programming/finix/finix"
+      },
+      "original": {
+        "rev": "54408f0974074a2c1b7aab8bef4c5c314c901637",
         "type": "git",
         "url": "file:///home/conor/programming/finix/finix"
       }
@@ -126,15 +126,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1780198923,
-        "narHash": "sha256-r4p8nzDjt0WkBR9kluWxx59U46cyVDvV4v2+/JD6LcU=",
-        "owner": "r0chd",
+        "lastModified": 1781430841,
+        "narHash": "sha256-5uEX8TEZ5kI+bnil/T2jtRlxiADcyeD9mX8gOwQIEVs=",
+        "owner": "feel-co",
         "repo": "hjem",
-        "rev": "71442f1aa0122be596077ac7163e6c99821457e7",
+        "rev": "89d0beea9068903aeb9998f52b741c69d4e32aa1",
         "type": "github"
       },
       "original": {
-        "owner": "r0chd",
+        "owner": "feel-co",
         "repo": "hjem",
         "type": "github"
       }
