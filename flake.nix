@@ -1,6 +1,7 @@
 {
-  description = "System flake that I'm scared of (how does this work)"; outputs = { nixpkgs, finix, finix-old, ... } @ inputs:
+  description = "System flake that I'm scared of (how does this work)";
 
+  outputs = { nixpkgs, finix, finix-old, ... } @ inputs:
     let
       lib = nixpkgs.lib;
 
@@ -135,9 +136,7 @@
   inputs = {
     # nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs.url = "git+file:///home/conor/nixpkgs?rev=1db7af7f172862de797893f3afd017cbd4a08ca3";
-    # finix.url = "git+file:///home/conor/programming/finix/finix?rev=5eadfc6544d069e7e9ae4268710c294d47c37529";
     finix.url = "github:chocoblocko9/finix/gardendevd-init";
-    finix-old.url = "git+file:///home/conor/programming/finix/finix?rev=54408f0974074a2c1b7aab8bef4c5c314c901637";
 
     community-modules.url = "git+file:///home/conor/finix/fastfetch-init";
     modular-services.url = "github:chocoblocko9/modular-services/fix-finit-check";

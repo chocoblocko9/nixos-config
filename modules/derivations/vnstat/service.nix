@@ -11,10 +11,19 @@
 let
   cfg = config.vnstat;
 
-  configFile = config.configData."vnstat.conf".path;
+  format = formats.iniWithGlobalSection { };
+  configFile = format.generate "vnstat.conf" {
+    globalSection = lib.filterAttrs (_: v: !lib.isAttrs v) cfg.settings;
+    sections = lib.filterAttrs (_: lib.isAttrs) cfg.settings;
+  };
+
+  /*
+  configFile = config.configData."tlshd.conf".path;
+  #configFile = format.generate "vnstat.conf" {};
   format = formats.keyValue {
     mkKeyValue = lib.generators.mkKeyValueDefault { } " ";
   };
+  */
 in
 {
   # https://nixos.org/manual/nixos/unstable/#modular-services
@@ -60,7 +69,7 @@ in
 
     process.argv = [
       (lib.getExe cfg.package)
-      (lib.optionalString (cfg.debug) "--debug")
+      (lib.optionalString (cfg.debug) "-D")
       "--config"
       configFile
     ];
@@ -90,8 +99,8 @@ in
         RestrictRealtime = true;
         RestrictNamespaces = true;
 
-        User = "vnstatd";
-        Group = "vnstatd";
+        #User = "vnstatd";
+        #Group = "vnstatd";
       };
     };
 
@@ -109,7 +118,5 @@ in
     };
   };
 
-  meta.maintainers = with lib.maintainers; [
-    choco98 
-  ];
+  meta.maintainers = with lib.maintainers; [ choco98 ];
 }
