@@ -15,9 +15,9 @@ let
         udev = libudev-garden;
       }
     )).overrideAttrs
-      (o: lib.optionalAttrs config.services.mdevd.enable {
+      (o: {
         # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/2398#note_2967898
-        patches = o.patches or [ ] ++ lib.optionals config.services.mdevd.enable [ ./pipewire.patch ];
+        patches = o.patches or [ ] ++ lib.optionals (config.services.mdevd.enable || config.services.gardendevd.enable) [ ./pipewire.patch ];
       });
 
   wireplumber' = pkgs.wireplumber.override (
@@ -28,7 +28,12 @@ let
 
   seatd' = pkgs.seatd.override { systemdSupport = false; };
 
-  xdg-desktop-portal' = pkgs.xdg-desktop-portal.override { enableSystemd = false; };
+  xdg-desktop-portal' = (pkgs.xdg-desktop-portal.override { enableSystemd = false; 
+    }).overrideAttrs 
+      (o: {
+        doCheck = false;
+      }
+    );
 
   gardendevd = pkgs.callPackage ./gardendevd.nix {};
   libudev-garden = pkgs.callPackage ./libudev-garden.nix {};
@@ -64,6 +69,8 @@ let
   xdph = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland.override {
     inherit hyprland;
   };
+
+  vnstat' = pkgs.callPackage ../../modules/derivations/vnstat/package.nix {};
 in
 {
   imports = [
@@ -71,12 +78,13 @@ in
     ./pam.nix
     ./zsh.nix
     ./flatpak.nix
-    ./steam.nix
     ./direnv.nix
+     ./openrgb.nix
     inputs.modular-services.nixosModules.default
 
     ../../profiles/slip/hjem.nix 
   ];
+
 
   hjem.users.conor = {
     directory = "/home/conor";
@@ -88,48 +96,17 @@ in
 
   specialisation.gardendevd = {
     services.mdevd.enable = lib.mkForce false;
+    #services.seatd.enable = lib.mkForce false;
+    #services.elogind.enable = lib.mkForce true;
+    environment.etc."specialisation".text = "gardendevd";
   };
 
+  /*
   specialisation.udev = {
     services.mdevd.enable = lib.mkForce false;
     services.gardendevd.enable = lib.mkForce false;
     services.udev.enable = lib.mkForce true;
     environment.etc."specialisation".text = "udev";
-  };
-
-  /*
-  finit.package = pkgs.finit.overrideAttrs (o: {
-    version = "5.0";
-    src = pkgs.fetchFromGitHub {
-      owner = "finit-project";
-      repo = "finit";
-      rev = "devman";
-      sha256 = "sha256-HmZPAhnZD0AIuzvkfiwjMudeYrjEIlDXUclsqXvNTI4=";
-    };
-
-    buildInputs = o.buildInputs ++ [ pkgs.util-linuxMinimal.dev ];
-
-    postPatch = (o.postPatch or "") + ''
-      substituteInPlace keventd/uevent.c \
-        --replace-fail '"/sbin/modprobe", "modprobe"' '"${pkgs.kmod}/bin/modprobe", "modprobe"' \
-        --replace-fail '"/usr/lib/firmware/' '"/run/current-system/firmware/lib/firmware/'
-
-      substituteInPlace keventd/builtin.c \
-        --replace-fail  '"/lib/udev/hwdb.d"' '"/run/current-system/sw/lib/udev/hwdb.d"' \
-        --replace-fail  '"/usr/share/hwdata/usb.ids"' '"${pkgs.hwdata}/share/hwdata/usb.ids"'
-    '';
-  });
-
-  specialisation.keventd = {
-    services.keventd.enable = lib.mkForce true;
-    services.mdevd.enable = lib.mkForce false;
-    services.udev.enable = lib.mkForce false;
-
-    services.seatd.enable = lib.mkForce true;
-    services.elogind.enable = lib.mkForce false;
-
-    services.iwd.enable = lib.mkForce true;
-    environment.etc."specialisation".text = "keventd";
   };
   */
 
@@ -162,6 +139,7 @@ in
   };
 
   services.elogind.package = pkgs.elogind;
+  services.hardware.openrgb.enable = true;
 
   security.pam.environment = {
     EDITOR.override = "nvim";
@@ -371,6 +349,42 @@ in
   '';
   services.polkit.enable = true;
 
+  system.services."meow" = {
+    imports = [ pkgs.vnstat.services.default ];
+
+    vnstat = {
+      debug = true;
+      settings = {
+
+          "CheckDiskSpace" = "1";
+          "DatabaseDir" = "/var/lib/vnstat";
+      };
+    };
+  };
+
+  /*
+  system.services."meow2" = {
+    imports = [ pkgs.ktls-utils.services.default ];
+
+    tlshd.settings = {  
+      "loglevel" = "1";
+      "authenticate.server" = {
+        "x509.certificate" = "/var/lib/tlshd/cert.pem";
+        "x509.private_key" = "/var/lib/tlshd/key.pem";
+        "x509.truststore" = "/var/lib/tlshd/truststore.pem";
+      };
+    };
+
+    vnstat = {
+      debug = true;
+      settings = {
+        CheckDiskSpace = "1";
+        DatabaseDir = "/var/lib/vnstat";
+      };
+    };
+  };
+  */
+
   programs.resolvconf.enable = true;
   programs.resolvconf.package = pkgs.openresolv.overrideAttrs (_: {
     # TODO: could potentially make 'RESTARTCMD' an overridable option for the package
@@ -397,6 +411,7 @@ in
   finit.services.seatd.command = lib.mkForce "${seatd'.bin}/bin/seatd -n %n -u root -g ${config.services.seatd.group}";
 
   services.gardendevd.enable = true;
+  services.gardendevd.debug = true;
   /*
   finit.services.gardendevd = {
     description = "hi";
@@ -436,16 +451,16 @@ in
     };
   };
 
-  # services.xserver.enable = true; 
-
   finit.cgroups = {
     system.settings."cpu.weight" = 100;
     user.settings."cpu.weight" = 100;
   };
 
   # misc
+  /*
   services.vnstat.enable = true;
   services.vnstat.package = pkgs.vnstat;
+  */
 
   services.upower.enable = true;
 
@@ -518,11 +533,16 @@ var YES = polkit.Result.YES;
         return permission[action.id];
       }
       */
-  xdg.portal.portals = [ 
-    xdph
-    # inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland
-    xdg-desktop-portal'
-  ];
+    xdg = {
+      mime.enable = true;
+      portal = {
+        enable = true;
+        portals = [ 
+          xdph
+          xdg-desktop-portal'
+        ];
+      };
+    };
 
 
   services.dbus.packages = [
@@ -554,6 +574,11 @@ var YES = polkit.Result.YES;
       requirePassword = false;
     }
     {
+      command = "/run/current-system/sw/bin/suspend";
+      users = [ "conor" ];
+      requirePassword = false;
+    }
+    {
       command = "/run/current-system/sw/bin/reboot";
       users = [ "conor" ]; requirePassword = false; }
   ]
@@ -577,6 +602,7 @@ var YES = polkit.Result.YES;
 
   services.udev.packages = [
     config.services.udev.package
+    pkgs.finit
   ];
 
   hardware.firmware = with pkgs; [
@@ -617,7 +643,7 @@ var YES = polkit.Result.YES;
   environment.etc.subuid.text = "conor:100000:65536";
   environment.etc.subgid.text = "conor:100000:65536";
 
-  programs.virtualbox.enable = true;
+  #programs.virtualbox.enable = true;
   programs.virtualbox.package = pkgs.virtualboxWithExtpack;
 
   users.users.test = {
@@ -637,7 +663,7 @@ var YES = polkit.Result.YES;
     ];
   };
 
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
 
   environment.pathsToLink = [
     # TODO: xdg.icon module
@@ -735,6 +761,10 @@ var YES = polkit.Result.YES;
     pkgs.kbd
     pkgs.xdg-utils
 
+    pkgs.steam
+    pkgs.steam.run
+    pkgs.pulseaudio
+
     pkgs.busybox
     pkgs.imv # TODO: set as default image viewer
 
@@ -747,7 +777,7 @@ var YES = polkit.Result.YES;
     "en_IE.UTF-8/UTF-8"
   ];
 
-  programs.fastfetch.enable = true;
+  # programs.fastfetch.enable = true;
 
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;

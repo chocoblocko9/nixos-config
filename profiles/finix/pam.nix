@@ -7,16 +7,6 @@
 {
   security.pam.debug = true;
 
-  services.udev.packages = lib.singleton (
-      pkgs.writeTextFile {
-        name = "i2c-udev-rules";
-        text = ''
-          SUBSYSTEM=="usb", ATTRS{idVendor}=="2dc8", ATTRS{idProduct}=="3010", ATTR{authorized}="0"
-        '';
-        destination = "/etc/udev/rules.d/90-controller-vm.rules";
-      }
-    );
-
   security.pam.services = lib.mkMerge [
     {
       login.text = lib.mkForce ''
@@ -61,6 +51,7 @@
         session optional ${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so auto_start
 
         ${lib.optionalString config.services.elogind.enable "session optional ${pkgs.elogind}/lib/security/pam_elogind.so"}
+        ${lib.optionalString config.services.seatd.enable "session optional ${pkgs.pam_xdg}/lib/security/pam_xdg.so runtime track_sessions"}
       '';
     }
 
