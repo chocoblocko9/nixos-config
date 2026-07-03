@@ -1,8 +1,5 @@
 {
-  description = "System flake that I'm scared of (how does this work)";
-
-  outputs =
-    { nixpkgs, finix, finix-old, ... } @ inputs:
+  description = "System flake that I'm scared of (how does this work)"; outputs = { nixpkgs, finix, finix-old, ... } @ inputs:
 
     let
       lib = nixpkgs.lib;
@@ -99,7 +96,7 @@
       }; 
 
       # shift = finix-patch.lib.finixSystem {
-      shift = finix-old.lib.finixSystem {
+      shift = finix.lib.finixSystem {
         inherit (muslpkgs) lib;
 
         specialArgs = {
@@ -108,7 +105,7 @@
           inherit (subvertpkgs) pkgsStatic;
         };
 
-        modules = with finix-old.nixosModules; [
+        modules = with finix.nixosModules; [
         # modules = with finix-patch.nixosModules; [
           { nixpkgs.pkgs = nixpkgs.lib.mkDefault muslpkgs; }
           ./profiles/shift/configuration.nix
@@ -120,6 +117,7 @@
           getty
           fwupd
           limine
+          ly
           nftables
           niri
           nix-daemon
@@ -127,6 +125,7 @@
           polkit
           rtkit
           doas
+          sudo
           sysklogd
         ];
       };
@@ -135,9 +134,9 @@
 
   inputs = {
     # nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs.url = "git+file:///home/conor/nixpkgs?rev=989422b4baae846680d10cfbbb7f6a15684b6f70";
-    finix.url = "git+file:///home/conor/programming/finix/finix?rev=eafe762ea96c1c39ac7d09019880ac53432a6cd4";
-    # finix.url = "github:chocoblocko9/finix/gardendevd-init";
+    nixpkgs.url = "git+file:///home/conor/nixpkgs?rev=1db7af7f172862de797893f3afd017cbd4a08ca3";
+    # finix.url = "git+file:///home/conor/programming/finix/finix?rev=5eadfc6544d069e7e9ae4268710c294d47c37529";
+    finix.url = "github:chocoblocko9/finix/gardendevd-init";
     finix-old.url = "git+file:///home/conor/programming/finix/finix?rev=54408f0974074a2c1b7aab8bef4c5c314c901637";
 
     community-modules.url = "git+file:///home/conor/finix/fastfetch-init";
@@ -147,7 +146,6 @@
     hyprland = {
       # url = "github:hyprwm/Hyprland";
       url = "github:chocoblocko9/Hyprland/center-false-fix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     hjem = {

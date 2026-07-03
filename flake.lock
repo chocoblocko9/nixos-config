@@ -50,18 +50,18 @@
     },
     "finix": {
       "locked": {
-        "lastModified": 1781724917,
-        "narHash": "sha256-zknI4oIV5SrTBEvkjprzmFlizA5Yx3CZqdDDbDWVwjo=",
-        "ref": "refs/heads/gardendevd-init",
-        "rev": "eafe762ea96c1c39ac7d09019880ac53432a6cd4",
-        "revCount": 535,
-        "type": "git",
-        "url": "file:///home/conor/programming/finix/finix"
+        "lastModified": 1782677422,
+        "narHash": "sha256-J7fFrMMUsdyK3pzM9i8SRG65lj5Eq26GMUFpbydWYnk=",
+        "owner": "chocoblocko9",
+        "repo": "finix",
+        "rev": "aaa568400cb938a2fdf78e5d09ef95caec59b9d9",
+        "type": "github"
       },
       "original": {
-        "rev": "eafe762ea96c1c39ac7d09019880ac53432a6cd4",
-        "type": "git",
-        "url": "file:///home/conor/programming/finix/finix"
+        "owner": "chocoblocko9",
+        "ref": "gardendevd-init",
+        "repo": "finix",
+        "type": "github"
       }
     },
     "finix-old": {
@@ -208,9 +208,7 @@
         "hyprutils": "hyprutils",
         "hyprwayland-scanner": "hyprwayland-scanner",
         "hyprwire": "hyprwire",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
+        "nixpkgs": "nixpkgs",
         "pre-commit-hooks": "pre-commit-hooks",
         "systems": "systems",
         "xdph": "xdph"
@@ -515,16 +513,32 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1781721546,
-        "narHash": "sha256-UwokWW04gSmfyj+k5vvtUK7KwBUkkqHey7l4L++1kS4=",
+        "lastModified": 1778443072,
+        "narHash": "sha256-zi7/fsqM/kFdNuED//4WOCUtezGtKKqRNORjMvfwjnA=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "da5ad661ba4e5ef59ba743f0d112cbc30e474f32",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1782583012,
+        "narHash": "sha256-/bTzziWWHZ7IIWxHkIhc0Ojco3m8ZvmfJ/DUhm0p6OQ=",
         "ref": "refs/heads/working",
-        "rev": "989422b4baae846680d10cfbbb7f6a15684b6f70",
-        "revCount": 1018292,
+        "rev": "1db7af7f172862de797893f3afd017cbd4a08ca3",
+        "revCount": 1018296,
         "type": "git",
         "url": "file:///home/conor/nixpkgs"
       },
       "original": {
-        "rev": "989422b4baae846680d10cfbbb7f6a15684b6f70",
+        "rev": "1db7af7f172862de797893f3afd017cbd4a08ca3",
         "type": "git",
         "url": "file:///home/conor/nixpkgs"
       }
@@ -561,7 +575,7 @@
         "hyprland": "hyprland",
         "modular-services": "modular-services",
         "nix-flatpak": "nix-flatpak",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       }
     },
     "systems": {
