@@ -3,23 +3,25 @@
 let
   kernel = pkgs.stdenv.mkDerivation rec {
     pname = "linux";
-    version = "7.0.3";
+    version = "7.1";
+
+    target = "bzImage"; # nixpkgs broke stuff for no reason
 
     src = pkgs.linux_latest.src;
 
-    nativeBuildInputs = with pkgs; [
-      bc
-      bison
-      flex
-      openssl.dev
-      elfutils
-      perl
-      python3
-      rsync
-      kmod
-      cpio
-      pahole
-      zstd
+    nativeBuildInputs = [
+      pkgs.bc
+      pkgs.bison
+      pkgs.flex
+      pkgs.openssl.dev
+      pkgs.elfutils
+      pkgs.perl
+      pkgs.python3
+      pkgs.rsync
+      pkgs.kmod
+      pkgs.cpio
+      pkgs.pahole
+      pkgs.zstd
     ];
 
     buildPhase = ''

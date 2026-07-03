@@ -9,6 +9,8 @@
 let
   xdg-desktop-portal = pkgs.xdg-desktop-portal.override { enableSystemd = false; };
 
+  sonarr = pkgs.callPackage ./sonarr.nix {};
+
   libinput = pkgs.libinput.override {
     udev = pkgs.libudev-zero;
     wacomSupport = false;
@@ -60,9 +62,10 @@ in
 
   boot.kernelParams = [ "loglevel=5" ];
 
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.callPackage ./kernel.nix {});
-  boot.initrd.availableKernelModules = lib.mkForce [
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.callPackage ./kernel.nix {});
+  /*
+  boot.initrd.availableKernelModules = [
     "ahci"
     "nvme"
     "sd_mod"
@@ -72,6 +75,7 @@ in
     "hid_generic"
     "rtc_cmos"
   ];
+  */
 
   finit.services.nix-daemon.environment.CURL_CA_BUNDLE = config.security.pki.caBundle;
   finit.services.nix-daemon.enable = true;
@@ -85,7 +89,6 @@ in
 
   finit.runlevel = 3;
 
-  # services.dbus.enable = true;
   services.dhcpcd.enable = true;
     
   services.openssh.enable = true;
@@ -212,9 +215,13 @@ in
   xdg.portal.enable = false;
 
   programs.bash.enable = true;
-  programs.doas.enable = true;
+  programs.doas = {
+    enable = true;
+    persist = true;
+  };
 
   services.seatd.enable = true;
+  services.ly.enable = true;
 
   finit.services.seatd.command = lib.mkForce "${pkgs.seatd.bin}/bin/seatd -n %n -u root -g ${config.services.seatd.group}";
 
@@ -285,6 +292,8 @@ in
     config.services.udev.package
   ];
 
+  programs.niri.enable = true;
+
   users.users.root.password = "$6$7luPjbNjbmrf1rvj$RAWwzn//WtL3PTm6LRjYqus1ELrAzXagWdmvroHVbPMP8.3Ze0.bzlQN4cRvGTgIfNlKQux6b0Yr2zn.ZvjZa.";
 
   users.users.conor = {
@@ -314,17 +323,24 @@ in
   environment.etc.subuid.text = "conor:100000:65536";
   environment.etc.subgid.text = "conor:100000:65536";
 
+  hardware.firmware = [
+    pkgs.linux-firmware
+  ];
+
+  /*
   hardware.firmware = [ 
     (pkgs.runCommand "navy-flounder-firmware" {} ''
     mkdir -p $out/lib/firmware/amdgpu
     cp ${pkgs.linux-firmware}/lib/firmware/amdgpu/navy_flounder_* $out/lib/firmware/amdgpu/
   '')
   ];
+  */
 
   environment.systemPackages = [
     # pkgs.fastfetch
     pkgs.btop
     pkgs.foot
+    pkgs.alacritty
 
     pkgs.firefox
 
@@ -349,10 +365,17 @@ in
 
     pkgs.pipewire
     pkgs.wireplumber
+    pkgs.pavucontrol
     pkgs.iproute2
+    pkgs.noctalia-shell
+
+    sonarr
+    # pkgs.sonarr
+    # pkgs.radarr
 
     pkgs.fish
     pkgs.musl
+    pkgs.nixos-rebuild-ng
 
     pkgs.util-linux
     pkgs.e2fsprogs

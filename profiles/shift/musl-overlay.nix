@@ -1,4 +1,5 @@
 (final: prev: {
+  # what
   musl = prev.musl.overrideAttrs (old: {
     nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
       prev.buildPackages.stdenv.cc.bintools
@@ -23,29 +24,50 @@
   */
 
   /*
-  firefox = prev.firefox.overrideAttrs (old: {
-  nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ prev.mold ];
-  env = (old.env or {}) // {
-    NIX_LDFLAGS = "-fuse-ld=mold -Wl,--threads=3";
-    RUSTFLAGS = "-C link-arg=-fuse-ld=mold -C link-args=-Wl,--threads=3";
-  };
-});
-*/
+  sonarr = prev.sonarr.override {
+      dotnet-sdk_8 = prev.dotnetCorePackages.sdk_8_0-source;
+    };
+    radarr = prev.radarr.override {
+      dotnet-sdk_8 = prev.dotnetCorePackages.sdk_8_0-source;
+    };
+  */
 
+  # FIXME: lame as fuck
+  dotnet-sdk_8 = prev.dotnet-sdk_8.overrideAttrs (old: {
+    src = final.fetchurl {
+      url = "https://dotnetcli.azureedge.net/dotnet/Sdk/8.0.422/dotnet-sdk-8.0.422-linux-musl-x64.tar.gz";
+      hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+    };
+    nativeBuildInputs = builtins.filter
+    (x: x != final.autoPatchelfHook)
+    old.nativeBuildInputs;
+  });
+
+  # Included in 2.2.8 upstream, waiting on release
+  ddcutil = prev.ddcutil.overrideAttrs (old: {
+    postPatch = (old.postPatch or "") + ''
+      substituteInPlace src/util/linux_util.c \
+        --replace-fail "#include <execinfo.h>      // for segv handler" ""
+    '';
+  });
+
+  breakpad = prev.breakpad.overrideAttrs (old: {
+    configureFlags = (old.configureFlags or []) ++ [
+      "--disable-tools"
+    ];
+  });
+
+  /*
    wayland = prev.wayland.overrideAttrs (old: {
     mesonFlags = (old.mesonFlags or []) ++ [
       "-Ddocumentation=false"
     ];
     outputs = ["out" "dev" ];
   });
+  */
 
-  pipewire = (prev.pipewire.override {
-    enableSystemd = false;
-    udev = prev.libudev-zero;
-  }).overrideAttrs (o: {
+  protobuf_33 = prev.protobuf_33.overrideAttrs (old: {
     doCheck = false;
-    NIX_CFLAGS_COMPILE = (o.NIX_CFLAGS_COMPILE or "") + " -Wno-error=nonnull -Wno-error=stringop-overread";
-    patches = o.patches or [] ++ [ ./pipewire.patch ];
   });
 
   fish = prev.fish.overrideAttrs (old: {
@@ -55,12 +77,6 @@
   pytest-timeout = prev.pytest-timeout.overrideAttrs (old: {
     doCheck = false;
   });
-
-  wireplumber = prev.wireplumber.override {
-    pipewire = final.pipewire;
-  };
-
-  seatd = prev.seatd.override { systemdSupport = false; };
 
   libfaketime = prev.libfaketime.overrideAttrs (old: {
     doCheck = false;
@@ -80,6 +96,11 @@
     ];
   });
 
+  gcr = prev.gcr.overrideAttrs (old: {
+    env.NIX_CFLAGS_COMPILE = (old.env.NIX_CFLAGS_COMPILE or "") 
+      + " -Wno-error=implicit-function-declaration -Wno-error=int-conversion";
+  });
+
   ffmpeg_7 = prev.ffmpeg.overrideAttrs (old: {
     doCheck = false;
   });
@@ -93,24 +114,17 @@
     '';
   });
 
-  # PR made
+  # PR merged!
+  # (in nixos-unstable yet?) 
   glaze = prev.glaze.overrideAttrs (old: {
     cmakeFlags = (old.cmakeFlags or []) ++ [
       "-Dglaze_ENABLE_FUZZING=OFF"
     ];
   });
 
+  # Outdated, use pr
   /*
   firefox-unwrapped = prev.firefox-unwrapped.overrideAttrs (old: {
-nativeBuildInputs = (old.nativeBuildInputs or []) ++ [
-  prev.llvmPackages_21.lld
-];
-env = (old.env or {}) // {
-  # NIX_LDFLAGS = "-fuse-ld=lld -Wl,--threads=3";
-  # RUSTFLAGS = "-C link-arg=-fuse-ld=lld -C link-args=-Wl,--threads=3 -C codegen-units=4";
-  MOZ_MAKE_FLAGS = "-j3";
-  # CARGO_BUILD_JOBS = "3";
-};
     patches = (old.patches or []) ++ [
       ./ff-patches/single-threaded-header.patch
       ./ff-patches/mallinfo.patch
@@ -141,6 +155,12 @@ env = (old.env or {}) // {
       src/lib/eina/eina_file_posix.c
     '';
   });
+  
+  /*
+  sqlite = prev.sqlite.overrideAttrs (old: {
+    doCheck = false;
+  });
+  */
 
   appstream = prev.appstream.overrideAttrs (old: {
     # none and required leaked into the meson file and
@@ -152,6 +172,9 @@ env = (old.env or {}) // {
       sed -i 's/ none$//g; s/ required$//g' build.ninja
     '';
   });
+
+  # related to this, there was like a half fix
+  # but cba to look into it 
 
   /*
   libfyaml = prev.libfyaml.overrideAttrs (old: {
@@ -171,4 +194,28 @@ env = (old.env or {}) // {
       doCheck = false; 
     };
   };
+
+
+  # ==================== Not necessary for pkgsMusl ====================
+  
+  # Tests don't even fail they just take FOREVER
+  # I don't wanna run them
+  openssl_3_6 = prev.openssl_3_6.overrideAttrs (old: {
+    doCheck = false;
+  });
+
+  pipewire = (prev.pipewire.override {
+    enableSystemd = false;
+    udev = prev.libudev-zero;
+  }).overrideAttrs (o: {
+    doCheck = false;
+    NIX_CFLAGS_COMPILE = (o.NIX_CFLAGS_COMPILE or "") + " -Wno-error=nonnull -Wno-error=stringop-overread";
+    patches = o.patches or [] ++ [ ./pipewire.patch ];
+  });
+
+  wireplumber = prev.wireplumber.override {
+    pipewire = final.pipewire;
+  };
+
+  seatd = prev.seatd.override { systemdSupport = false; };
 })
