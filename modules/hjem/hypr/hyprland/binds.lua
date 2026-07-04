@@ -19,9 +19,14 @@ hl.bind("SUPER + J", hl.dsp.layout("togglesplit"))
 
 hl.bind("SUPER + R", reset)
 
--- bind=$mod, B, exec, bash ~/.files/modules/hjem/hyprland/scripts/minimisetospecial.sh
-hl.bind("SUPER + B", function() -- TODO: Implement above function
-  hl.dispatch(hl.exec_cmd("kitty"))
+hl.bind("SUPER + B", function()
+    if hl.get_workspace("special:minimized") then
+        hl.dispatch(hl.dsp.window.move({ workspace = hl.get_active_workspace(), window = "tag:minimized" }))
+        hl.dispatch(hl.dsp.window.clear_tags({ window = "tag:minimized" }))
+    else
+        hl.dispatch(hl.dsp.window.tag({ tag = "minimized", window = hl.get_active_window() }))
+        hl.dispatch(hl.dsp.window.move({ workspace = "special:minimized", follow = false }))
+    end
 end)
 
 hl.bind("SUPER + mouse:272", hl.dsp.window.drag(),  { mouse = true })
