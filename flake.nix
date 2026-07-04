@@ -1,7 +1,7 @@
 {
   description = "System flake that I'm scared of (how does this work)";
 
-  outputs = { nixpkgs, finix, finix-old, ... } @ inputs:
+  outputs = { nixpkgs, finix, ... } @ inputs:
     let
       lib = nixpkgs.lib;
 
