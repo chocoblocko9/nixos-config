@@ -9,19 +9,19 @@ let
   ly' = pkgs.callPackage ./ly/package.nix {};
 
   pipewire' =
-    (pkgs.pipewire.override (
-      lib.optionalAttrs config.services.mdevd.enable {
+    (pkgs.pipewire.override 
+      {
         enableSystemd = false;
-        udev = libudev-garden;
+        udev = udevApi;
       }
-    )).overrideAttrs
+    ).overrideAttrs
       (o: {
         # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/2398#note_2967898
-        patches = o.patches or [ ] ++ lib.optionals (config.services.mdevd.enable || config.services.gardendevd.enable) [ ./pipewire.patch ];
+        patches = o.patches or [ ] ++ [ ./pipewire.patch ];
       });
 
   wireplumber' = pkgs.wireplumber.override (
-    lib.optionalAttrs config.services.mdevd.enable {
+    lib.optionalAttrs (config.services.mdevd.enable || config.services.mdev.enable) {
       pipewire = pipewire';
     }
   );
@@ -35,21 +35,29 @@ let
       }
     );
 
+  udevApi =
+    if config.services.gardendevd.enable then
+      libudev-garden
+    else if (config.services.mdev.enable || config.services.mdevd.enable || config.services.keventd.enable) then
+      pkgs.libudev-zero
+    else
+      null;
+
   gardendevd = pkgs.callPackage ./gardendevd.nix {};
   libudev-garden = pkgs.callPackage ./libudev-garden.nix {};
 
   libinput = pkgs.libinput.override (
-    lib.optionalAttrs (config.services.mdevd.enable || config.services.gardendevd.enable) {
-      udev = libudev-garden;
+    {
+      udev = udevApi;
       wacomSupport = false;
     }
   );
 
   aquamarine = pkgs.aquamarine.override (
-    lib.optionalAttrs (config.services.mdevd.enable || config.services.gardendevd.enable) {
+    {
       inherit libinput;
 
-      udev = libudev-garden;
+      udev = udevApi;
     }
 
     /*
@@ -70,6 +78,7 @@ let
     inherit hyprland;
   };
 
+  oxmgr = pkgs.callPackage ../../modules/derivations/oxmgr/default.nix {};
   vnstat' = pkgs.callPackage ../../modules/derivations/vnstat/package.nix {};
 in
 {
@@ -79,7 +88,9 @@ in
     ./zsh.nix
     ./flatpak.nix
     ./direnv.nix
-     ./openrgb.nix
+    ./openrgb.nix
+    ./forgejo.nix
+    
     inputs.modular-services.nixosModules.default
 
     ../../profiles/slip/hjem.nix 
@@ -96,21 +107,29 @@ in
 
   specialisation.gardendevd = {
     services.mdevd.enable = lib.mkForce false;
+    services.gardendevd = {
+      enable = true;
+      debug = true;
+    };
     #services.seatd.enable = lib.mkForce false;
     #services.elogind.enable = lib.mkForce true;
     environment.etc."specialisation".text = "gardendevd";
   };
-
-  /*
-  specialisation.udev = {
+  
+  specialisation.mdev = {
     services.mdevd.enable = lib.mkForce false;
-    services.gardendevd.enable = lib.mkForce false;
-    services.udev.enable = lib.mkForce true;
-    environment.etc."specialisation".text = "udev";
+    services.keventd.enable = lib.mkForce false;
+    services.gardendevd = {
+      enable = lib.mkForce false;
+    };
+    services.mdev.enable = true;
+    #services.seatd.enable = lib.mkForce false;
+    #services.elogind.enable = lib.mkForce true;
+    environment.etc."specialisation".text = "mdev";
   };
-  */
 
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.initrd.emergencyAccess = true;
 
   programs.limine.enable = true;
   /*
@@ -143,9 +162,6 @@ in
 
   security.pam.environment = {
     EDITOR.override = "nvim";
-
-    # https://wiki.nixos.org/wiki/Accelerated_Video_Playback#Intel
-    LIBVA_DRIVER_NAME.default = "iHD";
   };
 
   # TODO: some sort of option i guess
@@ -165,26 +181,26 @@ in
   };
 
   boot.kernelParams = [
-    "loglevel=1"
+    "loglevel=5"
 
-    # https://community.frame.work/t/linux-battery-life-tuning/6665/156
     "nvme.noacpi=1"
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.callPackage ../shift/kernel.nix {});
 
   fileSystems = {
     "/home/conor/2TB-Hard-Drive" = {
-      device = "/dev/disk/by-uuid/203EA3F63EA3C2E0";
-      fsType = "ntfs3";
+      device = "/dev/disk/by-uuid/4f8a7522-cc4c-4535-b00e-854d95c09a51";
+      fsType = "ext4";
       options = [ 
         "users" 
         "nofail" 
         "exec" 
-        "uid=1000"
-        "gid=100"
-        "dmask=022"
-        "fmask=133"
+        #"uid=1000"
+        #"gid=100"
+        #"dmask=022"
+        #"fmask=133"
       ];
     };
 
@@ -209,6 +225,18 @@ in
     pkgs.util-linux
     config.services.openssh.package
   ];
+
+  finit.services.oxmgr = {
+    description = "user level service manager";
+    command = "${oxmgr}/bin/oxmgr apply ~/Documents/oxfile.d/*";
+    conditions = "service/syslogd/ready";
+    group = "users";
+    log = true;
+    #notify = "systemd";
+    environment = {
+      XDG_RUNTIME_DIR = "/run/user/1000";
+    };
+  };
 
   networking.hostName = "subvert";
 
@@ -251,6 +279,7 @@ in
   };
    
   services.openssh.enable = false;
+  services.forgejo.enable = true;
   services.sysklogd.enable = true;
   services.mdevd.enable = true;
   services.mdevd.nlgroups = 2;
@@ -321,7 +350,7 @@ in
         icmp type echo-request accept
 
         # open tcp ports: sshd (22), http-alt (8080)
-        tcp dport { 22, 8080 } accept
+        tcp dport { 22, 2234, 2235, 8080 } accept
       }
     }
 
@@ -343,7 +372,7 @@ in
         icmpv6 type { echo-request, nd-neighbor-solicit } accept
 
         # open tcp ports: sshd (22), http-alt (8080)
-        tcp dport { 22, 8080 } accept
+        tcp dport { 22, 2234, 2235, 8080 } accept
       }
     }
   '';
@@ -410,8 +439,8 @@ in
   services.seatd.enable = true;
   finit.services.seatd.command = lib.mkForce "${seatd'.bin}/bin/seatd -n %n -u root -g ${config.services.seatd.group}";
 
-  services.gardendevd.enable = true;
-  services.gardendevd.debug = true;
+  #services.gardendevd.enable = true;
+  #services.gardendevd.debug = true;
   /*
   finit.services.gardendevd = {
     description = "hi";
@@ -730,7 +759,7 @@ var YES = polkit.Result.YES;
     pkgs.nix-tree
     pkgs.nixd
 
-    pkgs.firefox
+    pkgs.firefox-bin
     pkgs.qbittorrent
     pkgs.gamescope
     pkgs.xarchiver
@@ -764,6 +793,8 @@ var YES = polkit.Result.YES;
     pkgs.steam
     pkgs.steam.run
     pkgs.pulseaudio
+
+    oxmgr
 
     pkgs.busybox
     pkgs.imv # TODO: set as default image viewer
