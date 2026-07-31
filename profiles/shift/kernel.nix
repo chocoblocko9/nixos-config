@@ -3,7 +3,7 @@
 let
   kernel = pkgs.stdenv.mkDerivation rec {
     pname = "linux";
-    version = "7.1";
+    version = "7.1.3";
 
     target = "bzImage"; # nixpkgs broke stuff for no reason
 
@@ -22,6 +22,7 @@ let
       pkgs.cpio
       pkgs.pahole
       pkgs.zstd
+      # pkgs.zlib
     ];
 
     buildPhase = ''
@@ -42,6 +43,9 @@ let
     passthru = {
       kernelAtLeast = v: lib.versionAtLeast version v;
       modDirVersion = version;
+      features = {
+        ia32Emulation = true;
+      };
     };
   };
 in kernel

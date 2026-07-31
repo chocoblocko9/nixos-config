@@ -23,26 +23,6 @@
   });
   */
 
-  /*
-  sonarr = prev.sonarr.override {
-      dotnet-sdk_8 = prev.dotnetCorePackages.sdk_8_0-source;
-    };
-    radarr = prev.radarr.override {
-      dotnet-sdk_8 = prev.dotnetCorePackages.sdk_8_0-source;
-    };
-  */
-
-  # FIXME: lame as fuck
-  dotnet-sdk_8 = prev.dotnet-sdk_8.overrideAttrs (old: {
-    src = final.fetchurl {
-      url = "https://dotnetcli.azureedge.net/dotnet/Sdk/8.0.422/dotnet-sdk-8.0.422-linux-musl-x64.tar.gz";
-      hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-    };
-    nativeBuildInputs = builtins.filter
-    (x: x != final.autoPatchelfHook)
-    old.nativeBuildInputs;
-  });
-
   # Included in 2.2.8 upstream, waiting on release
   ddcutil = prev.ddcutil.overrideAttrs (old: {
     postPatch = (old.postPatch or "") + ''
@@ -51,6 +31,8 @@
     '';
   });
 
+  # PR'd
+  # merged
   breakpad = prev.breakpad.overrideAttrs (old: {
     configureFlags = (old.configureFlags or []) ++ [
       "--disable-tools"
@@ -88,14 +70,6 @@
     LC_ALL = "C.UTF-8";
   });
 
-  # Upstreamed! 
-  # Waiting for staging-next merge
-  sdl2-compat = prev.sdl2-compat.overrideAttrs (old: {
-    cmakeFlags = (old.cmakeFlags or [ ]) ++ [
-      (prev.lib.cmakeFeature "CMAKE_BUILD_RPATH" (prev.lib.makeLibraryPath [ final.sdl3 ]))
-    ];
-  });
-
   gcr = prev.gcr.overrideAttrs (old: {
     env.NIX_CFLAGS_COMPILE = (old.env.NIX_CFLAGS_COMPILE or "") 
       + " -Wno-error=implicit-function-declaration -Wno-error=int-conversion";
@@ -112,14 +86,6 @@
     substituteInPlace src/theme-{dark,light}/meson.build \
       --replace-fail '--no-source-map' '--sourcemap=none'
     '';
-  });
-
-  # PR merged!
-  # (in nixos-unstable yet?) 
-  glaze = prev.glaze.overrideAttrs (old: {
-    cmakeFlags = (old.cmakeFlags or []) ++ [
-      "-Dglaze_ENABLE_FUZZING=OFF"
-    ];
   });
 
   # Outdated, use pr
@@ -155,7 +121,19 @@
       src/lib/eina/eina_file_posix.c
     '';
   });
-  
+
+  level-zero = prev.level-zero.overrideAttrs (old: {
+    patches = (old.patches or []) ++ [
+      ./other-patches/Fix-incompatible-strerror_r-for-non-gnu-windows-libc.patch
+      ./other-patches/meow.patch
+    ];
+
+    src = old.src.override {
+      tag = "v1.32.0";
+      hash = "sha256-u8q8VOuJKUCFNJ8aLR/BrVx9lU5vD+hwkHRmy77vFe8=";
+    };
+  });
+
   /*
   sqlite = prev.sqlite.overrideAttrs (old: {
     doCheck = false;

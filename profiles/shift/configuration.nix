@@ -62,8 +62,8 @@ in
 
   boot.kernelParams = [ "loglevel=5" ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  # boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.callPackage ./kernel.nix {});
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.callPackage ./kernel.nix {});
   /*
   boot.initrd.availableKernelModules = [
     "ahci"
@@ -184,7 +184,7 @@ in
         icmp type echo-request accept
 
         # open tcp ports: sshd (22), http-alt (8080)
-        tcp dport { 22, 8080 } accept
+        tcp dport { 22, 2234, 8080 } accept
       }
     }
 
@@ -206,7 +206,7 @@ in
         icmpv6 type { echo-request, nd-neighbor-solicit } accept
 
         # open tcp ports: sshd (22), http-alt (8080)
-        tcp dport { 22, 8080 } accept
+        tcp dport { 22, 2234, 8080 } accept
       }
     }
   '';
@@ -342,7 +342,7 @@ in
     pkgs.foot
     pkgs.alacritty
 
-    pkgs.firefox
+    pkgs.librewolf
 
     pkgs.man
     pkgsStatic.nano

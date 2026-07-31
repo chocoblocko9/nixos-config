@@ -10,3 +10,15 @@ index db18051..d16ce20 100755
  #include <utility>
  #include <vector>
  
+diff --git a/third_party/xla/graphcycles.h b/third_party/xla/graphcycles.h
+index df73735..bf16676 100755
+--- a/third_party/xla/graphcycles.h
++++ b/third_party/xla/graphcycles.h
+@@ -50,6 +50,7 @@ limitations under the License.
+ // #include "absl/types/span.h"
+ // #include <span>
+ #include <string>
++#include <cstdint>
+ 
+ namespace xla {
+ 
