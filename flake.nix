@@ -135,11 +135,12 @@
 
   inputs = {
     # nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs.url = "git+file:///home/conor/nixpkgs?rev=1db7af7f172862de797893f3afd017cbd4a08ca3";
-    finix.url = "github:chocoblocko9/finix/gardendevd-init";
+    nixpkgs.url = "git+file:///home/conor/nixpkgs?rev=97cc4b8e7060705448188d5b18dd3cd3ff2dfaf5";
+    #finix.url = "github:finix-community/finix";
+    finix.url = "git+file:///home/conor/programming/finix/finix?rev=000d8ef0043d644fe71ee6c35b78050d96f5ecfb";
 
     community-modules.url = "git+file:///home/conor/finix/fastfetch-init";
-    modular-services.url = "github:chocoblocko9/modular-services/fix-finit-check";
+    modular-services.url = "github:finix-community/modular-services";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     hyprland = {

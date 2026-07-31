@@ -50,18 +50,18 @@
     },
     "finix": {
       "locked": {
-        "lastModified": 1783170837,
-        "narHash": "sha256-3cTAiAlXS1g2/f6Zg4Nub9OmvIO/WCdb4xeIy0S64sE=",
-        "owner": "chocoblocko9",
-        "repo": "finix",
-        "rev": "967bef9903e6e6bb3da9ae7cb8c1a1055ded5f88",
-        "type": "github"
+        "lastModified": 1784995958,
+        "narHash": "sha256-zGX+SZGym5fS0X38K1Y8zdbIjJqA/WNw/+eyhgbjzl4=",
+        "ref": "refs/heads/mdev-init",
+        "rev": "000d8ef0043d644fe71ee6c35b78050d96f5ecfb",
+        "revCount": 698,
+        "type": "git",
+        "url": "file:///home/conor/programming/finix/finix"
       },
       "original": {
-        "owner": "chocoblocko9",
-        "ref": "gardendevd-init",
-        "repo": "finix",
-        "type": "github"
+        "rev": "000d8ef0043d644fe71ee6c35b78050d96f5ecfb",
+        "type": "git",
+        "url": "file:///home/conor/programming/finix/finix"
       }
     },
     "flake-compat": {
@@ -198,11 +198,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1783107443,
-        "narHash": "sha256-4PS8BRJ4CigOc4+uJCKyEWkV9ZxlpiUzdQlBWBgecIk=",
+        "lastModified": 1783179456,
+        "narHash": "sha256-AFH0TTPg+BOu/U/gGhIYLBdQQl8hjotr2Lt/cQbVYHQ=",
         "owner": "chocoblocko9",
         "repo": "Hyprland",
-        "rev": "8a840db452f2baea98f33956543b06afa16f7371",
+        "rev": "d64657748fbcfc431a9f470a388e5406461c664d",
         "type": "github"
       },
       "original": {
@@ -445,16 +445,15 @@
     },
     "modular-services": {
       "locked": {
-        "lastModified": 1778513720,
+        "lastModified": 1778532280,
         "narHash": "sha256-8+Kajhw6x3KCD6M2+rMgOYCJ9spgvBJePuBm/VMReRw=",
-        "owner": "chocoblocko9",
+        "owner": "finix-community",
         "repo": "modular-services",
-        "rev": "b500571246a6626560e2512ef766812745de5e56",
+        "rev": "136cd5d5894b04a00a08f8228794f42be5af664f",
         "type": "github"
       },
       "original": {
-        "owner": "chocoblocko9",
-        "ref": "fix-finit-check",
+        "owner": "finix-community",
         "repo": "modular-services",
         "type": "github"
       }
@@ -513,16 +512,16 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1782583012,
-        "narHash": "sha256-/bTzziWWHZ7IIWxHkIhc0Ojco3m8ZvmfJ/DUhm0p6OQ=",
+        "lastModified": 1783617271,
+        "narHash": "sha256-6s9WCQsCAM5ljuMFOisgveFsHSfLqvYsa0lxi1isyZk=",
         "ref": "refs/heads/working",
-        "rev": "1db7af7f172862de797893f3afd017cbd4a08ca3",
-        "revCount": 1018296,
+        "rev": "97cc4b8e7060705448188d5b18dd3cd3ff2dfaf5",
+        "revCount": 1031713,
         "type": "git",
         "url": "file:///home/conor/nixpkgs"
       },
       "original": {
-        "rev": "1db7af7f172862de797893f3afd017cbd4a08ca3",
+        "rev": "97cc4b8e7060705448188d5b18dd3cd3ff2dfaf5",
         "type": "git",
         "url": "file:///home/conor/nixpkgs"
       }
