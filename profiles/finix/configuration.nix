@@ -45,6 +45,8 @@ let
 
   gardendevd = pkgs.callPackage ./gardendevd.nix {};
   libudev-garden = pkgs.callPackage ./libudev-garden.nix {};
+  glide-bin-unwrapped = pkgs.callPackage ./glide.nix {};
+  glide = pkgs.wrapFirefox glide-bin-unwrapped {};
 
   libinput = pkgs.libinput.override (
     {
@@ -80,6 +82,12 @@ let
 
   oxmgr = pkgs.callPackage ../../modules/derivations/oxmgr/default.nix {};
   vnstat' = pkgs.callPackage ../../modules/derivations/vnstat/package.nix {};
+  depixel = pkgs.callPackage ../../modules/derivations/depixel/default.nix {};
+
+  unstable = import (builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/nixos-26.05.tar.gz";
+    sha256 = "0x126xqaw6vqz27sp0w1vl58a90whrs9y7nsa1hkvr150y8j2m0w";
+  }) { system = "x86_64-linux"; };
 in
 {
   imports = [
@@ -90,6 +98,7 @@ in
     ./direnv.nix
     ./openrgb.nix
     ./forgejo.nix
+    ./xmonad.nix
     
     inputs.modular-services.nixosModules.default
 
@@ -583,6 +592,7 @@ var YES = polkit.Result.YES;
 
   fonts.enableDefaultPackages = true;
   fonts.packages = with pkgs; [
+    depixel
     vegur
     nerd-fonts.jetbrains-mono
     nerd-fonts._0xproto
@@ -692,7 +702,14 @@ var YES = polkit.Result.YES;
     ];
   };
 
-  # services.xserver.enable = true;
+  programs.xorg = {
+    enable = true;
+    xkb = {
+      layout = "eu";
+      options = "ctrl:swapcaps";
+    };
+  };
+
 
   environment.pathsToLink = [
     # TODO: xdg.icon module
@@ -734,8 +751,6 @@ var YES = polkit.Result.YES;
     pkgs.kanshi
     pkgs.musikcube
 
-    pkgs.oxwm
-    pkgs.alacritty
     pkgs.xinit
 
     pkgs.adw-gtk3
@@ -783,6 +798,9 @@ var YES = polkit.Result.YES;
     pkgs.libsForQt5.qtstyleplugin-kvantum
     pkgs.qt6Packages.qtstyleplugin-kvantum
 
+    pkgs.dmenu
+    pkgs.xterm
+
     pkgs.udiskie
     pkgs.udisks
     pkgs.util-linux
@@ -795,6 +813,7 @@ var YES = polkit.Result.YES;
     pkgs.pulseaudio
 
     oxmgr
+    glide
 
     pkgs.busybox
     pkgs.imv # TODO: set as default image viewer
@@ -807,6 +826,9 @@ var YES = polkit.Result.YES;
     "en_US.UTF-8/UTF-8"
     "en_IE.UTF-8/UTF-8"
   ];
+
+  programs.xmonad.enable = true;
+  programs.xmonad.enableContribAndExtras = true;
 
   # programs.fastfetch.enable = true;
 
