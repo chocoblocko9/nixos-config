@@ -1,0 +1,25 @@
+diff --git a/src/inference/src/os/lin/lin_system_conf.cpp b/src/inference/src/os/lin/lin_system_conf.cpp
+index 4d70df6e2a..ccd3556526 100644
+--- a/src/inference/src/os/lin/lin_system_conf.cpp
++++ b/src/inference/src/os/lin/lin_system_conf.cpp
+@@ -164,7 +164,7 @@ CPU::CPU() {
+ 
+         numa_node_list.assign(_sockets, std::vector<int>());
+         for (int i = 0; i < _processors; i++) {
+-            if (CPU_ISSET(_cpu_mapping_table[i][CPU_MAP_PROCESSOR_ID], mask) &&
++            if (CPU_ISSET(_cpu_mapping_table[i][CPU_MAP_PROCESSOR_ID], mask.get()) &&
+                 _cpu_mapping_table[i][CPU_MAP_USED_FLAG] != CPU_BLOCKED) {
+                 valid_cpu_mapping_table.emplace_back(_cpu_mapping_table[i]);
+                 if (_cpu_mapping_table[i][CPU_MAP_CORE_TYPE] == MAIN_CORE_PROC) {
+diff --git a/src/plugins/intel_gpu/include/intel_gpu/runtime/engine_configuration.hpp b/src/plugins/intel_gpu/include/intel_gpu/runtime/engine_configuration.hpp
+index 8854c9f406..c633fdf38c 100644
+--- a/src/plugins/intel_gpu/include/intel_gpu/runtime/engine_configuration.hpp
++++ b/src/plugins/intel_gpu/include/intel_gpu/runtime/engine_configuration.hpp
+@@ -5,6 +5,7 @@
+ #pragma once
+ 
+ #include <ostream>
++#include <cstdint>
+ 
+ namespace cldnn {
+ 

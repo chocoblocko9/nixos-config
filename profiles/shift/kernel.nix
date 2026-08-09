@@ -3,7 +3,7 @@
 let
   kernel = pkgs.stdenv.mkDerivation rec {
     pname = "linux";
-    version = "7.1.3";
+    version = "7.1.6";
 
     target = "bzImage"; # nixpkgs broke stuff for no reason
 

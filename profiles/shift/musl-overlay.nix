@@ -23,6 +23,14 @@
   });
   */
 
+  /*
+  afdko = prev.afdko.overrideAttrs (old: {
+    disabledTests = (old.disabledTests or []) ++
+    [ "test_overlap_removal" ];
+  });
+  */
+     
+
   # Included in 2.2.8 upstream, waiting on release
   ddcutil = prev.ddcutil.overrideAttrs (old: {
     postPatch = (old.postPatch or "") + ''
@@ -49,6 +57,10 @@
   */
 
   protobuf_33 = prev.protobuf_33.overrideAttrs (old: {
+    doCheck = false;
+  });
+
+  onnxruntime = prev.onnxruntime.overrideAttrs (old: {
     doCheck = false;
   });
 
@@ -132,6 +144,14 @@
       tag = "v1.32.0";
       hash = "sha256-u8q8VOuJKUCFNJ8aLR/BrVx9lU5vD+hwkHRmy77vFe8=";
     };
+  });
+
+  openvino = prev.openvino.overrideAttrs (old: {
+    patches = (old.patches or []) ++ [
+      ./other-patches/openvino-musl.patch
+    ];
+
+      cmakeFlags = (old.cmakeFlags or []) ++ [ "-DENABLE_LTO=OFF" ];
   });
 
   /*

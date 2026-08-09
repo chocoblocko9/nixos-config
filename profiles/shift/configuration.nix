@@ -342,7 +342,7 @@ in
     pkgs.foot
     pkgs.alacritty
 
-    pkgs.librewolf
+    pkgs.firefox
 
     pkgs.man
     pkgsStatic.nano
