@@ -21,6 +21,7 @@
     neovim.enable = true;
     quickshell.enable = true;
     theming.enable = true;
+    x11.enable = true;
   };
 }
 
