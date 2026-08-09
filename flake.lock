@@ -512,16 +512,16 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1783617271,
-        "narHash": "sha256-6s9WCQsCAM5ljuMFOisgveFsHSfLqvYsa0lxi1isyZk=",
+        "lastModified": 1786215619,
+        "narHash": "sha256-DS34a4Df4zl+Dg12juU02lgf3t9eIIu99TzhFEqPoEU=",
         "ref": "refs/heads/working",
-        "rev": "97cc4b8e7060705448188d5b18dd3cd3ff2dfaf5",
-        "revCount": 1031713,
+        "rev": "75436caa72326dfce5b087b7c63100f874233a75",
+        "revCount": 1048880,
         "type": "git",
         "url": "file:///home/conor/nixpkgs"
       },
       "original": {
-        "rev": "97cc4b8e7060705448188d5b18dd3cd3ff2dfaf5",
+        "rev": "75436caa72326dfce5b087b7c63100f874233a75",
         "type": "git",
         "url": "file:///home/conor/nixpkgs"
       }

@@ -90,7 +90,7 @@
           sysklogd
           upower
           vnstat
-          xserver
+          xorg
           virtualbox
           zerotierone
         ];
@@ -135,7 +135,8 @@
 
   inputs = {
     # nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs.url = "git+file:///home/conor/nixpkgs?rev=97cc4b8e7060705448188d5b18dd3cd3ff2dfaf5";
+    # working - vnstat mod service
+    nixpkgs.url = "git+file:///home/conor/nixpkgs?rev=75436caa72326dfce5b087b7c63100f874233a75";
     #finix.url = "github:finix-community/finix";
     finix.url = "git+file:///home/conor/programming/finix/finix?rev=000d8ef0043d644fe71ee6c35b78050d96f5ecfb";
 
